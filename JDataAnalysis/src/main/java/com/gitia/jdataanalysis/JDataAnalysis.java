@@ -33,6 +33,9 @@ import org.apache.commons.csv.CSVRecord;
  */
 public class JDataAnalysis {
 
+    private List<CSVRecord> datos;
+    private CSVParser parser;
+
     /**
      * this function open a file and show the info
      *
@@ -41,23 +44,25 @@ public class JDataAnalysis {
     public List<CSVRecord> open(String path) {
 
         try {
-            CSVParser parser = new CSVParser(
+            parser = new CSVParser(
                     new FileReader(path),
                     CSVFormat.DEFAULT.withHeader()
             );
-            List<CSVRecord> list = IteratorUtils.toList(parser.iterator());
-            System.out.println("Size List: " + list.size());
+            datos = IteratorUtils.toList(parser.iterator());
+            System.out.println("Header Map Size: " + parser.getHeaderMap().size());
 
-            for (int i = 0; i < list.size(); i++) {
-                CSVRecord next = list.get(i);
+            for (int i = 0; i < datos.size(); i++) {
+                CSVRecord next = datos.get(i);
                 int csvrSize = next.size();
                 for (int j = 0; j < csvrSize; j++) {
                     System.out.printf("%s\t", next.get(j));
                 }
                 System.out.printf("\n");
+                
             }
+            System.out.println("Records ( " + parser.getHeaderMap().size() + " x " + datos.size() + ")");
             parser.close();
-            return list;
+            return datos;
         } catch (IOException ex) {
             Logger.getLogger(JDataAnalysis.class.getName()).log(Level.SEVERE, null, ex);
             return null;
