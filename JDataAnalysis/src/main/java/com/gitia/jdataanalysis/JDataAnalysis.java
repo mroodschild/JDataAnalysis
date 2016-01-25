@@ -18,6 +18,7 @@ package com.gitia.jdataanalysis;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.collections4.IteratorUtils;
@@ -47,18 +48,8 @@ public class JDataAnalysis {
                     CSVFormat.DEFAULT.withHeader()
             );
             datos = IteratorUtils.toList(parser.iterator());
-            System.out.println("Header Map Size: " + parser.getHeaderMap().size());
-
-            for (int i = 0; i < datos.size(); i++) {
-                CSVRecord next = datos.get(i);
-                int csvrSize = next.size();
-                for (int j = 0; j < csvrSize; j++) {
-                    System.out.printf("%s\t", next.get(j));
-                }
-                System.out.printf("\n");
-
-            }
-            System.out.println("Records ( " + parser.getHeaderMap().size() + " x " + datos.size() + ")\n");
+            System.out.println("");
+            show();
             //parser.close();
             return datos;
         } catch (IOException ex) {
@@ -71,6 +62,7 @@ public class JDataAnalysis {
      * show 10 rows
      */
     public void show() {
+        printHeader(parser.getHeaderMap());
         for (int i = 0; i < datos.size() && i < 10; i++) {
             CSVRecord next = datos.get(i);
             int csvrSize = next.size();
@@ -79,7 +71,24 @@ public class JDataAnalysis {
             }
             System.out.printf("\n");
         }
-        System.out.println("");
+        System.out.println("...");
+        System.out.println("Records ( " + parser.getHeaderMap().size() + " x " + datos.size() + ")\n");
+    }
+
+    /**
+     * show all rows
+     */
+    public void showAll() {
+        printHeader(parser.getHeaderMap());
+        for (int i = 0; i < datos.size(); i++) {
+            CSVRecord next = datos.get(i);
+            int csvrSize = next.size();
+            for (int j = 0; j < csvrSize; j++) {
+                System.out.printf("%s\t", next.get(j));
+            }
+            System.out.printf("\n");
+        }
+       System.out.println("Records ( " + parser.getHeaderMap().size() + " x " + datos.size() + ")\n");
     }
 
     /**
@@ -97,6 +106,7 @@ public class JDataAnalysis {
             }
             System.out.printf("\n");
         }
+        System.out.println("Records ( " + headers.length + " x " + datos.size() + ")\n");
     }
 
     /**
@@ -110,6 +120,15 @@ public class JDataAnalysis {
             System.out.printf("%s\t", headers[i]);
         }
 
+        System.out.println("");
+    }
+
+    private void printHeader(Map<String, Integer> headerMap) {
+        for (Map.Entry<String, Integer> entry : headerMap.entrySet()) {
+            String key = entry.getKey();
+            //Integer value = entry.getValue();
+            System.out.printf("%s\t", key);
+        }
         System.out.println("");
     }
 
