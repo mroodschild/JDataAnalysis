@@ -56,30 +56,6 @@ public class JDataAnalysis {
                 }
                 System.out.printf("\n");
             }
-//            System.out.println(parser.getRecords().size());
-//            for (int i = 0; i < parser.getRecords().size(); i++) {
-//                CSVRecord csvr = parser.getRecords().get(i);
-//                int csvrSize = csvr.size();
-//                for (int j = 0; j < csvrSize; j++) {
-//                    System.out.printf("%s\t", csvr.get(j));
-//                }
-//                System.out.printf("\n");
-//            }
-
-//            for (CSVRecord record : parser) {
-//
-//                System.out.printf("id %s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
-//                        parser.getRecordNumber(),
-//                        record.get("HousePrice"),
-//                        record.get("HsPrc ($10,000)"),
-//                        record.get("CrimeRate"),
-//                        record.get("MilesPhila"),
-//                        record.get("PopChg"),
-//                        record.get("Name"),
-//                        record.get("County"),
-//                        Double.valueOf(record.get("CrimeRate")) + Double.valueOf(record.get("HsPrc ($10,000)"))
-//                );
-//            }
             parser.close();
             return list;
         } catch (IOException ex) {
