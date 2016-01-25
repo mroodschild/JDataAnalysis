@@ -17,8 +17,6 @@ package com.gitia.jdataanalysis;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,15 +56,61 @@ public class JDataAnalysis {
                     System.out.printf("%s\t", next.get(j));
                 }
                 System.out.printf("\n");
-                
+
             }
-            System.out.println("Records ( " + parser.getHeaderMap().size() + " x " + datos.size() + ")");
-            parser.close();
+            System.out.println("Records ( " + parser.getHeaderMap().size() + " x " + datos.size() + ")\n");
+            //parser.close();
             return datos;
         } catch (IOException ex) {
             Logger.getLogger(JDataAnalysis.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
+    }
+
+    /**
+     * show 10 rows
+     */
+    public void show() {
+        for (int i = 0; i < datos.size() && i < 10; i++) {
+            CSVRecord next = datos.get(i);
+            int csvrSize = next.size();
+            for (int j = 0; j < csvrSize; j++) {
+                System.out.printf("%s\t", next.get(j));
+            }
+            System.out.printf("\n");
+        }
+        System.out.println("");
+    }
+
+    /**
+     * show selected headers
+     *
+     * @param headers
+     */
+    public void show(String... headers) {
+        printHeaders(headers);
+        for (int i = 0; i < datos.size(); i++) {
+            CSVRecord next = datos.get(i);
+            int csvrSize = next.size();
+            for (int j = 0; j < headers.length; j++) {
+                System.out.printf("%s\t", next.get(headers[j]));
+            }
+            System.out.printf("\n");
+        }
+    }
+
+    /**
+     * print headers
+     *
+     * @param headers
+     */
+    private void printHeaders(String... headers) {
+
+        for (int i = 0; i < headers.length; i++) {
+            System.out.printf("%s\t", headers[i]);
+        }
+
+        System.out.println("");
     }
 
 }
