@@ -39,6 +39,7 @@ public class JDataAnalysis {
      * this function open a file and show the info
      *
      * @param path
+     * @return 
      */
     public List<CSVRecord> open(String path) {
 
@@ -115,11 +116,9 @@ public class JDataAnalysis {
      * @param headers
      */
     private void printHeaders(String... headers) {
-
         for (int i = 0; i < headers.length; i++) {
             System.out.printf("%s\t", headers[i]);
         }
-
         System.out.println("");
     }
 
