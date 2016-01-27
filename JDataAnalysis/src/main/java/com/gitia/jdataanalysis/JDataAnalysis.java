@@ -134,23 +134,23 @@ public class JDataAnalysis {
 
     /**
      * create a simple linear regression
-     * 
+     *
      * @param inputFeature
      * @param outputFeature
-     * @return 
+     * @return
      */
-    public LinearRegression simpleLinearRegression(String inputFeature, String outputFeature) {
+    public SimpleLinearRegression simpleLinearRegression(String inputFeature, String outputFeature) {
         double[] input = getFeature(inputFeature);
         double[] output = getFeature(outputFeature);
-        LinearRegression rss = new LinearRegression(input, output);
-        return null;
+        SimpleLinearRegression simpleLinearRegression = new SimpleLinearRegression(input, output);
+        return simpleLinearRegression;
     }
 
     /**
      * get the feature desired in a vector
-     * 
+     *
      * @param selectedFeature
-     * @return 
+     * @return
      */
     public double[] getFeature(String selectedFeature) {
         double[] feature = new double[datos.size()];
