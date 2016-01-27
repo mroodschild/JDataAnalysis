@@ -1,7 +1,7 @@
 package com.gitia.jdataanalysis;
 
 /**
- * 
+ *
  * @author @author Matías Roodschild <mroodschild@gmail.com>
  */
 public class RSS {
@@ -113,9 +113,9 @@ public class RSS {
     }
 
     /**
-     * 
+     *
      * @param input
-     * @return 
+     * @return
      */
     public double[] prediction(double[] input) {
         double[] prediction = new double[input.length];
@@ -123,6 +123,46 @@ public class RSS {
             prediction[i] = prediction(input[i]);
         }
         return prediction;
+    }
+
+    /**
+     * this function takes the input, and calculate the output estimated, and
+     * compare this with the output estimated
+     *
+     * @param input
+     * @param output
+     * @return
+     */
+    public double getResidualSumOfSquare_RSS(double[] input, double[] output) {
+        double rss = 0;
+        for (int i = 0; i < input.length; i++) {
+            rss = rss + Math.pow((output[i]) - prediction(input[i]), 2);
+        }
+        return rss;
+    }
+
+    /**
+     * 
+     * @param output
+     * @return 
+     */
+    public double inverseRegressionPredictions(double output) {
+        // y = intercept + slope * input;
+        // x = (y - intercept)/slope
+        return (output - intercept) / slope;
+    }
+
+    /**
+     * 
+     * @param output
+     * @return 
+     */
+    public double[] inverseRegressionPredictions(double[] output) {
+        double[] inverse = new double[output.length];
+        for (int i = 0; i < output.length; i++) {
+            inverse[i] = inverseRegressionPredictions(output[i]);
+        }
+        return inverse;
     }
 
     public double getIntercept() {
