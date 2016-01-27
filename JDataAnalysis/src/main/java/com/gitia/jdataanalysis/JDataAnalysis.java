@@ -88,7 +88,7 @@ public class JDataAnalysis {
             }
             System.out.printf("\n");
         }
-       System.out.println("Records ( " + parser.getHeaderMap().size() + " x " + datos.size() + ")\n");
+        System.out.println("Records ( " + parser.getHeaderMap().size() + " x " + datos.size() + ")\n");
     }
 
     /**
@@ -131,5 +131,32 @@ public class JDataAnalysis {
         }
         System.out.println("");
     }
-    
+
+    /**
+     * create a simple linear regression
+     * 
+     * @param inputFeature
+     * @param outputFeature
+     * @return 
+     */
+    public RSS simpleLinearRegression(String inputFeature, String outputFeature) {
+        double[] input = getFeature(inputFeature);
+        double[] output = getFeature(outputFeature);
+        RSS rss = new RSS(input, output);
+        return null;
+    }
+
+    /**
+     * get the feature desired in a vector
+     * 
+     * @param selectedFeature
+     * @return 
+     */
+    public double[] getFeature(String selectedFeature) {
+        double[] feature = new double[datos.size()];
+        for (int i = 0; i < datos.size(); i++) {
+            feature[i] = Double.valueOf(datos.get(i).get(selectedFeature));
+        }
+        return feature;
+    }
 }

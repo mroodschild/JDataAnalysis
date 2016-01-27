@@ -103,8 +103,26 @@ public class RSS {
         return meanY - slope * meanX;
     }
 
+    /**
+     *
+     * @param input
+     * @return
+     */
     public double prediction(double input) {
         return intercept + slope * input;
+    }
+
+    /**
+     * 
+     * @param input
+     * @return 
+     */
+    public double[] prediction(double[] input) {
+        double[] prediction = new double[input.length];
+        for (int i = 0; i < input.length; i++) {
+            prediction[i] = prediction(input[i]);
+        }
+        return prediction;
     }
 
     public double getIntercept() {
@@ -202,6 +220,10 @@ public class RSS {
 
     public void setIntercep(double intercept) {
         this.intercept = intercept;
+    }
+
+    public void getCoefficients() {
+        System.out.println("intercept: " + intercept + "\t slope: " + slope);
     }
 
 }
