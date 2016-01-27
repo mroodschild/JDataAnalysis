@@ -1,10 +1,25 @@
+/*
+ * Copyright 2016 @author Matías Roodschild <mroodschild@gmail.com>.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.gitia.jdataanalysis;
 
 /**
  *
  * @author @author Matías Roodschild <mroodschild@gmail.com>
  */
-public class RSS {
+public class LinearRegression {
 
     double[] x;
     double[] y;
@@ -19,10 +34,10 @@ public class RSS {
     protected double intercept;
     protected double slope;
 
-    public RSS() {
+    public LinearRegression() {
     }
 
-    public RSS(double[] x, double[] y) {
+    public LinearRegression(double[] x, double[] y) {
         this.x = x;
         this.y = y;
         calcular();

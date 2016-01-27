@@ -139,10 +139,10 @@ public class JDataAnalysis {
      * @param outputFeature
      * @return 
      */
-    public RSS simpleLinearRegression(String inputFeature, String outputFeature) {
+    public LinearRegression simpleLinearRegression(String inputFeature, String outputFeature) {
         double[] input = getFeature(inputFeature);
         double[] output = getFeature(outputFeature);
-        RSS rss = new RSS(input, output);
+        LinearRegression rss = new LinearRegression(input, output);
         return null;
     }
 

@@ -1,15 +1,25 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2016 @author Matías Roodschild <mroodschild@gmail.com>.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package com.gitia.jdataanalysis;
 
 /**
- *
- * @author M
+ * 
+ * @author @author Matías Roodschild <mroodschild@gmail.com>
  */
-public class RSSGradDesc extends RSS {
+public class LinearRegressionGD extends LinearRegression {
 
     double initial_intercept;
     double initial_slope;
@@ -23,7 +33,7 @@ public class RSSGradDesc extends RSS {
      * initial slope = 0; initial intercept = 0; step_size = 0.05; tolerance =
      * 0.01;
      */
-    public RSSGradDesc() {
+    public LinearRegressionGD() {
         this(0, 0, 0.05, 0.01);
     }
 
@@ -34,7 +44,7 @@ public class RSSGradDesc extends RSS {
      * @param step_size
      * @param tolerance
      */
-    public RSSGradDesc(double initial_intercept, double initial_slope, double step_size, double tolerance) {
+    public LinearRegressionGD(double initial_intercept, double initial_slope, double step_size, double tolerance) {
         this.initial_intercept = initial_intercept;
         this.initial_slope = initial_slope;
         intercept = initial_intercept;
@@ -52,7 +62,7 @@ public class RSSGradDesc extends RSS {
      * @param x
      * @param y
      */
-    public RSSGradDesc(double initial_intercept, double initial_slope, double step_size, double tolerance, double[] x, double[] y) {
+    public LinearRegressionGD(double initial_intercept, double initial_slope, double step_size, double tolerance, double[] x, double[] y) {
         this(initial_intercept, initial_slope, step_size, tolerance);
         this.x = x;
         this.y = y;
