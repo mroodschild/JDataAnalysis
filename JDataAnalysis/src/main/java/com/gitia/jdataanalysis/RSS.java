@@ -1,8 +1,8 @@
 package com.gitia.jdataanalysis;
 
 /**
- *
- * @author M
+ * 
+ * @author @author Matías Roodschild <mroodschild@gmail.com>
  */
 public class RSS {
 
