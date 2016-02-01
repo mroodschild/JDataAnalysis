@@ -22,5 +22,10 @@
             <artifactId>commons-collections4</artifactId>
             <version>4.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.ejml</groupId>
+            <artifactId>all</artifactId>
+            <version>0.29</version>
+        </dependency>
     </dependencies>
 </project>

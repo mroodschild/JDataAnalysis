@@ -39,7 +39,7 @@ public class JDataAnalysis {
      * this function open a file and show the info
      *
      * @param path
-     * @return 
+     * @return
      */
     public List<CSVRecord> open(String path) {
 
@@ -157,5 +157,33 @@ public class JDataAnalysis {
             feature[i] = Double.valueOf(datos.get(i).get(selectedFeature));
         }
         return feature;
+    }
+
+    public double mean(String selectedFeature) {
+        double mean = 0;
+        double sum = 0;
+        for (int i = 0; i < datos.size(); i++) {
+            sum = sum + Double.valueOf(datos.get(i).get(selectedFeature));
+        }
+        return sum / datos.size();
+    }
+
+    public void statistics(String selectedFeature) {
+        double mean = 0;
+        double sum = 0;
+        double num;
+        double min = Double.valueOf(datos.get(0).get(selectedFeature));
+        double max = Double.valueOf(datos.get(0).get(selectedFeature));
+        for (int i = 0; i < datos.size(); i++) {
+            num = Double.valueOf(datos.get(i).get(selectedFeature));
+            sum = sum + num;
+            if (num < min) {
+                min = num;
+            }
+            if (num > max) {
+                max = num;
+            }
+        }
+        System.out.println("mean: " + mean + "\tmax: " + max + "\tmin: " + min);
     }
 }
