@@ -15,14 +15,19 @@
  */
 package com.gitia.jdataanalysis;
 
+import org.ejml.simple.SimpleMatrix;
+
 /**
  *
  * @author @author Matías Roodschild <mroodschild@gmail.com>
  */
-public class MultipleLinearRegression1 {
+public class MultipleLinearRegression {
 
-    double[] x;
-    double[] y;
+    double[][] input;
+    double[] output;
+    SimpleMatrix W;
+    SimpleMatrix H;
+    SimpleMatrix Y;
     protected double sumX;
     protected double sumY;
     protected double meanX;
@@ -34,26 +39,61 @@ public class MultipleLinearRegression1 {
     protected double intercept;
     protected double slope;
 
-    public MultipleLinearRegression1() {
+    public MultipleLinearRegression() {
     }
 
-    public MultipleLinearRegression1(double[] x, double[] y) {
-        this.x = x;
-        this.y = y;
-        calcular();
+    public MultipleLinearRegression(double[][] input, double[] output) {
+        H = new SimpleMatrix(input);
+        W = new SimpleMatrix(input[0].length, 1);
+        W.zero();
+        Y = new SimpleMatrix(output.length, 1, true, output);
+        getRSS(H, Y);
+        //Y.print();
+    }
+    
+    /**
+     * this function takes the input, and calculate the output estimated, and
+     * compare this with the output estimated
+     *
+     * @param input
+     * @param output
+     * @return
+     */
+    public double getRSS(double[] input, double[] output) {
+        double rss = 0;
+        for (int i = 0; i < input.length; i++) {
+            rss = rss + Math.pow((output[i]) - prediction(input[i]), 2);
+        }
+        return rss;
+    }
+
+    /**
+     * this function takes the input, and calculate the output estimated, and
+     * compare this with the output estimated
+     *
+     * @param input
+     * @param output
+     * @return
+     */
+    public double getRSS(SimpleMatrix input, SimpleMatrix output) {
+        double rss = 0;
+        //input.print();
+        W.print();
+        input.mult(W).print();
+        return rss;
     }
 
     public void calcular() {
-        sumX = sum(x);
-        sumY = sum(y);
-        meanX = mean(x);
-        meanY = mean(y);
-        sumSquaredX = sumSquared(x);
-        meanSquaredX = meanSquared(x);
-        n = x.length;
-        sumProdXY = sumProd(x, y);
-        slope = getSlope();
-        intercept = intercept();
+//        sumX = sum(input);
+//        sumY = sum(output);
+//        meanX = mean(input);
+//        meanY = mean(output);
+//        sumSquaredX = sumSquared(input);
+//        meanSquaredX = meanSquared(input);
+//        n = input.length;
+//        sumProdXY = sumProd(input, output);
+//        slope = getSlope();
+//        intercept = intercept();
     }
 
     /**
@@ -141,22 +181,6 @@ public class MultipleLinearRegression1 {
     }
 
     /**
-     * this function takes the input, and calculate the output estimated, and
-     * compare this with the output estimated
-     *
-     * @param input
-     * @param output
-     * @return
-     */
-    public double getRSS(double[] input, double[] output) {
-        double rss = 0;
-        for (int i = 0; i < input.length; i++) {
-            rss = rss + Math.pow((output[i]) - prediction(input[i]), 2);
-        }
-        return rss;
-    }
-
-    /**
      *
      * @param output
      * @return
@@ -194,51 +218,48 @@ public class MultipleLinearRegression1 {
     }
 
     public int getN() {
-        return x.length;
+        return input.length;
     }
 
-    public double getSumX() {
-        return sum(x);
-    }
-
+//    public double getSumX() {
+//        return sum(input);
+//    }
     public double getSumY() {
-        return sum(y);
+        return sum(output);
     }
 
-    public double getMeanX() {
-        return mean(x);
-    }
-
+//    public double getMeanX() {
+//        return mean(input);
+//    }
     public double getMeanY() {
-        return mean(y);
+        return mean(output);
     }
 
-    public double getSumSquaredX() {
-        return sumSquared(x);
-    }
-
-    public double getMeanSquaredX() {
-        return sumSquared(x) / x.length;
-    }
-
-    public double getSumProdXY() {
-        return sumProd(x, y);
-    }
-
-    public double[] getX() {
-        return x;
-    }
-
-    public void setX(double[] x) {
-        this.x = x;
-    }
-
+//    public double getSumSquaredX() {
+//        return sumSquared(input);
+//    }
+//
+//    public double getMeanSquaredX() {
+//        return sumSquared(input) / input.length;
+//    }
+//
+//    public double getSumProdXY() {
+//        return sumProd(input, output);
+//    }
+//
+//    public double[] getX() {
+//        return input;
+//    }
+//
+//    public void setX(double[] x) {
+//        this.input = x;
+//    }
     public double[] getY() {
-        return y;
+        return output;
     }
 
     public void setY(double[] y) {
-        this.y = y;
+        this.output = y;
     }
 
     public void printSum() {

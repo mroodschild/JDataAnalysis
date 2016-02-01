@@ -159,6 +159,22 @@ public class JDataAnalysis {
         return feature;
     }
 
+    /**
+     * 
+     * @param Features
+     * @return 
+     */
+    public double[][] getFeatures(String... Features) {
+        double[][] data = new double[datos.size()][Features.length];
+        for (int i = 0; i < datos.size(); i++) {
+            for (int j = 0; j < Features.length; j++) {
+                data[i][j] = Double.valueOf(datos.get(i).get(Features[j]));
+            }
+            
+        }
+        return data;
+    }
+
     public double mean(String selectedFeature) {
         double mean = 0;
         double sum = 0;
