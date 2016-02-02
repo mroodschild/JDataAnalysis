@@ -111,7 +111,7 @@ public class SimpleLinearRegressionGD extends SimpleLinearRegression {
     }
 
     public void mostrarResultados() {
-        Util.print(errors, "Errores: ");//actualizamos el vector de errores
+        //Util.print(errors, "Errores: ");//actualizamos el vector de errores
         System.out.println("Step:\t" + sumErrorY * step_size);
         System.out.println("Suma Errores Y:\t" + sumErrorY);
         System.out.println("Suma Errores X:\t" + sumErrorX);
