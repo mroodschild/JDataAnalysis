@@ -28,16 +28,21 @@ public class EJMLTest {
         double[][] data = {{1, 2, 3}, {1, 2, 3}, {1, 2, 3}};
         double[][] w = {{1, 2, 3}};
         double[][] x = {{1, 2, 3}};
+        double[][] a = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
 
-        SimpleMatrix W = new SimpleMatrix(w);
-        SimpleMatrix X = new SimpleMatrix(x);
-        SimpleMatrix S;
-        W.transpose().print();
-        X.print();
-        S = W.transpose().mult(X);
-        S.print();
-        S = W.mult(X.transpose());
-        S.print();
+//        SimpleMatrix W = new SimpleMatrix(w);
+//        SimpleMatrix X = new SimpleMatrix(x);
+//        SimpleMatrix S;
+//        W.transpose().print();
+//        X.print();
+//        S = W.transpose().mult(X);
+//        S.print();
+//        S = W.mult(X.transpose());
+//        S.print();
+        SimpleMatrix h = new SimpleMatrix(a);
+        h.print();
+        h.transpose().print();
+        h.transpose().transpose().print();
     }
 
 }
