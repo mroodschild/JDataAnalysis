@@ -43,6 +43,12 @@ public class EJMLTest {
         h.print();
         h.transpose().print();
         h.transpose().transpose().print();
+        
+        h.print();
+        //h.plus(-2).print();
+        
+        h.divide(0.5).print();
+        h.divide(-0.5).print();
     }
 
 }
