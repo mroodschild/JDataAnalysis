@@ -51,7 +51,7 @@ public class MultipleLinearRegressionGD extends MultipleLinearRegression {
 //            W = W.minus(gradRSS().divide(100));// W(old) - n * gradRSS() divide(100) = mult(0.01)
 //        }
         while (gradRSS().normF() > 10) {
-            W = W.minus(gradRSS().divide(100));// W(old) - n * gradRSS() divide(100) = mult(0.01)  //REVISAR!!!
+            W = W.minus(gradRSS().scale(0.01));// W(old) - n * gradRSS() divide(100) = mult(0.01)  //REVISAR!!!
         }
     }
 
@@ -61,7 +61,7 @@ public class MultipleLinearRegressionGD extends MultipleLinearRegression {
      * @return - 2 Ht * ( Yobs - H * w)
      */
     public SimpleMatrix gradRSS() {
-        SimpleMatrix gradRSS = H.transpose().mult(Yobs.minus(H.mult(W))).divide(-0.5); //divide(-0.5) = mult(-2)
+        SimpleMatrix gradRSS = H.transpose().mult(Yobs.minus(H.mult(W))).scale(2); //divide(-0.5) = mult(-2)
         return gradRSS;
     }
 
