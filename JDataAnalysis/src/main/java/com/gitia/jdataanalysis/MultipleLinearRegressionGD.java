@@ -25,15 +25,17 @@ public class MultipleLinearRegressionGD extends MultipleLinearRegression {
 
     //SimpleMatrix n;//step
     double tolerance = 0.01;//stop criteria
+    double stepSize;
 
     public MultipleLinearRegressionGD() {
     }
 
-    public MultipleLinearRegressionGD(double[][] input, double[] output) {
+    public MultipleLinearRegressionGD(double[][] input, double[] output, double stepSize, double tolerance) {
+        this.stepSize = stepSize;
+        this.tolerance = tolerance;
         H = new SimpleMatrix(input);
         h = H.transpose();
         W = new SimpleMatrix(input[0].length, 1);
-       // n = new SimpleMatrix(input[0].length, 1, true, 0.01);
         W.zero();
         Yobs = new SimpleMatrix(output.length, 1, true, output);
         Yest = H.mult(W);
@@ -41,15 +43,14 @@ public class MultipleLinearRegressionGD extends MultipleLinearRegression {
         System.out.println("Initial RSS: " + rss);
         adjustW();
         System.out.println("Finish RSS: " + getRSS(H, Yobs));
+        System.out.println("Finish W: ");
+        W.print();
     }
 
     @Override
     public void adjustW() {
-//        for (int i = 0; i < 15; i++) {
-//            W = W.minus(gradRSS().divide(100));// W(old) - n * gradRSS() divide(100) = mult(0.01)
-//        }
-        while (gradRSS().normF() > tolerance) {
-            W = W.minus(gradRSS().scale(0.01));// W(old) - n * gradRSS() divide(100) = mult(0.01)  //REVISAR!!!
+        while (gradRSS().normF()> tolerance) {
+            W = W.minus(gradRSS().scale(stepSize));// W(old) - n * gradRSS()
         }
     }
 
@@ -59,7 +60,7 @@ public class MultipleLinearRegressionGD extends MultipleLinearRegression {
      * @return - 2 Ht * ( Yobs - H * w)
      */
     public SimpleMatrix gradRSS() {
-        SimpleMatrix gradRSS = H.transpose().mult(Yobs.minus(H.mult(W))).scale(2); //divide(-0.5) = mult(-2)
+        SimpleMatrix gradRSS = H.transpose().mult(Yobs.minus(H.mult(W))).scale(-2);
         return gradRSS;
     }
 

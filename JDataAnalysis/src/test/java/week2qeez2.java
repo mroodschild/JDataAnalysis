@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 
-
 import com.gitia.jdataanalysis.JDataAnalysis;
 import com.gitia.jdataanalysis.MultipleLinearRegression;
 import com.gitia.jdataanalysis.MultipleLinearRegressionGD;
@@ -20,20 +19,20 @@ public class week2qeez2 {
         JDataAnalysis train = new JDataAnalysis();
         JDataAnalysis test = new JDataAnalysis();
         System.out.println("-- Data --");
-        data.open("G:\\coursera\\Machine Learning - Regression\\week 2 - Multiple Regression\\06 - Quiz 2\\kc_house_data.csv");
+        data.open("D:\\coursera\\Machine Learning - Regression\\week 2 - Multiple Regression\\06 - Quiz 2\\kc_house_data.csv");
         System.out.println("-- Train --");
-        train.open("G:\\coursera\\Machine Learning - Regression\\week 2 - Multiple Regression\\06 - Quiz 2\\kc_house_train_data.csv");
+        train.open("D:\\coursera\\Machine Learning - Regression\\week 2 - Multiple Regression\\06 - Quiz 2\\kc_house_train_data.csv");
         System.out.println("-- Test --");
-        test.open("G:\\coursera\\Machine Learning - Regression\\week 2 - Multiple Regression\\06 - Quiz 2\\kc_house_test_data.csv");
+        test.open("D:\\coursera\\Machine Learning - Regression\\week 2 - Multiple Regression\\06 - Quiz 2\\kc_house_test_data.csv");
 
         System.out.println("Q1 mean 4 new Columns");
-        System.out.println("Mean (bedrooms_sqared): " + test.mean("bedrooms_sqared"));
+        System.out.println("Mean (bedrooms_squared): " + test.mean("bedrooms_squared"));
         System.out.println("Mean (bed_bath_rooms): " + test.mean("bed_bath_rooms"));
-        System.out.println("Mean (los_sqft_living): " + test.mean("los_sqft_living"));
+        System.out.println("Mean (log_sqft_living): " + test.mean("log_sqft_living"));
         System.out.println("Mean (lat_plus_long): " + test.mean("lat_plus_long"));
 
-        //Util.print(train.getFeatures("bedrooms_sqared", "bed_bath_rooms", "los_sqft_living", "lat_plus_long"), "Datos Extraidos");
-        MultipleLinearRegression mlr = new MultipleLinearRegression(train.getFeatures("bedrooms_sqared", "bed_bath_rooms", "los_sqft_living", "lat_plus_long"), train.getFeature("price"));
+        //Util.print(train.getFeatures("bedrooms_squared", "bed_bath_rooms", "log_sqft_living", "lat_plus_long"), "Datos Extraidos");
+        MultipleLinearRegression mlr = new MultipleLinearRegression(train.getFeatures("bedrooms_squared", "bed_bath_rooms", "log_sqft_living", "lat_plus_long"), train.getFeature("price"));
         mlr.getCoefficients();
 
         //Q2
@@ -64,8 +63,8 @@ public class week2qeez2 {
                 "lat",
                 "long",
                 "bed_bath_rooms",
-                "bedrooms_sqared",
-                "los_sqft_living",
+                "bedrooms_squared",
+                "log_sqft_living",
                 "lat_plus_long"),
                 train.getFeature("price"));
         model3.getCoefficients();
@@ -92,11 +91,11 @@ public class week2qeez2 {
                 "lat",
                 "long",
                 "bed_bath_rooms",
-                "bedrooms_sqared",
-                "los_sqft_living",
+                "bedrooms_squared",
+                "log_sqft_living",
                 "lat_plus_long"),
                 test.getFeature("price")));
-        
+
         System.out.println("//////////////////////////////////////////////////////////////////////////////////////////////");
 
         //Q2
@@ -107,7 +106,7 @@ public class week2qeez2 {
                 "bathrooms",
                 "lat",
                 "long"),
-                train.getFeature("price"));
+                train.getFeature("price"),0.01,0.01);
         model1.getCoefficients();
         System.out.println("Model 2");
         MultipleLinearRegressionGD model2B = new MultipleLinearRegressionGD(train.getFeatures(
@@ -117,7 +116,7 @@ public class week2qeez2 {
                 "lat",
                 "long",
                 "bed_bath_rooms"),
-                train.getFeature("price"));
+                train.getFeature("price"),0.01,0.01);
         model2.getCoefficients();
         System.out.println("Model 3");
         MultipleLinearRegressionGD model3B = new MultipleLinearRegressionGD(train.getFeatures(
@@ -127,10 +126,10 @@ public class week2qeez2 {
                 "lat",
                 "long",
                 "bed_bath_rooms",
-                "bedrooms_sqared",
-                "los_sqft_living",
+                "bedrooms_squared",
+                "log_sqft_living",
                 "lat_plus_long"),
-                train.getFeature("price"));
+                train.getFeature("price"),0.01,0.01);
         model3.getCoefficients();
 
         System.out.println("RSS 1: " + model1B.getRSS(test.getFeatures(
@@ -155,11 +154,9 @@ public class week2qeez2 {
                 "lat",
                 "long",
                 "bed_bath_rooms",
-                "bedrooms_sqared",
-                "los_sqft_living",
+                "bedrooms_squared",
+                "log_sqft_living",
                 "lat_plus_long"),
                 test.getFeature("price")));
-        
-        
     }
 }
