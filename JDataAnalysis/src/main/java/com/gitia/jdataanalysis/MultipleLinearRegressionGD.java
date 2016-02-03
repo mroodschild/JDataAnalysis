@@ -25,7 +25,6 @@ public class MultipleLinearRegressionGD extends MultipleLinearRegression {
 
     //SimpleMatrix n;//step
     double tolerance = 0.01;//stop criteria
-    SimpleMatrix minus2;
 
     public MultipleLinearRegressionGD() {
     }
@@ -36,7 +35,6 @@ public class MultipleLinearRegressionGD extends MultipleLinearRegression {
         W = new SimpleMatrix(input[0].length, 1);
        // n = new SimpleMatrix(input[0].length, 1, true, 0.01);
         W.zero();
-        minus2 = new SimpleMatrix(input[0].length, 0, true, output);
         Yobs = new SimpleMatrix(output.length, 1, true, output);
         Yest = H.mult(W);
         double rss = getRSS(H, Yobs);
@@ -50,7 +48,7 @@ public class MultipleLinearRegressionGD extends MultipleLinearRegression {
 //        for (int i = 0; i < 15; i++) {
 //            W = W.minus(gradRSS().divide(100));// W(old) - n * gradRSS() divide(100) = mult(0.01)
 //        }
-        while (gradRSS().normF() > 10) {
+        while (gradRSS().normF() > tolerance) {
             W = W.minus(gradRSS().scale(0.01));// W(old) - n * gradRSS() divide(100) = mult(0.01)  //REVISAR!!!
         }
     }
