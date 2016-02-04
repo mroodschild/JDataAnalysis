@@ -73,7 +73,7 @@ public class JDataAnalysis {
             System.out.printf("\n");
         }
         System.out.println("...");
-        System.out.println("Records ( " + parser.getHeaderMap().size() + " x " + datos.size() + ")\n");
+        System.out.println("Records (" + datos.size() + " x " + parser.getHeaderMap().size() + ")\n");
     }
 
     /**
@@ -89,7 +89,7 @@ public class JDataAnalysis {
             }
             System.out.printf("\n");
         }
-        System.out.println("Records ( " + parser.getHeaderMap().size() + " x " + datos.size() + ")\n");
+        System.out.println("Records (" + datos.size() + " x " + parser.getHeaderMap().size() + ")\n");
     }
 
     /**
@@ -107,7 +107,7 @@ public class JDataAnalysis {
             }
             System.out.printf("\n");
         }
-        System.out.println("Records ( " + headers.length + " x " + datos.size() + ")\n");
+        System.out.println("Records (" + datos.size() + " x " + parser.getHeaderMap().size() + ")\n");
     }
 
     /**
@@ -160,9 +160,9 @@ public class JDataAnalysis {
     }
 
     /**
-     * 
+     *
      * @param Features
-     * @return 
+     * @return
      */
     public double[][] getFeatures(String... Features) {
         double[][] data = new double[datos.size()][Features.length];
@@ -170,7 +170,7 @@ public class JDataAnalysis {
             for (int j = 0; j < Features.length; j++) {
                 data[i][j] = Double.valueOf(datos.get(i).get(Features[j]));
             }
-            
+
         }
         return data;
     }

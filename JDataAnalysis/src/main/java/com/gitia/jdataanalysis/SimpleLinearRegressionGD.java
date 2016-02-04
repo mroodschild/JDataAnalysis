@@ -16,7 +16,7 @@
 package com.gitia.jdataanalysis;
 
 /**
- * 
+ *
  * @author @author Matías Roodschild <mroodschild@gmail.com>
  */
 public class SimpleLinearRegressionGD extends SimpleLinearRegression {
