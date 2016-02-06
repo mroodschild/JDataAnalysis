@@ -96,7 +96,6 @@ public class MultipleLinearRegression {
     public double[] predictOutcome(double[][] featureMatrix) {
         SimpleMatrix input = UtilMatrix.addColumnBefore(new SimpleMatrix(featureMatrix));
         input = UtilMatrix.setColumn(input, 0, 1);
-        System.out.println("input length: "+input.numCols()+"\t w length: "+W.numRows());
         SimpleMatrix output = input.mult(W);
         double[] s = new double[output.numRows()];
         int size = s.length;
