@@ -15,6 +15,7 @@
  */
 import com.gitia.jdataanalysis.JDataAnalysis;
 import com.gitia.jdataanalysis.MultipleLinearRegressionGD;
+import com.gitia.jdataanalysis.SimpleLinearRegressionGD;
 
 /**
  *
@@ -27,11 +28,11 @@ public class week2qeez3 {
         JDataAnalysis train = new JDataAnalysis();
         JDataAnalysis test = new JDataAnalysis();
         System.out.println("-- Data --");
-        data.open("G:\\coursera\\Machine Learning - Regression\\week 2 - Multiple Regression\\06 - Quiz 2\\kc_house_data.csv");
+        data.open("G:\\coursera\\Machine Learning - Regression\\week 2 - Multiple Regression\\08 - Quiz 3\\kc_house_data.csv");
         System.out.println("-- Train --");
-        train.open("G:\\coursera\\Machine Learning - Regression\\week 2 - Multiple Regression\\06 - Quiz 2\\kc_house_train_data.csv");
+        train.open("G:\\coursera\\Machine Learning - Regression\\week 2 - Multiple Regression\\08 - Quiz 3\\kc_house_train_data.csv");
         System.out.println("-- Test --");
-        test.open("G:\\coursera\\Machine Learning - Regression\\week 2 - Multiple Regression\\06 - Quiz 2\\kc_house_test_data.csv");
+        test.open("G:\\coursera\\Machine Learning - Regression\\week 2 - Multiple Regression\\08 - Quiz 3\\kc_house_test_data.csv");
 
         System.out.println("----------------------Q1----------------------------");
 
@@ -47,7 +48,7 @@ public class week2qeez3 {
 
         System.out.println("Coefficients Model 1");
         model1.getCoefficients();
-
+        
         System.out.println("");
         System.out.println("--------------------------------------------------");
         System.out.println("------------------------Q2--------------------------");
