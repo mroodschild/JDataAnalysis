@@ -35,9 +35,11 @@ public class MultipleLinearRegression {
     }
 
     public MultipleLinearRegression(double[][] input, double[] output) {
-        H = new SimpleMatrix(input);
+        H = UtilMatrix.addColumnBefore(new SimpleMatrix(input));
+        H = UtilMatrix.setColumn(H, 0, 1);
+        //H = new SimpleMatrix(input);
         h = H.transpose();
-        W = new SimpleMatrix(input[0].length, 1);
+        W = new SimpleMatrix(H.numCols(), 1);
         W.zero();
         Yobs = new SimpleMatrix(output.length, 1, true, output);
         Yest = H.mult(W);
@@ -56,12 +58,14 @@ public class MultipleLinearRegression {
      * @return
      */
     public double getRSS(double[][] input, double[] output) {
-        SimpleMatrix in = new SimpleMatrix(input);
+        SimpleMatrix in = UtilMatrix.addColumnBefore(new SimpleMatrix(input));
+        in = UtilMatrix.setColumn(in, 0, 1);
         SimpleMatrix Yo = new SimpleMatrix(output.length, 1, true, output);
         return getRSS(in, Yo);
     }
 
     /**
+     * only use this internally
      * this function takes the input, and calculate the output estimated, and
      * compare this with the output estimated
      *
@@ -69,13 +73,13 @@ public class MultipleLinearRegression {
      * @param output w (vertical)
      * @return
      */
-    public double getRSS(SimpleMatrix input, SimpleMatrix output) {
+    protected double getRSS(SimpleMatrix input, SimpleMatrix output) {
         SimpleMatrix dif = output.minus(input.mult(W));//(Yi-Hw)
         SimpleMatrix rss = dif.transpose().mult(dif);//(Yi-Hw)t * (Yi-Hw)
         return rss.get(0, 0);
     }
 
-    public void adjustW() {
+    protected void adjustW() {
         W = (H.transpose().mult(H)).invert().mult(H.transpose()).mult(Yobs);// (Ht * H)^(-1) * Ht * Y
     }
 
@@ -90,10 +94,12 @@ public class MultipleLinearRegression {
      * @return
      */
     public double[] predictOutcome(double[][] featureMatrix) {
-        SimpleMatrix input = new SimpleMatrix(featureMatrix);
+        SimpleMatrix input = UtilMatrix.addColumnBefore(new SimpleMatrix(featureMatrix));
+        input = UtilMatrix.setColumn(input, 0, 1);
+        System.out.println("input length: "+input.numCols()+"\t w length: "+W.numRows());
         SimpleMatrix output = input.mult(W);
         System.out.println("Numero de Filas " + output.numRows() + " Numero de Columnas " + output.numCols());
-        double[][] salida = new double[output.numRows()][output.numCols()];
+        //double[][] salida = new double[output.numRows()][output.numCols()];
         double[] s = new double[output.numRows()];
         int size = s.length;
         for (int i = 0; i < size; i++) {

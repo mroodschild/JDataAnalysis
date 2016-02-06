@@ -33,9 +33,10 @@ public class MultipleLinearRegressionGD extends MultipleLinearRegression {
     public MultipleLinearRegressionGD(double[][] input, double[] output, double stepSize, double tolerance) {
         this.stepSize = stepSize;
         this.tolerance = tolerance;
-        H = new SimpleMatrix(input);
+        H = UtilMatrix.addColumnBefore(new SimpleMatrix(input));
+        H = UtilMatrix.setColumn(H, 0, 1);
         h = H.transpose();
-        W = new SimpleMatrix(input[0].length, 1);
+        W = new SimpleMatrix(H.numCols(), 1);
         W.zero();
         Yobs = new SimpleMatrix(output.length, 1, true, output);
         Yest = H.mult(W);
@@ -49,7 +50,7 @@ public class MultipleLinearRegressionGD extends MultipleLinearRegression {
 
     @Override
     public void adjustW() {
-        while (gradRSS().normF()> tolerance) {
+        while (gradRSS().normF() > tolerance) {
             W = W.minus(gradRSS().scale(stepSize));// W(old) - n * gradRSS()
         }
     }
