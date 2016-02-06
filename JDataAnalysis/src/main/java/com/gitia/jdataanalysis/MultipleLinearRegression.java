@@ -84,7 +84,7 @@ public class MultipleLinearRegression {
     }
 
     public void getCoefficients() {
-        System.out.println("\nCoefficients:");
+        System.out.println("\nCoefficients: (first coefficient is intercept)");
         W.print();
     }
 
@@ -98,8 +98,6 @@ public class MultipleLinearRegression {
         input = UtilMatrix.setColumn(input, 0, 1);
         System.out.println("input length: "+input.numCols()+"\t w length: "+W.numRows());
         SimpleMatrix output = input.mult(W);
-        System.out.println("Numero de Filas " + output.numRows() + " Numero de Columnas " + output.numCols());
-        //double[][] salida = new double[output.numRows()][output.numCols()];
         double[] s = new double[output.numRows()];
         int size = s.length;
         for (int i = 0; i < size; i++) {

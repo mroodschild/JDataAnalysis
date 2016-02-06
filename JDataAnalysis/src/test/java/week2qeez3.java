@@ -27,11 +27,21 @@ public class week2qeez3 {
         System.out.println("-- Test --");
         test.open("G:\\coursera\\Machine Learning - Regression\\week 2 - Multiple Regression\\06 - Quiz 2\\kc_house_test_data.csv");
 
+        System.out.println("--------------------------------------------------");
+        MultipleLinearRegressionGD model4 = new MultipleLinearRegressionGD();
+                //train.getFeatures("sqft_living"), train.getFeature("price"));
+                model4.regression_gradient_descent(train.getFeatures("sqft_living"), train.getFeature("price"), 7e-12, 2.5e7,  -47000, 1);
+        System.out.println("\nQ1: \tWhat is the value of the weight for sqft_living from your gradient descent predicting house prices (model 1)? Round your answer to 1 decimal place.");
+        double price4 = model4.predictOutcome(test.getFeatures("sqft_living"))[0];
+        System.out.println("$"+price4);
+        model4.getCoefficients();
+        System.out.println("--------------------------------------------------");
+        
         SimpleLinearRegressionGD model1Linear
                 = new SimpleLinearRegressionGD(-47000, 1, 7e-12, 2.5e7, 
                         train.getFeature("sqft_living"), 
                         train.getFeature("price"));
-        System.out.println("\nQ1: \tWhat is the value of the weight for sqft_living from your gradient descent predicting house prices (model 1)? Round your answer to 1 decimal place.");
+        
         model1Linear.compute();
 
         System.out.println("\nQ2: \tWhat is the predicted price for the 1st house in the TEST data set for model 1 (round to nearest dollar)?");
@@ -66,11 +76,6 @@ public class week2qeez3 {
         System.out.println("$"+price3);
         model3.getCoefficients();
         
-        MultipleLinearRegression model4 = new MultipleLinearRegression(
-                train.getFeatures("sqft_living"), train.getFeature("price"));
         
-        double price4 = model4.predictOutcome(test.getFeatures("sqft_living"))[0];
-        System.out.println("$"+price4);
-        model4.getCoefficients();
     }
 }

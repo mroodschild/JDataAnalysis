@@ -48,6 +48,32 @@ public class MultipleLinearRegressionGD extends MultipleLinearRegression {
         W.print();
     }
 
+    /**
+     *
+     * @param feature_matrix
+     * @param output
+     * @param step_size
+     * @param tolerance
+     * @param initial_weights
+     */
+    public void regression_gradient_descent(double[][] feature_matrix, double[] output, double stepSize, double tolerance, double... initial_weights) {
+        this.stepSize = stepSize;
+        this.tolerance = tolerance;
+        H = UtilMatrix.addColumnBefore(new SimpleMatrix(feature_matrix));
+        H = UtilMatrix.setColumn(H, 0, 1);
+        h = H.transpose();
+        //W = new SimpleMatrix(H.numCols(), 1);
+        W = new SimpleMatrix(initial_weights.length, 1, true, initial_weights);//.zero()
+        Yobs = new SimpleMatrix(output.length, 1, true, output);
+        Yest = H.mult(W);
+        double rss = getRSS(H, Yobs);
+        System.out.println("Initial RSS: " + rss);
+        adjustW();
+        System.out.println("Finish RSS: " + getRSS(H, Yobs));
+        System.out.println("Finish W: ");
+        W.print();
+    }
+
     @Override
     public void adjustW() {
         while (gradRSS().normF() > tolerance) {
