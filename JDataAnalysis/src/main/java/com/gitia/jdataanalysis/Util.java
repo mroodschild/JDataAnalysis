@@ -42,7 +42,7 @@ public class Util implements java.io.Serializable {
     public static void mostrarVector(double[] vector, String nombre) {
         System.out.println("Vector " + nombre + ":");
         for (int i = 0; i < vector.length; i++) {
-            System.out.printf("%.3f \t", vector[i]);
+            System.out.printf("%.3f\n", vector[i]);
         }
         System.out.println("");
     }
