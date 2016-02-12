@@ -15,13 +15,12 @@
  */
 import com.gitia.jdataanalysis.JDataAnalysis;
 import com.gitia.jdataanalysis.MultipleLinearRegressionGD;
-import com.gitia.jdataanalysis.SimpleLinearRegressionGD;
 
 /**
  *
  * @author @author Matías Roodschild <mroodschild@gmail.com>
  */
-public class week2qeez3 {
+public class week2quiz3 {
 
     public static void main(String[] args) {
         JDataAnalysis data = new JDataAnalysis();

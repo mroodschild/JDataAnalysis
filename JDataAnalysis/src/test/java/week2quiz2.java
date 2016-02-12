@@ -12,7 +12,7 @@ import com.gitia.jdataanalysis.MultipleLinearRegressionGD;
  *
  * @author @author Matías Roodschild <mroodschild@gmail.com>
  */
-public class week2qeez2 {
+public class week2quiz2 {
 
     public static void main(String[] args) {
         JDataAnalysis data = new JDataAnalysis();

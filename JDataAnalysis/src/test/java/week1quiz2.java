@@ -12,7 +12,7 @@ import com.gitia.jdataanalysis.SimpleLinearRegression;
  *
  * @author @author Matías Roodschild <mroodschild@gmail.com>
  */
-public class week1queez2 {
+public class week1quiz2 {
 
     public static void main(String[] args) {
         JDataAnalysis jda = new JDataAnalysis();
