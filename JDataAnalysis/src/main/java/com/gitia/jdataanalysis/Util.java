@@ -47,6 +47,19 @@ public class Util implements java.io.Serializable {
         System.out.println("");
     }
 
+    public static void mostrarVector(String nombre, double[]... vectores) {
+        System.out.println("Vectores " + nombre + ":");
+        for (int j = 0; j < vectores[0].length; j++) {
+            for (int i = 0; i < vectores.length; i++) {
+                System.out.printf("%.3f\t", vectores[i][j]);
+//                System.out.printf("%.3f\t", vectores[i][j]);
+//                System.out.printf("%.3f\t", vectores[i][j]);
+            }
+            System.out.println("");
+        }
+        System.out.println("");
+    }
+
     public static void mostrarVector(int[] vector, String nombre) {
         System.out.println("Vector " + nombre + ":");
         for (int i = 0; i < vector.length; i++) {
