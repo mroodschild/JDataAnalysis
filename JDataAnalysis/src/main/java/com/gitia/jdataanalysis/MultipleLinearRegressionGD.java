@@ -52,7 +52,7 @@ public class MultipleLinearRegressionGD extends MultipleLinearRegression {
      *
      * @param feature_matrix
      * @param output
-     * @param step_size
+     * @param stepSize
      * @param tolerance
      * @param initial_weights
      */
