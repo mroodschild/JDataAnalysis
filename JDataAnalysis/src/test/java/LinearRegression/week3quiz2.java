@@ -1,3 +1,5 @@
+package LinearRegression;
+
 
 import com.gitia.jdataanalysis.JDataAnalysis;
 import com.gitia.jdataanalysis.MultipleLinearRegression;

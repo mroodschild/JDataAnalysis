@@ -1,3 +1,5 @@
+package LinearRegression;
+
 /*
  * Copyright 2016 @author Matías Roodschild <mroodschild@gmail.com>.
  *
