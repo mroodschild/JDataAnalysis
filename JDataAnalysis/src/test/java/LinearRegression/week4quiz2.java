@@ -1,5 +1,9 @@
 package LinearRegression;
 
+import com.gitia.jdataanalysis.JDataAnalysis;
+import com.gitia.jdataanalysis.RidgeRegression;
+import com.gitia.jdataanalysis.Util;
+
 /*
  * Copyright 2016 Roodschild, Matias <mroodschild@gmail.com>.
  *
@@ -15,13 +19,21 @@ package LinearRegression;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  *
  * @author Roodschild, Matias <mroodschild@gmail.com>
  */
 public class week4quiz2 {
+
     public static void main(String[] args) {
-        System.out.println("Hola Mundo");
+        double l2_small_penalty = 1.5e-5;
+        JDataAnalysis jda = new JDataAnalysis(
+                "D:\\coursera\\Machine Learning - Regression\\"
+                + "week 4 - Ridge Regression\\quiz 2\\wk3_kc_house_set_1_data.csv"
+        );
+        double poly_sqft[][] = jda.getPolynomial("sqft_living", 15);
+        RidgeRegression model = new RidgeRegression();
+        //Util.mostrarMatriz(a, "poly_sqft_living");
+
     }
 }

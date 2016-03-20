@@ -35,6 +35,13 @@ public class JDataAnalysis {
     private List<CSVRecord> datos;
     private CSVParser parser;
 
+    public JDataAnalysis() {
+    }
+
+    public JDataAnalysis(String path) {
+        open(path);
+    }
+
     /**
      * this function open a file and show the info
      *
@@ -171,6 +178,33 @@ public class JDataAnalysis {
                 data[i][j] = Double.valueOf(datos.get(i).get(Features[j]));
             }
 
+        }
+        return data;
+    }
+
+    /**
+     * Con esta función obtenemos el polinomio de una característica dada. y[][]
+     * = x1^1 , x1^2 , ... , x1^poly poly >= 1
+     *
+     * @param feature
+     * @param polynomial >=1
+     * @return
+     */
+    public double[][] getPolynomial(String feature, int polynomial) {
+        double aux[] = getFeature(feature);
+        double data[][] = new double[aux.length][polynomial];
+        int cantDatos = aux.length;
+        int cantExponentes = polynomial;
+        for (int j = 0; j < cantExponentes; j++) {
+            if (j == 0) {
+                for (int i = 0; i < cantDatos; i++) {
+                    data[i][j] = aux[i];
+                }
+            } else {
+                for (int i = 0; i < cantDatos; i++) {
+                    data[i][j] = Math.pow(aux[i], j + 1);
+                }
+            }
         }
         return data;
     }
