@@ -16,15 +16,19 @@
 package test;
 
 import com.gitia.jdataanalysis.JDataAnalysis;
+import com.gitia.jdataanalysis.Util;
 
 /**
  *
  * @author Roodschild, Matias <mroodschild@gmail.com>
  */
 public class TestPolynomial {
+
     public static void main(String[] args) {
-        //JDataAnalysis jda = new JDataAnalysis();
-        String path = "/resources/week4/quiz2/kc_house_data.csv";
-        System.out.println(TestPolynomial.class.getClass().getClassLoader().getResource(path).toString());
+        String folder = "src/main/resources/week4/quiz2/";
+        String kc_house_data = folder + "kc_house_data.csv";
+        JDataAnalysis jda = new JDataAnalysis(kc_house_data);
+        double[][] sqft = jda.getPolynomial("sqft_living", 3);
+        Util.mostrarMatriz(sqft, "SQFT");
     }
 }

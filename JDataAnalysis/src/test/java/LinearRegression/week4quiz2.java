@@ -2,7 +2,6 @@ package LinearRegression;
 
 import com.gitia.jdataanalysis.JDataAnalysis;
 import com.gitia.jdataanalysis.RidgeRegression;
-import com.gitia.jdataanalysis.Util;
 
 /*
  * Copyright 2016 Roodschild, Matias <mroodschild@gmail.com>.
@@ -26,11 +25,18 @@ import com.gitia.jdataanalysis.Util;
 public class week4quiz2 {
 
     public static void main(String[] args) {
+        //establezco la dirección relativa
+        String folder = "src/main/resources/week4/quiz2/";
+        //indicamos los lugares de donde se tomaran los datos
+        String set1 = folder + "wk3_kc_house_set_1_data.csv";
+        
+        /*3. Let us revisit the 15th-order polynomial model using 
+        the 'sqft_living' input. Generate polynomial features up to 
+        degree 15 using `polynomial_sframe()` and fit a model with 
+        these features. When fitting the model, use an L2 penalty 
+        of 1.5e-5:*/
         double l2_small_penalty = 1.5e-5;
-        JDataAnalysis jda = new JDataAnalysis(
-                "D:\\coursera\\Machine Learning - Regression\\"
-                + "week 4 - Ridge Regression\\quiz 2\\wk3_kc_house_set_1_data.csv"
-        );
+        JDataAnalysis jda = new JDataAnalysis(set1);
         double poly_sqft[][] = jda.getPolynomial("sqft_living", 15);
         RidgeRegression model = new RidgeRegression();
         //Util.mostrarMatriz(a, "poly_sqft_living");

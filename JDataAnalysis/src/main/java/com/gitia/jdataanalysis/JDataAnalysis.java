@@ -192,9 +192,13 @@ public class JDataAnalysis {
      */
     public double[][] getPolynomial(String feature, int polynomial) {
         double aux[] = getFeature(feature);
+        int cantExponentes = polynomial;
+        if (polynomial == 0) {
+            cantExponentes = 1;
+            polynomial = 1;
+        }
         double data[][] = new double[aux.length][polynomial];
         int cantDatos = aux.length;
-        int cantExponentes = polynomial;
         for (int j = 0; j < cantExponentes; j++) {
             if (j == 0) {
                 for (int i = 0; i < cantDatos; i++) {
