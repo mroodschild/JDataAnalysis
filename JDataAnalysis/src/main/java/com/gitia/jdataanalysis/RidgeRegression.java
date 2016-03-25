@@ -21,22 +21,23 @@ import org.ejml.simple.SimpleMatrix;
  *
  * @author @author Matías Roodschild <mroodschild@gmail.com>
  */
-public class RidgeRegression {
+public class RidgeRegression extends MultipleLinearRegression {
 
-    double[][] input;
-    double[] output;
     double alpha;
     boolean normalize;
-    SimpleMatrix W;
-    SimpleMatrix H;//H = h transp
-    SimpleMatrix h;
-    SimpleMatrix Yobs;
-    SimpleMatrix Yest;
 
     public RidgeRegression() {
     }
 
-    public RidgeRegression(double[][] input, double[] output) {
+    public RidgeRegression(double alpha, boolean normalize) {
+        this.alpha = alpha;
+        this.normalize = normalize;
+    }
+
+    public void fit(double[][] input, double[] output) {
+        this.input = input;
+        this.output = output;
+
         H = UtilMatrix.addColumnBefore(new SimpleMatrix(input));
         H = UtilMatrix.setColumn(H, 0, 1);
         //H = new SimpleMatrix(input);
@@ -45,66 +46,37 @@ public class RidgeRegression {
         W.zero();
         Yobs = new SimpleMatrix(output.length, 1, true, output);
         Yest = H.mult(W);
-        double rss = getRSS(H, Yobs);
-        System.out.println("Initial RSS: " + rss);
+        System.out.println("Initial RSS: " + getRSS(H, Yobs) + " Initial magnitude_coefficients: " + magnitude_coefficients());
         adjustW();
-        System.out.println("Finish RSS: " + getRSS(H, Yobs));
+        System.out.println("Finish RSS: " + getRSS(H, Yobs) + " Finish magnitude_coefficients: " + magnitude_coefficients());
     }
 
     /**
-     * this function takes the input, and calculate the output estimated, and
-     * compare this with the output observada
      *
-     * @param input
-     * @param output Y observada
-     * @return
+     * @return Wt*W
      */
-    public double getRSS(double[][] input, double[] output) {
-        SimpleMatrix in = UtilMatrix.addColumnBefore(new SimpleMatrix(input));
-        in = UtilMatrix.setColumn(in, 0, 1);
-        //convertimos la salida observada en simple matrix
-        SimpleMatrix Yo = new SimpleMatrix(output.length, 1, true, output);
-        return getRSS(in, Yo);
+    protected double magnitude_coefficients() {
+        return W.transpose().mult(W).get(0);
     }
 
     /**
-     * only use this internally this function takes the input, and calculate the
-     * output estimated, and compare this with the output observada
+     * This is the regression cost = RSS + alpha * Wt * W
      *
-     * @param input (H)
-     * @param output w (vertical)
-     * @return
+     * @return (Y - H * W)t * (Y - H * W) + alpha * Wt * W
      */
-    protected double getRSS(SimpleMatrix input, SimpleMatrix output) {
-        SimpleMatrix dif = output.minus(input.mult(W));//(Yi-Hw)
-        SimpleMatrix rss = dif.transpose().mult(dif);//(Yi-Hw)t * (Yi-Hw)   
-        return rss.get(0, 0);
+    protected double cost() {
+        return getRSS(input, output) + alpha * W.transpose().mult(W).get(0);
     }
 
+    /**
+     *
+     */
+    @Override
     protected void adjustW() {
-        W = (H.transpose().mult(H)).invert().mult(H.transpose()).mult(Yobs);// (Ht * H)^(-1) * Ht * Y
-    }
-
-    public void getCoefficients() {
-        System.out.println("\nCoefficients: (first coefficient is intercept)");
-        W.print();
-    }
-
-    /**
-     *
-     * @param featureMatrix
-     * @return
-     */
-    public double[] predictOutcome(double[][] featureMatrix) {
-        SimpleMatrix input = UtilMatrix.addColumnBefore(new SimpleMatrix(featureMatrix));
-        input = UtilMatrix.setColumn(input, 0, 1);
-        SimpleMatrix output = input.mult(W);
-        double[] s = new double[output.numRows()];
-        int size = s.length;
-        for (int i = 0; i < size; i++) {
-            s[i] = output.get(i, 0);
-        }
-        return s;
+        //(alpha * I) del tamaño de H
+        SimpleMatrix diag = SimpleMatrix.identity(H.numCols()).scale(alpha);
+        //(Ht * H + alpha * I)^(-1) * Ht * Y
+        W = (H.transpose().mult(H).plus(diag)).invert().mult(H.transpose()).mult(Yobs);
     }
 
 }
