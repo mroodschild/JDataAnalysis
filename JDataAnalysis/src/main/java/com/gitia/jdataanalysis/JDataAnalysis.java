@@ -223,7 +223,7 @@ public class JDataAnalysis {
     }
 
     public void statistics(String selectedFeature) {
-        double mean = 0;
+        double mean;
         double sum = 0;
         double num;
         double min = Double.valueOf(datos.get(0).get(selectedFeature));
@@ -238,6 +238,25 @@ public class JDataAnalysis {
                 max = num;
             }
         }
+        mean = sum / (double) datos.size();
         System.out.println("mean: " + mean + "\tmax: " + max + "\tmin: " + min);
+    }
+
+    /**
+     *
+     * @param kPart
+     * @param k
+     * @param features
+     */
+    public void getCrossData(int k, String... features) {
+        double[][] data = getFeatures(features);
+        double[][] k_data;
+        int start, end;
+        int n = data.length;
+        for (int i = 0; i < k; i++) {
+            start = (n * i) / k;
+            end = (n * (i + 1)) / k - 1;
+            System.out.println("i: " + i + "\tStart: " + start + "\tEnd: " + end);
+        }
     }
 }
