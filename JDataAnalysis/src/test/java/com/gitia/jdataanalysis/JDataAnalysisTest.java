@@ -15,8 +15,6 @@
  */
 package com.gitia.jdataanalysis;
 
-import java.util.List;
-import org.apache.commons.csv.CSVRecord;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -62,8 +60,49 @@ public class JDataAnalysisTest {
         System.out.println("getCrossData");
         int k = 4;
         String[] features = {"price"};
-        data.getCrossData(k, features);
+        int[][] idx = data.getCrossIndex(k, features);
+        Util.mostrarMatriz(idx, "Indices");
         assertEquals(0, 0, 0);
+    }
+
+    @Test
+    public void testGetCrossTrain() {
+        System.out.println("");
+        System.out.println("getCrossTrain");
+        int k = 4;
+        String[] features = {"price", "sqft_living"};
+        double[][] datos0 = data.getCrossTrain(0, k, features);
+        double[][] datos1 = data.getCrossTrain(0, k, features);
+        double[][] datos2 = data.getCrossTrain(0, k, features);
+        double[][] datos3 = data.getCrossTrain(0, k, features);
+        System.out.println("Size Datos 0: "+datos0.length+" x "+datos0[0].length);
+        System.out.println("Size Datos 1: "+datos1.length+" x "+datos1[0].length);
+        System.out.println("Size Datos 2: "+datos2.length+" x "+datos2[0].length);
+        System.out.println("Size Datos 3: "+datos3.length+" x "+datos3[0].length);
+        assertEquals("datos 0",0, 14547, datos0.length);
+        assertEquals("datos 1",0, 14547, datos1.length);
+        assertEquals("datos 2",0, 14547, datos2.length);
+        assertEquals("datos 3",0, 14547, datos3.length);
+    }
+    
+    @Test
+    public void testGetCrossValidation() {
+        System.out.println("");
+        System.out.println("getCrossValidation");
+        int k = 4;
+        String[] features = {"price", "sqft_living"};
+        double[][] datos0 = data.getCrossValidation(0, k, features);
+        double[][] datos1 = data.getCrossValidation(0, k, features);
+        double[][] datos2 = data.getCrossValidation(0, k, features);
+        double[][] datos3 = data.getCrossValidation(0, k, features);
+        System.out.println("Size Datos 0: "+datos0.length+" x "+datos0[0].length);
+        System.out.println("Size Datos 1: "+datos1.length+" x "+datos1[0].length);
+        System.out.println("Size Datos 2: "+datos2.length+" x "+datos2[0].length);
+        System.out.println("Size Datos 3: "+datos3.length+" x "+datos3[0].length);
+        assertEquals("datos 0",0, 4849, datos0.length);
+        assertEquals("datos 1",0, 4849, datos1.length);
+        assertEquals("datos 2",0, 4849, datos2.length);
+        assertEquals("datos 3",0, 4849, datos3.length);
     }
 
 }

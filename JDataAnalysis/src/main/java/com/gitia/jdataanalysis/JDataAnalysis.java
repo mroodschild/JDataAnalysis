@@ -244,19 +244,84 @@ public class JDataAnalysis {
 
     /**
      *
-     * @param kPart
      * @param k
      * @param features
+     * @return retornamos una matriz con los indices start/end
      */
-    public void getCrossData(int k, String... features) {
-        double[][] data = getFeatures(features);
-        double[][] k_data;
+    public int[][] getCrossIndex(int k, String... features) {
+        int[][] index = new int[k][2];
         int start, end;
-        int n = data.length;
+        int n = getFeatures(features).length;
         for (int i = 0; i < k; i++) {
             start = (n * i) / k;
             end = (n * (i + 1)) / k - 1;
-            System.out.println("i: " + i + "\tStart: " + start + "\tEnd: " + end);
+            index[i][0] = start;
+            index[i][1] = end;
+            //System.out.println("Ki: " + i + "\tStart: " + start + "\tEnd: " + end);
         }
+        return index;
     }
+
+    /**
+     *
+     * @param part parte seleccionada
+     * @param k particiones a realizar
+     * @param features características seleccionadas
+     * @return datos extraídos
+     */
+    public double[][] getCrossTrain(int part, int k, String... features) {
+        int[][] idx = getCrossIndex(k, features);
+        int size = 0;
+        double[][] data;
+        double[][] aux = getFeatures(features);//cargamos los datos
+        for (int i = 0; i < k; i++) {//recorremos todas las partes
+            if (i != k - (part + 1)) {//ignoramos las partes que no seran cargadas
+                size = size + idx[i][1] - idx[i][0] + 1;//el 1, corresponde al inicio del conteo
+            }
+        }
+        data = new double[size][features.length];//creamos el espacio para el conjunto
+
+        int count = 0;
+        for (int i = 0; i < k; i++) {//recorremos todas las partes
+            if (i != k - (part + 1)) {//salteamos las partes que son de validación
+                for (int j = idx[i][0]; j < idx[i][1]; j++) { //recorremos todos los valores del indice
+                    System.arraycopy(aux[j], 0, data[count], 0, features.length); //copiamos los valores
+                    count++;//incrementamos la fila del dato
+                }
+            }
+        }
+        return data;
+    }
+
+    /**
+     *
+     * @param part
+     * @param k
+     * @param features
+     * @return datos de validación
+     */
+    public double[][] getCrossValidation(int part, int k, String... features) {
+        int[][] idx = getCrossIndex(k, features);
+        int size = 0;
+        double[][] data;
+        double[][] aux = getFeatures(features);//cargamos los datos
+        for (int i = 0; i < k; i++) {//recorremos todas las partes
+            if (i == k - (part + 1)) {//ignoramos las partes que no seran cargadas
+                size = size + idx[i][1] - idx[i][0] + 1;//el 1, corresponde al inicio del conteo
+            }
+        }
+        data = new double[size][features.length];//creamos el espacio para el conjunto
+
+        int count = 0;
+        for (int i = 0; i < k; i++) {//recorremos todas las partes
+            if (i == k - (part + 1)) {//salteamos las partes que son de validación
+                for (int j = idx[i][0]; j < idx[i][1]; j++) { //recorremos todos los valores del indice
+                    System.arraycopy(aux[j], 0, data[count], 0, features.length); //copiamos los valores
+                    count++;//incrementamos la fila del dato
+                }
+            }
+        }
+        return data;
+    }
+
 }

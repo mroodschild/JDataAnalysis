@@ -38,6 +38,22 @@ public class Util implements java.io.Serializable {
             System.out.println("");
         }
     }
+    
+    /**
+     * Imprime la matriz en la consola
+     *
+     * @param matriz
+     * @param nombre
+     */
+    public static void mostrarMatriz(int[][] matriz, String nombre) {
+        System.out.println("Matriz: " + nombre);
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < matriz[0].length; j++) {
+                System.out.printf("%d\t", matriz[i][j]);
+            }
+            System.out.println("");
+        }
+    }
 
     public static void mostrarVector(double[] vector, String nombre) {
         System.out.println("Vector " + nombre + ":");
