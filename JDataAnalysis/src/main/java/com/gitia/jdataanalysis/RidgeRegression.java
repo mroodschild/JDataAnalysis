@@ -34,7 +34,13 @@ public class RidgeRegression extends MultipleLinearRegression {
         this.normalize = normalize;
     }
 
-    public void fit(double[][] input, double[] output) {
+    /**
+     * 
+     * @param input
+     * @param output
+     * @return cost = RSS + alpha * Wt * W
+     */
+    public double fit(double[][] input, double[] output) {
         this.input = input;
         this.output = output;
 
@@ -49,6 +55,7 @@ public class RidgeRegression extends MultipleLinearRegression {
         System.out.println("Initial RSS: " + getRSS(H, Yobs) + " Initial magnitude_coefficients: " + magnitude_coefficients());
         adjustW();
         System.out.println("Finish RSS: " + getRSS(H, Yobs) + " Finish magnitude_coefficients: " + magnitude_coefficients());
+        return cost();
     }
 
     /**
@@ -65,6 +72,10 @@ public class RidgeRegression extends MultipleLinearRegression {
      * @return (Y - H * W)t * (Y - H * W) + alpha * Wt * W
      */
     protected double cost() {
+        return getRSS(input, output) + alpha * W.transpose().mult(W).get(0);
+    }
+    
+    public double cost(double[][] input, double[] output){
         return getRSS(input, output) + alpha * W.transpose().mult(W).get(0);
     }
 

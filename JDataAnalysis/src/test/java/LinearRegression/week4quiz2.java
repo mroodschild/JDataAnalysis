@@ -3,6 +3,7 @@ package LinearRegression;
 import com.gitia.jdataanalysis.JDataAnalysis;
 import com.gitia.jdataanalysis.MultipleLinearRegression;
 import com.gitia.jdataanalysis.RidgeRegression;
+import com.gitia.jdataanalysis.data.CrossValidation;
 
 /*
  * Copyright 2016 Roodschild, Matias <mroodschild@gmail.com>.
@@ -42,6 +43,7 @@ public class week4quiz2 {
         JDataAnalysis set2_data = new JDataAnalysis(set2);
         JDataAnalysis set3_data = new JDataAnalysis(set3);
         JDataAnalysis set4_data = new JDataAnalysis(set4);
+        
         JDataAnalysis train_valid_shuffled_data = new JDataAnalysis(train_valid_shuffled);
         JDataAnalysis test_valid_shuffled_data = new JDataAnalysis(test_valid_shuffled);
         
@@ -51,7 +53,7 @@ public class week4quiz2 {
         double poly15_set2[][] = set2_data.getPolynomial("sqft_living", 15);
         double poly15_set3[][] = set3_data.getPolynomial("sqft_living", 15);
         double poly15_set4[][] = set4_data.getPolynomial("sqft_living", 15);
-        double poly15_train[][] = train_valid_shuffled_data.getPolynomial("sqft_living", 15);
+        double poly15_train_valid_shuffled_data[][] = train_valid_shuffled_data.getPolynomial("sqft_living", 15);
         double poly15_test[][] = test_valid_shuffled_data.getPolynomial("sqft_living", 15);
 
         double l2_small_penalty = 1.5e-5;
@@ -113,6 +115,9 @@ public class week4quiz2 {
         System.out.println("Set 4");
         model_set4.fit(poly15_set4, set4_data.getFeature("price"));
         model_set4.getCoefficients();
+        
+        CrossValidation crossValidation = new CrossValidation();
+        crossValidation.kFoldCrossValidation(4, 1.2e5,poly15_train_valid_shuffled_data , train_valid_shuffled_data.getFeature("price"));
         
 
     }
