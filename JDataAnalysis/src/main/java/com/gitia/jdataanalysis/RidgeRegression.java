@@ -72,16 +72,9 @@ public class RidgeRegression extends MultipleLinearRegression {
      * @return (Y - H * W)t * (Y - H * W) + alpha * Wt * W
      */
     protected double cost() {
-        return cost(input, output);
+        return getRSS(input, output) + alpha * W.transpose().mult(W).get(0);
     }
     
-    /**
-     * This is the regression cost = RSS + alpha * Wt * W
-     *
-     * @param input
-     * @param output
-     * @return (Y - H * W)t * (Y - H * W) + alpha * Wt * W
-     */
     public double cost(double[][] input, double[] output){
         return getRSS(input, output) + alpha * W.transpose().mult(W).get(0);
     }

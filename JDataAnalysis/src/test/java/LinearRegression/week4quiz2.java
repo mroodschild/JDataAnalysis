@@ -117,11 +117,7 @@ public class week4quiz2 {
         model_set4.getCoefficients();
         
         CrossValidation crossValidation = new CrossValidation();
-        crossValidation.kFoldCrossValidation(
-                4, 
-                1.2e5,
-                poly15_train_valid_shuffled_data , 
-                train_valid_shuffled_data.getFeature("price"));
+        crossValidation.kFoldCrossValidation(4, 1.2e5,poly15_train_valid_shuffled_data , train_valid_shuffled_data.getFeature("price"));
         
 
     }
