@@ -49,15 +49,23 @@ public class CrossValidation {
     private double entrenarModelos() {
         double sum = 0;
         double cost = 0;
+        double sumVal = 0;
+        double costVal = 0;
         for (int i = 0; i < k; i++) {
             double[][] xTrain = getCrossTrain(i, k, input);
             double[] yTrain = getCrossTrain(i, k, output);
+            double[][] xVal = getCrossValidation(i, k, input);
+            double[] yVal = getCrossValidation(i, k, output);
             modelos[i] = new RidgeRegression(l2_penalty, true);
             cost = modelos[i].fit(xTrain, yTrain);
+            costVal = modelos[i].fit(xVal, yVal);
             System.out.println("Modelo " + i + "\tcost training: " + cost);
+            System.out.println("Modelo " + i + "\tcost Validating: " + costVal);
             sum += cost;
+            sumVal += costVal;
         }
         System.out.println("Average cost: " + sum / (double) modelos.length);
+        System.out.println("Average cost Validating: " + sumVal / (double) modelos.length);
         return sum / (double) modelos.length;
     }
 

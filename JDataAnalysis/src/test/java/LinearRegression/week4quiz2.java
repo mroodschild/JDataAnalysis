@@ -119,6 +119,7 @@ public class week4quiz2 {
 
         CrossValidation crossValidation = new CrossValidation();
         crossValidation.kFoldCrossValidation(4, 1.2e5, poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
+        
 
     }
 }
