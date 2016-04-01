@@ -24,7 +24,8 @@ public class Expresiones {
     public static void main(String[] args) {
         double a = 10e4;
         double b = Math.pow(10, 4);
-        System.out.println("a: " + a + "\tb: " + b);
+        double c = Math.pow(10, 3.5);
+        System.out.println("a: " + a + "\tb: " + b+ "\tc: " + c);
     }
 
 }

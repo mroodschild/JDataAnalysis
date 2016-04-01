@@ -118,8 +118,20 @@ public class week4quiz2 {
         model_set4.getCoefficients();
 
         CrossValidation crossValidation = new CrossValidation();
-        crossValidation.kFoldCrossValidation(4, 1.2e5, poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
         
-
+        crossValidation.kFoldCrossValidation(4, 1.2e5, poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
+        crossValidation.kFoldCrossValidation(4, Math.pow(10,3), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
+        crossValidation.kFoldCrossValidation(4, Math.pow(10,3.5), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
+        crossValidation.kFoldCrossValidation(4, Math.pow(10,4), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
+        crossValidation.kFoldCrossValidation(4, Math.pow(10,4.5), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
+        crossValidation.kFoldCrossValidation(4, Math.pow(10,5), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
+        crossValidation.kFoldCrossValidation(4, Math.pow(10,5.5), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
+        crossValidation.kFoldCrossValidation(4, Math.pow(10,6), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
+        crossValidation.kFoldCrossValidation(4, Math.pow(10,6.5), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
+        crossValidation.kFoldCrossValidation(4, Math.pow(10,7), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
+        crossValidation.kFoldCrossValidation(4, Math.pow(10,7.5), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
+        crossValidation.kFoldCrossValidation(4, Math.pow(10,8), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
+        crossValidation.kFoldCrossValidation(4, Math.pow(10,8.5), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
+        crossValidation.kFoldCrossValidation(4, Math.pow(10,9), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
     }
 }
