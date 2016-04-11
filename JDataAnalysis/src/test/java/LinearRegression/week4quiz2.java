@@ -43,12 +43,13 @@ public class week4quiz2 {
         double poly15_data[][] = all_data.getPolynomial("sqft_living", 15);
 
         double poly15_train_valid_shuffled_data[][] = train_valid_shuffled_data.getPolynomial("sqft_living", 15);
-        double poly15_test[][] = test_valid_shuffled_data.getPolynomial("sqft_living", 15);
+        //double poly15_test[][] = test_valid_shuffled_data.getPolynomial("sqft_living", 15);
 
         System.out.println("\n4. Quiz Question: What’s the learned value for the coefficient of feature power_1?");
         double l2_small_penalty = 1.5e-5;
         RidgeRegression model = new RidgeRegression(l2_small_penalty, true);
         model.fit(poly15_data, all_data.getFeature("price"));
+        System.out.println("\n---- Q1: Coeficientes ---");
         model.getCoefficients();
 
         System.out.println("\n Polynomial Regression");
@@ -92,7 +93,7 @@ public class week4quiz2 {
         model_set4.getCoefficients();
 
         System.out.println("\nEntrenamos cada uno de los sets");
-        l2_small_penalty = 1.23e2;
+
         double l2_large_penalty = 1.23e2;
         //Util.mostrarMatriz(a, "poly_sqft_living");
         model_set1 = new RidgeRegression(l2_large_penalty, true);
@@ -118,20 +119,33 @@ public class week4quiz2 {
         model_set4.getCoefficients();
 
         CrossValidation crossValidation = new CrossValidation();
-        
-        crossValidation.kFoldCrossValidation(4, 1.2e5, poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
-        crossValidation.kFoldCrossValidation(4, Math.pow(10,3), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
-        crossValidation.kFoldCrossValidation(4, Math.pow(10,3.5), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
-        crossValidation.kFoldCrossValidation(4, Math.pow(10,4), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
-        crossValidation.kFoldCrossValidation(4, Math.pow(10,4.5), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
-        crossValidation.kFoldCrossValidation(4, Math.pow(10,5), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
-        crossValidation.kFoldCrossValidation(4, Math.pow(10,5.5), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
-        crossValidation.kFoldCrossValidation(4, Math.pow(10,6), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
-        crossValidation.kFoldCrossValidation(4, Math.pow(10,6.5), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
-        crossValidation.kFoldCrossValidation(4, Math.pow(10,7), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
-        crossValidation.kFoldCrossValidation(4, Math.pow(10,7.5), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
-        crossValidation.kFoldCrossValidation(4, Math.pow(10,8), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
-        crossValidation.kFoldCrossValidation(4, Math.pow(10,8.5), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
-        crossValidation.kFoldCrossValidation(4, Math.pow(10,9), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
+        System.out.println("e: 1.2e5");
+        crossValidation.kFoldCrossValidation(10, 1.2e5, poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
+        System.out.println("e: 10^3");
+        crossValidation.kFoldCrossValidation(10, Math.pow(10, 3), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
+        System.out.println("e: 10^3.5");
+        crossValidation.kFoldCrossValidation(10, Math.pow(10, 3.5), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
+        System.out.println("e: 10^4");
+        crossValidation.kFoldCrossValidation(10, Math.pow(10, 4), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
+        System.out.println("e: 10^4.5");
+        crossValidation.kFoldCrossValidation(10, Math.pow(10, 4.5), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
+        System.out.println("e: 10^5");
+        crossValidation.kFoldCrossValidation(10, Math.pow(10, 5), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
+        System.out.println("e: 10^5.5");
+        crossValidation.kFoldCrossValidation(10, Math.pow(10, 5.5), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
+        System.out.println("e: 10^6");
+        crossValidation.kFoldCrossValidation(10, Math.pow(10, 6), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
+        System.out.println("e: 10^6.5");
+        crossValidation.kFoldCrossValidation(10, Math.pow(10, 6.5), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
+        System.out.println("e: 10^7");
+        crossValidation.kFoldCrossValidation(10, Math.pow(10, 7), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
+        System.out.println("e: 10^7.5");
+        crossValidation.kFoldCrossValidation(10, Math.pow(10, 7.5), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
+        System.out.println("e: 10^8");
+        crossValidation.kFoldCrossValidation(10, Math.pow(10, 8), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
+        System.out.println("e: 10^8.5");
+        crossValidation.kFoldCrossValidation(10, Math.pow(10, 8.5), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
+        System.out.println("e: 10^9");
+        crossValidation.kFoldCrossValidation(10, Math.pow(10, 9), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
     }
 }
