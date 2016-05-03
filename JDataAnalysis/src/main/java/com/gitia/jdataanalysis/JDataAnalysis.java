@@ -15,6 +15,7 @@
  */
 package com.gitia.jdataanalysis;
 
+import dnl.utils.text.table.TextTable;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
@@ -70,15 +71,10 @@ public class JDataAnalysis {
      * show 10 rows
      */
     public void show() {
-        printHeader(parser.getHeaderMap());
-        for (int i = 0; i < datos.size() && i < 10; i++) {
-            CSVRecord next = datos.get(i);
-            int csvrSize = next.size();
-            for (int j = 0; j < csvrSize; j++) {
-                System.out.printf("%s\t", next.get(j));
-            }
-            System.out.printf("\n");
-        }
+        String[] columnNames = getHeader(parser.getHeaderMap());
+        String[][] data = getFeature(10);
+        TextTable textTable = new TextTable(columnNames, data);
+        textTable.printTable();
         System.out.println("...");
         System.out.println("Records (" + datos.size() + " x " + parser.getHeaderMap().size() + ")\n");
     }
@@ -139,6 +135,22 @@ public class JDataAnalysis {
     }
 
     /**
+     * Obtenemos los nombres de las columnas
+     *
+     * @param headerMap
+     * @return
+     */
+    private String[] getHeader(Map<String, Integer> headerMap) {
+        String[] columNames = new String[headerMap.size()];
+        int count = 0;
+        for (Map.Entry<String, Integer> entry : headerMap.entrySet()) {
+            columNames[count] = entry.getKey();
+            count++;
+        }
+        return columNames;
+    }
+
+    /**
      * create a simple linear regression
      *
      * @param inputFeature
@@ -150,6 +162,26 @@ public class JDataAnalysis {
         double[] output = getFeature(outputFeature);
         SimpleLinearRegression simpleLinearRegression = new SimpleLinearRegression(input, output);
         return simpleLinearRegression;
+    }
+
+    /**
+     * get the feature desired in a vector
+     *
+     * @param numRows Número de filas a recuperar
+     * @return
+     */
+    public String[][] getFeature(int numRows) {
+        int size = numRows;
+        if (datos.size() < numRows) {
+            size = datos.size();
+        }
+        String[][] feature = new String[size][datos.get(0).size()];
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < datos.get(0).size(); j++) {
+                feature[i][j] = datos.get(i).get(j);
+            }
+        }
+        return feature;
     }
 
     /**
