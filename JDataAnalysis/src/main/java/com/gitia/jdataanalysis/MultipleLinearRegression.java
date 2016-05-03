@@ -66,9 +66,8 @@ public class MultipleLinearRegression {
     }
 
     /**
-     * only use this internally
-     * this function takes the input, and calculate the output estimated, and
-     * compare this with the output observada
+     * only use this internally this function takes the input, and calculate the
+     * output estimated, and compare this with the output observada
      *
      * @param input (H)
      * @param output w (vertical)
@@ -86,7 +85,13 @@ public class MultipleLinearRegression {
 
     public void getCoefficients() {
         System.out.println("\nCoefficients: (first coefficient is intercept)");
-        W.print();
+        for (int i = 0; i < W.getNumElements(); i++) {
+            System.out.printf(" %.2f x%d | ", W.get(i), i);
+//            if (i % 5 == 0 && i != 0) {
+//                System.out.println("");
+//            }
+        }
+        System.out.println("\n");
     }
 
     /**
