@@ -47,7 +47,7 @@ public class week4quiz2 {
 
         System.out.println("\n4. Quiz Question: What’s the learned value for the coefficient of feature power_1?");
         double l2_small_penalty = 1.5e-5;
-        RidgeRegression model = new RidgeRegression(l2_small_penalty, true);
+        RidgeRegression model = new RidgeRegression(l2_small_penalty);
         model.fit(poly15_data, all_data.getFeature("price"));
         System.out.println("\n---- Q1: Coeficientes ---");
         model.getCoefficients();
@@ -71,10 +71,10 @@ public class week4quiz2 {
         double poly15_set3[][] = set3_data.getPolynomial("sqft_living", 15);
         double poly15_set4[][] = set4_data.getPolynomial("sqft_living", 15);
         l2_small_penalty = 1e-9;
-        RidgeRegression model_set1 = new RidgeRegression(l2_small_penalty, true);
-        RidgeRegression model_set2 = new RidgeRegression(l2_small_penalty, true);
-        RidgeRegression model_set3 = new RidgeRegression(l2_small_penalty, true);
-        RidgeRegression model_set4 = new RidgeRegression(l2_small_penalty, true);
+        RidgeRegression model_set1 = new RidgeRegression(l2_small_penalty);
+        RidgeRegression model_set2 = new RidgeRegression(l2_small_penalty);
+        RidgeRegression model_set3 = new RidgeRegression(l2_small_penalty);
+        RidgeRegression model_set4 = new RidgeRegression(l2_small_penalty);
 
         System.out.println("\nQuiz Question: For the models learned in each of \n"
                 + "these training sets, what are the smallest and largest values\n"
@@ -96,10 +96,10 @@ public class week4quiz2 {
 
         double l2_large_penalty = 1.23e2;
         //Util.mostrarMatriz(a, "poly_sqft_living");
-        model_set1 = new RidgeRegression(l2_large_penalty, true);
-        model_set2 = new RidgeRegression(l2_large_penalty, true);
-        model_set3 = new RidgeRegression(l2_large_penalty, true);
-        model_set4 = new RidgeRegression(l2_large_penalty, true);
+        model_set1 = new RidgeRegression(l2_large_penalty);
+        model_set2 = new RidgeRegression(l2_large_penalty);
+        model_set3 = new RidgeRegression(l2_large_penalty);
+        model_set4 = new RidgeRegression(l2_large_penalty);
 
         System.out.println("\nQUIZ QUESTION: For the models learned with \n"
                 + "regularization in each of these training sets, what are the \n"

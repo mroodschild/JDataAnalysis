@@ -51,16 +51,14 @@ public class MultipleLinearRegression {
 
     /**
      * this function takes the input, and calculate the output estimated, and
-     * compare this with the output observada
+     * compare this with the output observated.
      *
      * @param input
      * @param output Y observada
      * @return
      */
     public double getRSS(double[][] input, double[] output) {
-        SimpleMatrix in = UtilMatrix.addColumnBefore(new SimpleMatrix(input));
-        in = UtilMatrix.setColumn(in, 0, 1);
-        //convertimos la salida observada en simple matrix
+        SimpleMatrix in = UtilMatrix.addColumnBefore(new SimpleMatrix(input), 1);
         SimpleMatrix Yo = new SimpleMatrix(output.length, 1, true, output);
         return getRSS(in, Yo);
     }
@@ -97,8 +95,7 @@ public class MultipleLinearRegression {
      * @return
      */
     public double[] predictOutcome(double[][] featureMatrix) {
-        SimpleMatrix input = UtilMatrix.addColumnBefore(new SimpleMatrix(featureMatrix));
-        input = UtilMatrix.setColumn(input, 0, 1);
+        SimpleMatrix input = UtilMatrix.addColumnBefore(new SimpleMatrix(featureMatrix), 1);
         SimpleMatrix output = input.mult(W);
         double[] s = new double[output.numRows()];
         int size = s.length;

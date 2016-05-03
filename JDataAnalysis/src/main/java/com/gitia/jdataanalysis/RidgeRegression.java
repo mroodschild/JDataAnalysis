@@ -24,18 +24,23 @@ import org.ejml.simple.SimpleMatrix;
 public class RidgeRegression extends MultipleLinearRegression {
 
     double alpha;
-    boolean normalize;
 
+    /**
+     *
+     */
     public RidgeRegression() {
     }
 
-    public RidgeRegression(double alpha, boolean normalize) {
+    /**
+     *
+     * @param alpha
+     */
+    public RidgeRegression(double alpha) {
         this.alpha = alpha;
-        this.normalize = normalize;
     }
 
     /**
-     * 
+     *
      * @param input
      * @param output
      * @return cost = RSS + alpha * Wt * W
@@ -44,14 +49,12 @@ public class RidgeRegression extends MultipleLinearRegression {
         this.input = input;
         this.output = output;
 
-        H = UtilMatrix.addColumnBefore(new SimpleMatrix(input));
-        H = UtilMatrix.setColumn(H, 0, 1);
-        //H = new SimpleMatrix(input);
+        H = UtilMatrix.addColumnBefore(new SimpleMatrix(input), 1);
         h = H.transpose();
         W = new SimpleMatrix(H.numCols(), 1);
         W.zero();
         Yobs = new SimpleMatrix(output.length, 1, true, output);
-        Yest = H.mult(W);
+        //Yest = H.mult(W);
         System.out.println("Initial RSS: " + getRSS(H, Yobs) + " Initial magnitude_coefficients: " + magnitude_coefficients());
         adjustW();
         System.out.println("Finish RSS: " + getRSS(H, Yobs) + " Finish magnitude_coefficients: " + magnitude_coefficients());
@@ -62,7 +65,10 @@ public class RidgeRegression extends MultipleLinearRegression {
      *
      * @return Wt*W
      */
-    protected double magnitude_coefficients() {
+    public double magnitude_coefficients() {
+        if (W == null) {
+            return 0;
+        }
         return W.transpose().mult(W).get(0);
     }
 
@@ -74,8 +80,14 @@ public class RidgeRegression extends MultipleLinearRegression {
     protected double cost() {
         return getRSS(input, output) + alpha * W.transpose().mult(W).get(0);
     }
-    
-    public double cost(double[][] input, double[] output){
+
+    /**
+     *
+     * @param input
+     * @param output
+     * @return
+     */
+    public double cost(double[][] input, double[] output) {
         return getRSS(input, output) + alpha * W.transpose().mult(W).get(0);
     }
 

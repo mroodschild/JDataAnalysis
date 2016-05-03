@@ -56,7 +56,7 @@ public class CrossValidation {
             double[] yTrain = getCrossTrain(i, k, output);
             double[][] xVal = getCrossValidation(i, k, input);
             double[] yVal = getCrossValidation(i, k, output);
-            modelos[i] = new RidgeRegression(l2_penalty, true);
+            modelos[i] = new RidgeRegression(l2_penalty);
             cost = modelos[i].fit(xTrain, yTrain);
             costVal = modelos[i].fit(xVal, yVal);
             //System.out.println("Modelo " + i + "\tcost training: " + cost);
