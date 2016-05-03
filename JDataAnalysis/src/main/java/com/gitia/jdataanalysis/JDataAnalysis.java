@@ -110,7 +110,7 @@ public class JDataAnalysis {
             }
             System.out.printf("\n");
         }
-        System.out.println("Records (" + datos.size() + " x " + parser.getHeaderMap().size() + ")\n");
+        System.out.println("Records (" + datos.size() + " x " + headers.length + ")\n");
     }
 
     /**
