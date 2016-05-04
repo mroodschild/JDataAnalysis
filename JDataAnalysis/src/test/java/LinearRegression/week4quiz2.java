@@ -29,31 +29,24 @@ public class week4quiz2 {
     public static void main(String[] args) {
         //establezco la dirección relativa
         String folder = "src/main/resources/week4/quiz2/";
-        //indicamos los lugares de donde se tomaran los datos
-        String all = folder + "kc_house_data.csv";
+        JDataAnalysis kc_house_data = new JDataAnalysis(folder + "kc_house_data.csv");
+        JDataAnalysis train_valid_shuffled_data = new JDataAnalysis(folder + "wk3_kc_house_train_valid_shuffled.csv");
+        //JDataAnalysis test_valid_shuffled_data = new JDataAnalysis(folder + "wk3_kc_house_test_data.csv");
 
-        String train_valid_shuffled = folder + "wk3_kc_house_train_valid_shuffled.csv";
-        String test_valid_shuffled = folder + "wk3_kc_house_test_data.csv";
-
-        JDataAnalysis all_data = new JDataAnalysis(all);
-
-        JDataAnalysis train_valid_shuffled_data = new JDataAnalysis(train_valid_shuffled);
-        JDataAnalysis test_valid_shuffled_data = new JDataAnalysis(test_valid_shuffled);
-
-        double poly15_data[][] = all_data.getPolynomial("sqft_living", 15);
-
-        double poly15_train_valid_shuffled_data[][] = train_valid_shuffled_data.getPolynomial("sqft_living", 15);
+        //double poly15_data[][] = all_data.getPolynomial("sqft_living", 15);
+        double poly15_train_valid_shuffled_data[][] = 
+                train_valid_shuffled_data.getPolynomial("sqft_living", 15);
         //double poly15_test[][] = test_valid_shuffled_data.getPolynomial("sqft_living", 15);
 
         System.out.println("\n4. Quiz Question: What’s the learned value for the coefficient of feature power_1?");
         double l2_small_penalty = 1.5e-5;
         RidgeRegression model = new RidgeRegression(l2_small_penalty);
-        model.fit(poly15_data, all_data.getFeature("price"));
+        model.fit(kc_house_data.getPolynomial("sqft_living", 15), kc_house_data.getFeature("price"));
         System.out.println("\n---- Q1: Coeficientes ---");
         model.getCoefficients();
 
         System.out.println("\n Polynomial Regression");
-        MultipleLinearRegression polynomial_regression = new MultipleLinearRegression(poly15_data, all_data.getFeature("price"));
+        MultipleLinearRegression polynomial_regression = new MultipleLinearRegression(kc_house_data.getPolynomial("sqft_living", 15), kc_house_data.getFeature("price"));
         polynomial_regression.getCoefficients();
 
         System.out.println("\nEntrenamos cada uno de los sets");
