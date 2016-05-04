@@ -23,7 +23,7 @@ import org.ejml.simple.SimpleMatrix;
  */
 public class RidgeRegression extends MultipleLinearRegression {
 
-    double alpha;
+    private double l2Penalty;
 
     /**
      *
@@ -36,7 +36,7 @@ public class RidgeRegression extends MultipleLinearRegression {
      * @param alpha
      */
     public RidgeRegression(double alpha) {
-        this.alpha = alpha;
+        this.l2Penalty = alpha;
     }
 
     /**
@@ -78,7 +78,7 @@ public class RidgeRegression extends MultipleLinearRegression {
      * @return (Y - H * W)t * (Y - H * W) + alpha * Wt * W
      */
     protected double cost() {
-        return getRSS(input, output) + alpha * W.transpose().mult(W).get(0);
+        return getRSS(input, output) + getL2Penalty() * W.transpose().mult(W).get(0);
     }
 
     /**
@@ -88,7 +88,7 @@ public class RidgeRegression extends MultipleLinearRegression {
      * @return
      */
     public double cost(double[][] input, double[] output) {
-        return getRSS(input, output) + alpha * W.transpose().mult(W).get(0);
+        return getRSS(input, output) + getL2Penalty() * W.transpose().mult(W).get(0);
     }
 
     /**
@@ -97,9 +97,23 @@ public class RidgeRegression extends MultipleLinearRegression {
     @Override
     protected void adjustW() {
         //(alpha * I) del tamaño de H
-        SimpleMatrix diag = SimpleMatrix.identity(H.numCols()).scale(alpha);
+        SimpleMatrix diag = SimpleMatrix.identity(H.numCols()).scale(getL2Penalty());
         //(Ht * H + alpha * I)^(-1) * Ht * Y
         W = (H.transpose().mult(H).plus(diag)).invert().mult(H.transpose()).mult(Yobs);
+    }
+
+    /**
+     * @return the l2Penalty
+     */
+    public double getL2Penalty() {
+        return l2Penalty;
+    }
+
+    /**
+     * @param l2Penalty the l2Penalty to set
+     */
+    public void setL2Penalty(double l2Penalty) {
+        this.l2Penalty = l2Penalty;
     }
 
 }

@@ -29,51 +29,39 @@ public class week4quiz2 {
     public static void main(String[] args) {
         //establezco la dirección relativa
         String folder = "src/main/resources/week4/quiz2/";
-        JDataAnalysis kc_house_data = new JDataAnalysis(folder + "kc_house_data.csv");
-        JDataAnalysis train_valid_shuffled_data = new JDataAnalysis(folder + "wk3_kc_house_train_valid_shuffled.csv");
-        //JDataAnalysis test_valid_shuffled_data = new JDataAnalysis(folder + "wk3_kc_house_test_data.csv");
+        JDataAnalysis JDA_kc_house_data = new JDataAnalysis(folder + "kc_house_data.csv");
+        JDataAnalysis JDA_train_valid_shuffled_data = new JDataAnalysis(folder + "wk3_kc_house_train_valid_shuffled.csv");
 
-        //double poly15_data[][] = all_data.getPolynomial("sqft_living", 15);
-        double poly15_train_valid_shuffled_data[][] = 
-                train_valid_shuffled_data.getPolynomial("sqft_living", 15);
-        //double poly15_test[][] = test_valid_shuffled_data.getPolynomial("sqft_living", 15);
-
-        System.out.println("\n4. Quiz Question: What’s the learned value for the coefficient of feature power_1?");
-        double l2_small_penalty = 1.5e-5;
-        RidgeRegression model = new RidgeRegression(l2_small_penalty);
-        model.fit(kc_house_data.getPolynomial("sqft_living", 15), kc_house_data.getFeature("price"));
-        System.out.println("\n---- Q1: Coeficientes ---");
+        System.out.println("\nQuiz Question: What’s the learned value for the coefficient of feature power_1?");
+        double l2 = 1.5e-5;
+        RidgeRegression model = new RidgeRegression(l2);
+        System.out.println("l2:\t" + model.getL2Penalty());
+        model.fit(JDA_kc_house_data.getPolynomial("sqft_living", 15), JDA_kc_house_data.getFeature("price"));
+        System.out.println("\n---- Q1: Coeficientes, See power_1 coefficient ---");
         model.getCoefficients();
-
-        System.out.println("\n Polynomial Regression");
-        MultipleLinearRegression polynomial_regression = new MultipleLinearRegression(kc_house_data.getPolynomial("sqft_living", 15), kc_house_data.getFeature("price"));
-        polynomial_regression.getCoefficients();
-
+        
         System.out.println("\nEntrenamos cada uno de los sets");
-
-        String set1 = folder + "wk3_kc_house_set_1_data.csv";
-        String set2 = folder + "wk3_kc_house_set_2_data.csv";
-        String set3 = folder + "wk3_kc_house_set_3_data.csv";
-        String set4 = folder + "wk3_kc_house_set_4_data.csv";
-        JDataAnalysis set1_data = new JDataAnalysis(set1);
-        JDataAnalysis set2_data = new JDataAnalysis(set2);
-        JDataAnalysis set3_data = new JDataAnalysis(set3);
-        JDataAnalysis set4_data = new JDataAnalysis(set4);
-        double poly15_set1[][] = set1_data.getPolynomial("sqft_living", 15);
+        
+        JDataAnalysis JDASet1 = new JDataAnalysis(folder + "wk3_kc_house_set_1_data.csv");
+        JDataAnalysis set2_data = new JDataAnalysis(folder + "wk3_kc_house_set_2_data.csv");
+        JDataAnalysis set3_data = new JDataAnalysis(folder + "wk3_kc_house_set_3_data.csv");
+        JDataAnalysis set4_data = new JDataAnalysis(folder + "wk3_kc_house_set_4_data.csv");
+        double poly15_set1[][] = JDASet1.getPolynomial("sqft_living", 15);
         double poly15_set2[][] = set2_data.getPolynomial("sqft_living", 15);
         double poly15_set3[][] = set3_data.getPolynomial("sqft_living", 15);
         double poly15_set4[][] = set4_data.getPolynomial("sqft_living", 15);
-        l2_small_penalty = 1e-9;
-        RidgeRegression model_set1 = new RidgeRegression(l2_small_penalty);
-        RidgeRegression model_set2 = new RidgeRegression(l2_small_penalty);
-        RidgeRegression model_set3 = new RidgeRegression(l2_small_penalty);
-        RidgeRegression model_set4 = new RidgeRegression(l2_small_penalty);
+        
+        l2 = 1e-9;
+        RidgeRegression model_set1 = new RidgeRegression(l2);
+        RidgeRegression model_set2 = new RidgeRegression(l2);
+        RidgeRegression model_set3 = new RidgeRegression(l2);
+        RidgeRegression model_set4 = new RidgeRegression(l2);
 
         System.out.println("\nQuiz Question: For the models learned in each of \n"
                 + "these training sets, what are the smallest and largest values\n"
                 + "you learned for the coefficient of feature power_1?\n");
         System.out.println("Set 1");
-        model_set1.fit(poly15_set1, set1_data.getFeature("price"));
+        model_set1.fit(poly15_set1, JDASet1.getFeature("price"));
         model_set1.getCoefficients();
         System.out.println("Set 2");
         model_set2.fit(poly15_set2, set2_data.getFeature("price"));
@@ -86,34 +74,36 @@ public class week4quiz2 {
         model_set4.getCoefficients();
 
         System.out.println("\nEntrenamos cada uno de los sets");
-
-        double l2_large_penalty = 1.23e2;
-        //Util.mostrarMatriz(a, "poly_sqft_living");
-        model_set1 = new RidgeRegression(l2_large_penalty);
-        model_set2 = new RidgeRegression(l2_large_penalty);
-        model_set3 = new RidgeRegression(l2_large_penalty);
-        model_set4 = new RidgeRegression(l2_large_penalty);
-
+        
         System.out.println("\nQUIZ QUESTION: For the models learned with \n"
                 + "regularization in each of these training sets, what are the \n"
                 + "smallest and largest values you learned for the coefficient \n"
                 + "of feature power_1?\n");
+        
+        l2 = 1.23e2;
         System.out.println("Set 1");
-        model_set1.fit(poly15_set1, set1_data.getFeature("price"));
+        model_set1.setL2Penalty(l2);
+        model_set1.fit(poly15_set1, JDASet1.getFeature("price"));
         model_set1.getCoefficients();
+        
         System.out.println("Set 2");
+        model_set2.setL2Penalty(l2);
         model_set2.fit(poly15_set2, set2_data.getFeature("price"));
         model_set2.getCoefficients();
+        
         System.out.println("Set 3");
+        model_set3.setL2Penalty(l2);
         model_set3.fit(poly15_set3, set3_data.getFeature("price"));
         model_set3.getCoefficients();
+        
         System.out.println("Set 4");
+        model_set4.setL2Penalty(l2);
         model_set4.fit(poly15_set4, set4_data.getFeature("price"));
         model_set4.getCoefficients();
 
         CrossValidation crossValidation = new CrossValidation();
         System.out.println("e: 1.2e5");
-        crossValidation.kFoldCrossValidation(10, 1.2e5, poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
+        crossValidation.kFoldCrossValidation(10, 1.2e5, JDA_train_valid_shuffled_data.getPolynomial("sqft_living", 15), JDA_train_valid_shuffled_data.getFeature("price"));
 //        System.out.println("e: 10^3");
 //        crossValidation.kFoldCrossValidation(10, Math.pow(10, 3), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
 //        System.out.println("e: 10^3.5");
