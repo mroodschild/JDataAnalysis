@@ -43,35 +43,31 @@ public class week4quiz2 {
         System.out.println("\nEntrenamos cada uno de los sets");
         
         JDataAnalysis JDASet1 = new JDataAnalysis(folder + "wk3_kc_house_set_1_data.csv");
-        JDataAnalysis set2_data = new JDataAnalysis(folder + "wk3_kc_house_set_2_data.csv");
-        JDataAnalysis set3_data = new JDataAnalysis(folder + "wk3_kc_house_set_3_data.csv");
-        JDataAnalysis set4_data = new JDataAnalysis(folder + "wk3_kc_house_set_4_data.csv");
-        double poly15_set1[][] = JDASet1.getPolynomial("sqft_living", 15);
-        double poly15_set2[][] = set2_data.getPolynomial("sqft_living", 15);
-        double poly15_set3[][] = set3_data.getPolynomial("sqft_living", 15);
-        double poly15_set4[][] = set4_data.getPolynomial("sqft_living", 15);
+        JDataAnalysis JDASet2 = new JDataAnalysis(folder + "wk3_kc_house_set_2_data.csv");
+        JDataAnalysis JDASet3 = new JDataAnalysis(folder + "wk3_kc_house_set_3_data.csv");
+        JDataAnalysis JDASet4 = new JDataAnalysis(folder + "wk3_kc_house_set_4_data.csv");
         
         l2 = 1e-9;
-        RidgeRegression model_set1 = new RidgeRegression(l2);
-        RidgeRegression model_set2 = new RidgeRegression(l2);
-        RidgeRegression model_set3 = new RidgeRegression(l2);
-        RidgeRegression model_set4 = new RidgeRegression(l2);
+        RidgeRegression modelSet1 = new RidgeRegression(l2);
+        RidgeRegression modelSet2 = new RidgeRegression(l2);
+        RidgeRegression modelSet3 = new RidgeRegression(l2);
+        RidgeRegression modelSet4 = new RidgeRegression(l2);
 
         System.out.println("\nQuiz Question: For the models learned in each of \n"
                 + "these training sets, what are the smallest and largest values\n"
                 + "you learned for the coefficient of feature power_1?\n");
         System.out.println("Set 1");
-        model_set1.fit(poly15_set1, JDASet1.getFeature("price"));
-        model_set1.getCoefficients();
+        modelSet1.fit(JDASet1.getPolynomial("sqft_living", 15), JDASet1.getFeature("price"));
+        modelSet1.getCoefficients();
         System.out.println("Set 2");
-        model_set2.fit(poly15_set2, set2_data.getFeature("price"));
-        model_set2.getCoefficients();
+        modelSet2.fit(JDASet2.getPolynomial("sqft_living", 15), JDASet2.getFeature("price"));
+        modelSet2.getCoefficients();
         System.out.println("Set 3");
-        model_set3.fit(poly15_set3, set3_data.getFeature("price"));
-        model_set3.getCoefficients();
+        modelSet3.fit(JDASet3.getPolynomial("sqft_living", 15), JDASet3.getFeature("price"));
+        modelSet3.getCoefficients();
         System.out.println("Set 4");
-        model_set4.fit(poly15_set4, set4_data.getFeature("price"));
-        model_set4.getCoefficients();
+        modelSet4.fit(JDASet4.getPolynomial("sqft_living", 15), JDASet4.getFeature("price"));
+        modelSet4.getCoefficients();
 
         System.out.println("\nEntrenamos cada uno de los sets");
         
@@ -82,24 +78,24 @@ public class week4quiz2 {
         
         l2 = 1.23e2;
         System.out.println("Set 1");
-        model_set1.setL2Penalty(l2);
-        model_set1.fit(poly15_set1, JDASet1.getFeature("price"));
-        model_set1.getCoefficients();
+        modelSet1.setL2Penalty(l2);
+        modelSet1.fit(JDASet1.getPolynomial("sqft_living", 15), JDASet1.getFeature("price"));
+        modelSet1.getCoefficients();
         
         System.out.println("Set 2");
-        model_set2.setL2Penalty(l2);
-        model_set2.fit(poly15_set2, set2_data.getFeature("price"));
-        model_set2.getCoefficients();
+        modelSet2.setL2Penalty(l2);
+        modelSet2.fit(JDASet2.getPolynomial("sqft_living", 15), JDASet2.getFeature("price"));
+        modelSet2.getCoefficients();
         
         System.out.println("Set 3");
-        model_set3.setL2Penalty(l2);
-        model_set3.fit(poly15_set3, set3_data.getFeature("price"));
-        model_set3.getCoefficients();
+        modelSet3.setL2Penalty(l2);
+        modelSet3.fit(JDASet3.getPolynomial("sqft_living", 15), JDASet3.getFeature("price"));
+        modelSet3.getCoefficients();
         
         System.out.println("Set 4");
-        model_set4.setL2Penalty(l2);
-        model_set4.fit(poly15_set4, set4_data.getFeature("price"));
-        model_set4.getCoefficients();
+        modelSet4.setL2Penalty(l2);
+        modelSet4.fit(JDASet4.getPolynomial("sqft_living", 15), JDASet4.getFeature("price"));
+        modelSet4.getCoefficients();
 
         CrossValidation crossValidation = new CrossValidation();
         System.out.println("e: 1.2e5");
