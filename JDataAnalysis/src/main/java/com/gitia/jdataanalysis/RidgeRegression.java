@@ -99,7 +99,7 @@ public class RidgeRegression extends MultipleLinearRegression {
         //(alpha * I) del tamaño de H
         SimpleMatrix diag = SimpleMatrix.identity(H.numCols()).scale(getL2Penalty());
         //(Ht * H + alpha * I)^(-1) * Ht * Y
-        W = (H.transpose().mult(H).plus(diag)).invert().mult(H.transpose()).mult(Yobs);
+        W = (H.transpose().mult(H).plus(diag)).pseudoInverse().mult(H.transpose()).mult(Yobs);
     }
 
     /**
