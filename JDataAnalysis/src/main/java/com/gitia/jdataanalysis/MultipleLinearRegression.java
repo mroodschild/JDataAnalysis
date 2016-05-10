@@ -78,7 +78,8 @@ public class MultipleLinearRegression {
     }
 
     protected void adjustW() {
-        W = (H.transpose().mult(H)).invert().mult(H.transpose()).mult(Yobs);// (Ht * H)^(-1) * Ht * Y
+        W = (H.transpose().mult(H)).pseudoInverse().mult(H.transpose()).mult(Yobs);// (Ht * H)^(-1) * Ht * Y
+        //W = (H.transpose().mult(H)).invert().mult(H.transpose()).mult(Yobs);// (Ht * H)^(-1) * Ht * Y
     }
 
     public void getCoefficients() {
