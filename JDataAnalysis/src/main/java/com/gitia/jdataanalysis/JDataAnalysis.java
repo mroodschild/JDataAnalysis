@@ -59,7 +59,6 @@ public class JDataAnalysis {
             datos = IteratorUtils.toList(parser.iterator());
             System.out.println("");
             show();
-            //parser.close();
             return datos;
         } catch (IOException ex) {
             Logger.getLogger(JDataAnalysis.class.getName()).log(Level.SEVERE, null, ex);

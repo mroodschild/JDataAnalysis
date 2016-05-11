@@ -97,9 +97,41 @@ public class RidgeRegression extends MultipleLinearRegression {
     @Override
     protected void adjustW() {
         //(alpha * I) del tamaño de H
+//        H = new SimpleMatrix(8, 6, true,
+//                64, 2, 3, 61, 60, 6,
+//                9, 55, 54, 12, 13, 51,
+//                17, 47, 46, 20, 21, 43,
+//                40, 26, 27, 37, 36, 30,
+//                32, 34, 35, 29, 28, 38,
+//                41, 23, 22, 44, 45, 19,
+//                49, 15, 14, 52, 53, 11,
+//                8, 58, 59, 5, 4, 62);
+        
         SimpleMatrix diag = SimpleMatrix.identity(H.numCols()).scale(getL2Penalty());
+//        System.out.println("H");
+////        H.print("%.6f");
+//        diag.print("%.6f");
+////        
+//        SimpleMatrix aux;
         //(Ht * H + alpha * I)^(-1) * Ht * Y
-        W = (H.transpose().mult(H).plus(diag)).pseudoInverse().mult(H.transpose()).mult(Yobs);
+       W = (H.transpose().mult(H).plus(diag)).pseudoInverse().mult(H.transpose()).mult(Yobs);
+       
+//        System.out.println("Ht*H");
+//        aux = H.transpose().mult(H);
+//        aux.print("%.6f");
+//        aux = aux.plus(diag);
+//        System.out.println("Ht * H + alfa");
+//        aux.print("%.6f");
+//        System.out.println("(Ht * H + alfa)^-1");
+//        aux = aux.pseudoInverse();
+//        aux.print("%.6f");
+//        System.out.println("((Ht * H + alfa)^-1)*Ht");
+//        aux = aux.mult(H.transpose());
+//        aux.print("%.6f");
+//        System.out.println("((Ht * H + alfa)^-1)*Ht * Yobs");
+//        aux = aux.mult(Yobs);
+//        aux.print("%.6f");
+//        System.out.println("Hola Mundo");
     }
 
     /**
