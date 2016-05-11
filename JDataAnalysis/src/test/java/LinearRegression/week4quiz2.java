@@ -1,7 +1,6 @@
 package LinearRegression;
 
 import com.gitia.jdataanalysis.JDataAnalysis;
-import com.gitia.jdataanalysis.MultipleLinearRegression;
 import com.gitia.jdataanalysis.RidgeRegression;
 import com.gitia.jdataanalysis.data.CrossValidation;
 
@@ -100,31 +99,31 @@ public class week4quiz2 {
         CrossValidation crossValidation = new CrossValidation();
         System.out.println("e: 1.2e5");
         crossValidation.kFoldCrossValidation(10, 1.2e5, JDA_train_valid_shuffled_data.getPolynomial("sqft_living", 2), JDA_train_valid_shuffled_data.getFeature("price"));
-//        System.out.println("e: 10^3");
-//        crossValidation.kFoldCrossValidation(10, Math.pow(10, 3), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
-//        System.out.println("e: 10^3.5");
-//        crossValidation.kFoldCrossValidation(10, Math.pow(10, 3.5), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
-//        System.out.println("e: 10^4");
-//        crossValidation.kFoldCrossValidation(10, Math.pow(10, 4), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
-//        System.out.println("e: 10^4.5");
-//        crossValidation.kFoldCrossValidation(10, Math.pow(10, 4.5), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
-//        System.out.println("e: 10^5");
-//        crossValidation.kFoldCrossValidation(10, Math.pow(10, 5), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
-//        System.out.println("e: 10^5.5");
-//        crossValidation.kFoldCrossValidation(10, Math.pow(10, 5.5), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
-//        System.out.println("e: 10^6");
-//        crossValidation.kFoldCrossValidation(10, Math.pow(10, 6), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
-//        System.out.println("e: 10^6.5");
-//        crossValidation.kFoldCrossValidation(10, Math.pow(10, 6.5), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
-//        System.out.println("e: 10^7");
-//        crossValidation.kFoldCrossValidation(10, Math.pow(10, 7), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
-//        System.out.println("e: 10^7.5");
-//        crossValidation.kFoldCrossValidation(10, Math.pow(10, 7.5), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
-//        System.out.println("e: 10^8");
-//        crossValidation.kFoldCrossValidation(10, Math.pow(10, 8), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
-//        System.out.println("e: 10^8.5");
-//        crossValidation.kFoldCrossValidation(10, Math.pow(10, 8.5), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
-//        System.out.println("e: 10^9");
-//        crossValidation.kFoldCrossValidation(10, Math.pow(10, 9), poly15_train_valid_shuffled_data, train_valid_shuffled_data.getFeature("price"));
+        System.out.println("e: 10^3");
+        crossValidation.kFoldCrossValidation(10, Math.pow(10, 3), JDA_train_valid_shuffled_data.getPolynomial("sqft_living", 2), JDA_train_valid_shuffled_data.getFeature("price"));
+        System.out.println("e: 10^3.5");
+        crossValidation.kFoldCrossValidation(10, Math.pow(10, 3.5), JDA_train_valid_shuffled_data.getPolynomial("sqft_living", 2), JDA_train_valid_shuffled_data.getFeature("price"));
+        System.out.println("e: 10^4");
+        crossValidation.kFoldCrossValidation(10, Math.pow(10, 4), JDA_train_valid_shuffled_data.getPolynomial("sqft_living", 2), JDA_train_valid_shuffled_data.getFeature("price"));
+        System.out.println("e: 10^4.5");
+        crossValidation.kFoldCrossValidation(10, Math.pow(10, 4.5), JDA_train_valid_shuffled_data.getPolynomial("sqft_living", 2), JDA_train_valid_shuffled_data.getFeature("price"));
+        System.out.println("e: 10^5");
+        crossValidation.kFoldCrossValidation(10, Math.pow(10, 5), JDA_train_valid_shuffled_data.getPolynomial("sqft_living", 2), JDA_train_valid_shuffled_data.getFeature("price"));
+        System.out.println("e: 10^5.5");
+        crossValidation.kFoldCrossValidation(10, Math.pow(10, 5.5), JDA_train_valid_shuffled_data.getPolynomial("sqft_living", 2), JDA_train_valid_shuffled_data.getFeature("price"));
+        System.out.println("e: 10^6");
+        crossValidation.kFoldCrossValidation(10, Math.pow(10, 6), JDA_train_valid_shuffled_data.getPolynomial("sqft_living", 2), JDA_train_valid_shuffled_data.getFeature("price"));
+        System.out.println("e: 10^6.5");
+        crossValidation.kFoldCrossValidation(10, Math.pow(10, 6.5), JDA_train_valid_shuffled_data.getPolynomial("sqft_living", 2), JDA_train_valid_shuffled_data.getFeature("price"));
+        System.out.println("e: 10^7");
+        crossValidation.kFoldCrossValidation(10, Math.pow(10, 7), JDA_train_valid_shuffled_data.getPolynomial("sqft_living", 2), JDA_train_valid_shuffled_data.getFeature("price"));
+        System.out.println("e: 10^7.5");
+        crossValidation.kFoldCrossValidation(10, Math.pow(10, 7.5), JDA_train_valid_shuffled_data.getPolynomial("sqft_living", 2), JDA_train_valid_shuffled_data.getFeature("price"));
+        System.out.println("e: 10^8");
+        crossValidation.kFoldCrossValidation(10, Math.pow(10, 8), JDA_train_valid_shuffled_data.getPolynomial("sqft_living", 2), JDA_train_valid_shuffled_data.getFeature("price"));
+        System.out.println("e: 10^8.5");
+        crossValidation.kFoldCrossValidation(10, Math.pow(10, 8.5), JDA_train_valid_shuffled_data.getPolynomial("sqft_living", 2), JDA_train_valid_shuffled_data.getFeature("price"));
+        System.out.println("e: 10^9");
+        crossValidation.kFoldCrossValidation(10, Math.pow(10, 9), JDA_train_valid_shuffled_data.getPolynomial("sqft_living", 2), JDA_train_valid_shuffled_data.getFeature("price"));
     }
 }

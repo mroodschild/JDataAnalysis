@@ -59,8 +59,6 @@ public class CrossValidation {
             modelos[i] = new RidgeRegression(l2_penalty);
             cost = modelos[i].fit(xTrain, yTrain);
             costVal = modelos[i].fit(xVal, yVal);
-            //System.out.println("Modelo " + i + "\tcost training: " + cost);
-            //System.out.println("Modelo " + i + "\tcost Validating: " + costVal);
             sum += cost;
             sumVal += costVal;
         }

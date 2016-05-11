@@ -29,6 +29,12 @@ public class TestLambda {
         double l2 = 1.5e-5;
         RidgeRegression model = new RidgeRegression(l2);
         System.out.println("l2:\t" + model.getL2Penalty());
+        model.fit(JDA_kc_house_data.getPolynomial("sqft_living", 1), JDA_kc_house_data.getFeature("price"));
+        model.getCoefficients();
+        
+        l2 = 1.5e-5;
+        model = new RidgeRegression(l2);
+        System.out.println("l2:\t" + model.getL2Penalty());
         model.fit(JDA_kc_house_data.getPolynomial("sqft_living", 2), JDA_kc_house_data.getFeature("price"));
         model.getCoefficients();
         
