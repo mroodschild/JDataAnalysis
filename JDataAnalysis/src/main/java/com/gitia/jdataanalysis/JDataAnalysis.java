@@ -39,17 +39,52 @@ public class JDataAnalysis {
     public JDataAnalysis() {
     }
 
+    /**
+     * Abrimos el Archivo seleccionado y <br>
+     * por defecto mostramos los 10 primeros elementos
+     *
+     * @param path
+     */
     public JDataAnalysis(String path) {
-        open(path);
+        open(path, true);
     }
 
     /**
-     * this function open a file and show the info
+     * Abrimos el Archivo seleccionado e <br>
+     * indicamos si mostramos los 10 primeros elementos.<br>
+     *
+     * true: mostrar <br>
+     * false: ocutlar
+     *
+     * @param path
+     * @param show
+     */
+    public JDataAnalysis(String path, boolean show) {
+        open(path, show);
+    }
+
+    /**
+     * Abrimos el Archivo seleccionado y <br>
+     * por defecto mostramos los 10 primeros elementos
      *
      * @param path
      * @return
      */
     public List<CSVRecord> open(String path) {
+        return open(path, true);
+    }
+
+    /**
+     * Abrimos el Archivo seleccionado e <br>
+     * indicamos si mostramos los 10 primeros elementos.<br>
+     *
+     * true: mostrar <br>
+     * false: ocutlar
+     *
+     * @param path
+     * @return
+     */
+    public List<CSVRecord> open(String path, boolean show) {
 
         try {
             parser = new CSVParser(
@@ -58,7 +93,9 @@ public class JDataAnalysis {
             );
             datos = IteratorUtils.toList(parser.iterator());
             System.out.println("");
-            show();
+            if (show) {
+                show();
+            }
             return datos;
         } catch (IOException ex) {
             Logger.getLogger(JDataAnalysis.class.getName()).log(Level.SEVERE, null, ex);
