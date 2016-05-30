@@ -28,6 +28,7 @@ public class week4quiz2 {
     public static void main(String[] args) {
         //establezco la dirección relativa
         String folder = "src/main/resources/week4/quiz2/";
+        
         JDataAnalysis JDA_kc_house_data = new JDataAnalysis(folder + "kc_house_data.csv");
         JDataAnalysis JDA_train_valid_shuffled_data = new JDataAnalysis(folder + "wk3_kc_house_train_valid_shuffled.csv");
 
