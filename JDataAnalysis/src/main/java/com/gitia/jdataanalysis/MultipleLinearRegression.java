@@ -85,7 +85,7 @@ public class MultipleLinearRegression {
     public void getCoefficients() {
         System.out.println("\nCoefficients: (first coefficient is intercept)");
         for (int i = 0; i < W.getNumElements(); i++) {
-            System.out.printf(" %.10f x%d | ", W.get(i), i);
+            System.out.printf(" %s x%d | ", String.format("%6.3e", W.get(i)), i);
         }
         System.out.println("\n");
     }

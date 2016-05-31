@@ -1,5 +1,6 @@
 package com.gitia.jdataanalysis;
 
+import dnl.utils.text.table.TextTable;
 import java.util.Arrays;
 import javafx.scene.chart.XYChart;
 
@@ -38,7 +39,7 @@ public class Util implements java.io.Serializable {
             System.out.println("");
         }
     }
-    
+
     /**
      * Imprime la matriz en la consola
      *
@@ -74,6 +75,12 @@ public class Util implements java.io.Serializable {
             System.out.println("");
         }
         System.out.println("");
+    }
+
+    public static void show(String[] headers, double[]... vectores) {
+        //TextTable textTable = new TextTable(headers, vectores);
+        TextTable textTable = new TextTable(headers, convertVectorToArray(vectores));
+        textTable.printTable();
     }
 
     public static void mostrarVector(int[] vector, String nombre) {
@@ -134,6 +141,21 @@ public class Util implements java.io.Serializable {
         for (int i = 0; i < serie.getData().size(); i++) {
             System.out.println(serie.getData().get(i).toString());
         }
+    }
+
+    /**
+     *
+     * @param vector
+     * @return
+     */
+    public static Double[][] convertVectorToArray(double[]... vector) {
+        Double data[][] = new Double[vector[0].length][vector.length];
+        for (int i = 0; i < vector.length; i++) {
+            for (int j = 0; j < vector[0].length; j++) {
+                data[j][i] = vector[i][j];
+            }
+        }
+        return data;
     }
 
     public static int[] ordenarVector(int[] vector) {
