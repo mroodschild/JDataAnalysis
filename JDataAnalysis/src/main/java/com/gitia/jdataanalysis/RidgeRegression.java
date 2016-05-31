@@ -40,12 +40,24 @@ public class RidgeRegression extends MultipleLinearRegression {
     }
 
     /**
+     * no imprime los coeficientes parciales por defecto
      *
      * @param input
      * @param output
      * @return cost = RSS + alpha * Wt * W
      */
     public double fit(double[][] input, double[] output) {
+        return fit(input, output, false);
+    }
+
+    /**
+     * para imprimir ponga print = true
+     *
+     * @param input
+     * @param output
+     * @return cost = RSS + alpha * Wt * W
+     */
+    public double fit(double[][] input, double[] output, boolean print) {
         this.input = input;
         this.output = output;
 
@@ -55,9 +67,14 @@ public class RidgeRegression extends MultipleLinearRegression {
         W.zero();
         Yobs = new SimpleMatrix(output.length, 1, true, output);
         //Yest = H.mult(W);
-        System.out.println("Initial RSS: " + getRSS(H, Yobs) + " Initial magnitude_coefficients: " + magnitude_coefficients());
+        if (print) {
+            System.out.println("Initial RSS: " + getRSS(H, Yobs) + " Initial magnitude_coefficients: " + magnitude_coefficients());
+        }
         adjustW();
-        System.out.println("Finish RSS: " + getRSS(H, Yobs) + " Finish magnitude_coefficients: " + magnitude_coefficients());
+        if (print) {
+            System.out.println("Finish RSS: " + getRSS(H, Yobs) + " Finish magnitude_coefficients: " + magnitude_coefficients());
+        }
+
         return cost();
     }
 
@@ -106,7 +123,7 @@ public class RidgeRegression extends MultipleLinearRegression {
 //                41, 23, 22, 44, 45, 19,
 //                49, 15, 14, 52, 53, 11,
 //                8, 58, 59, 5, 4, 62);
-        
+
         SimpleMatrix diag = SimpleMatrix.identity(H.numCols()).scale(getL2Penalty());
 //        System.out.println("H");
 ////        H.print("%.6f");
@@ -114,8 +131,8 @@ public class RidgeRegression extends MultipleLinearRegression {
 ////        
 //        SimpleMatrix aux;
         //(Ht * H + alpha * I)^(-1) * Ht * Y
-       W = (H.transpose().mult(H).plus(diag)).pseudoInverse().mult(H.transpose()).mult(Yobs);
-       
+        W = (H.transpose().mult(H).plus(diag)).pseudoInverse().mult(H.transpose()).mult(Yobs);
+
 //        System.out.println("Ht*H");
 //        aux = H.transpose().mult(H);
 //        aux.print("%.6f");

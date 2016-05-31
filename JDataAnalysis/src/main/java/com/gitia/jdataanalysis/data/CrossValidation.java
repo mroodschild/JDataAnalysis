@@ -32,6 +32,14 @@ public class CrossValidation {
     public CrossValidation() {
     }
 
+    /**
+     * 
+     * @param k partes en la que será dividido el conjunto de datos
+     * @param l2_penalty penalidad del Ridge Regression
+     * @param input Datos de Entrada
+     * @param output Datos de Salida
+     * @return Retorna los modelos de RidgeRegression
+     */
     public RidgeRegression[] kFoldCrossValidation(int k, double l2_penalty, double[][] input, double[] output) {
         this.k = k;
         this.l2_penalty = l2_penalty;
@@ -43,7 +51,8 @@ public class CrossValidation {
     }
 
     /**
-     *
+     * Entrenamos todos los modelos
+     * 
      * @return
      */
     private double entrenarModelos() {

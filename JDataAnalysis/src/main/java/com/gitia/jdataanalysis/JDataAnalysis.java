@@ -92,7 +92,6 @@ public class JDataAnalysis {
                     CSVFormat.DEFAULT.withHeader()
             );
             datos = IteratorUtils.toList(parser.iterator());
-            System.out.println("");
             if (show) {
                 show();
             }
