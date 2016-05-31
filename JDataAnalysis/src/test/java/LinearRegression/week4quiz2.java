@@ -115,10 +115,6 @@ public class week4quiz2 {
         JDataAnalysis JDA_train_valid_shuffled_data = new JDataAnalysis(folder + "wk3_kc_house_train_valid_shuffled.csv", false);
 
         CrossValidation crossValidation = new CrossValidation();
-        System.out.println("e: 100");
-        crossValidation.kFoldCrossValidation(10, 100, JDA_train_valid_shuffled_data.getPolynomial("sqft_living", 2), JDA_train_valid_shuffled_data.getFeature("price"));
-        System.out.println("e: 10^2.5");
-        crossValidation.kFoldCrossValidation(10, Math.pow(10, 2.5), JDA_train_valid_shuffled_data.getPolynomial("sqft_living", 2), JDA_train_valid_shuffled_data.getFeature("price"));
         System.out.println("e: 10^3");
         crossValidation.kFoldCrossValidation(10, Math.pow(10, 3), JDA_train_valid_shuffled_data.getPolynomial("sqft_living", 2), JDA_train_valid_shuffled_data.getFeature("price"));
         System.out.println("e: 10^3.5");
