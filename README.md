@@ -1,7 +1,9 @@
 # JDataAnalysis
+                    Author: Roodschild Matías
+                            mroodschild@gmail.com
 This project born with the idea of analysis data for ML
 
-# Dependencies
+## Dependencies
 -----------------------------------------
 
 The main JDataAnalysis modules depends on the following libraries
