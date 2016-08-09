@@ -22,6 +22,7 @@ The main JDataAnalysis modules depends on the following libraries
 
 - [ EJML          ]  ( http://code.google.com/p/efficient-java-matrix-library )
 - [ Apache Commons-csv          ]  ( https://commons.apache.org/proper/commons-csv/ )
+- [ j-text-utils          ]  ( https://github.com/Udinic/j-text-utils/tree/master/repo/dnl/utils/j-text-utils )
 
 The following is required for unit tests
 
