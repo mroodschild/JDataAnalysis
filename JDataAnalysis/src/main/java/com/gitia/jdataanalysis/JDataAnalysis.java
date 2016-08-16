@@ -64,6 +64,20 @@ public class JDataAnalysis {
     }
 
     /**
+     * Abrimos el Archivo seleccionado e <br>
+     * indicamos si mostramos los 10 primeros elementos.<br>
+     *
+     * true: mostrar <br>
+     * false: ocutlar
+     *
+     * @param path
+     * @param show
+     */
+    public JDataAnalysis(String path, boolean header, boolean show) {
+        open(path, header, show);
+    }
+
+    /**
      * Abrimos el Archivo seleccionado y <br>
      * por defecto mostramos los 10 primeros elementos
      *
@@ -103,6 +117,35 @@ public class JDataAnalysis {
     }
 
     /**
+     * Abrimos el Archivo seleccionado e <br>
+     * indicamos si mostramos los 10 primeros elementos.<br>
+     *
+     * true: mostrar <br>
+     * false: ocutlar
+     *
+     * @param path
+     * @return
+     */
+    public List<CSVRecord> open(String path, boolean header, boolean show) {
+
+        try {
+            CSVFormat csvf = CSVFormat.DEFAULT.withIgnoreHeaderCase(header);
+            parser = new CSVParser(
+                    new FileReader(path),
+                    csvf
+            );
+            datos = IteratorUtils.toList(parser.iterator());
+            if (show) {
+                show();
+            }
+            return datos;
+        } catch (IOException ex) {
+            Logger.getLogger(JDataAnalysis.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    /**
      * show 10 rows
      */
     public void show() {
@@ -111,7 +154,7 @@ public class JDataAnalysis {
         TextTable textTable = new TextTable(columnNames, data);
         textTable.printTable();
         System.out.println("...");
-        System.out.println("Records (" + datos.size() + " x " + parser.getHeaderMap().size() + ")\n");
+        System.out.println("Records (" + datos.size() + " x " + datos.get(0).size() + ")\n");//parser.getHeaderMap().size() + ")\n");
     }
 
     /**
@@ -176,11 +219,14 @@ public class JDataAnalysis {
      * @return
      */
     private String[] getHeader(Map<String, Integer> headerMap) {
-        String[] columNames = new String[headerMap.size()];
-        int count = 0;
-        for (Map.Entry<String, Integer> entry : headerMap.entrySet()) {
-            columNames[count] = entry.getKey();
-            count++;
+        String[] columNames = null;
+        if (headerMap != null) {
+            columNames = new String[headerMap.size()];
+            int count = 0;
+            for (Map.Entry<String, Integer> entry : headerMap.entrySet()) {
+                columNames[count] = entry.getKey();
+                count++;
+            }
         }
         return columNames;
     }
