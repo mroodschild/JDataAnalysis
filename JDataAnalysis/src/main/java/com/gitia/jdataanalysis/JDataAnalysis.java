@@ -35,6 +35,10 @@ public class JDataAnalysis {
 
     private List<CSVRecord> datos;
     private CSVParser parser;
+    private boolean header = false;
+    private String[] columnNames;
+    private String[][] data;
+    private String path;
 
     public JDataAnalysis() {
     }
@@ -46,7 +50,7 @@ public class JDataAnalysis {
      * @param path
      */
     public JDataAnalysis(String path) {
-        open(path, true);
+        open(path, true, true);
     }
 
     /**
@@ -60,7 +64,7 @@ public class JDataAnalysis {
      * @param show
      */
     public JDataAnalysis(String path, boolean show) {
-        open(path, show);
+        open(path, true, show);
     }
 
     /**
@@ -85,7 +89,7 @@ public class JDataAnalysis {
      * @return
      */
     public List<CSVRecord> open(String path) {
-        return open(path, true);
+        return open(path, true, true);
     }
 
     /**
@@ -99,21 +103,7 @@ public class JDataAnalysis {
      * @return
      */
     public List<CSVRecord> open(String path, boolean show) {
-
-        try {
-            parser = new CSVParser(
-                    new FileReader(path),
-                    CSVFormat.DEFAULT.withHeader()
-            );
-            datos = IteratorUtils.toList(parser.iterator());
-            if (show) {
-                show();
-            }
-            return datos;
-        } catch (IOException ex) {
-            Logger.getLogger(JDataAnalysis.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
+        return open(path, true, true);
     }
 
     /**
@@ -127,21 +117,48 @@ public class JDataAnalysis {
      * @return
      */
     public List<CSVRecord> open(String path, boolean header, boolean show) {
+        this.header = header;
+        this.path = path;
+        obtainData();
+        generateColumnNames();
+        if (show) {
+            show();
+        }
+        return datos;
+    }
 
+    private void obtainData() {
         try {
-            CSVFormat csvf = CSVFormat.DEFAULT.withIgnoreHeaderCase(header);
+            CSVFormat csvf;
+            if (this.header) {
+                csvf = CSVFormat.DEFAULT.withHeader();
+            } else {
+                csvf = CSVFormat.DEFAULT.withIgnoreHeaderCase(header);
+            }
             parser = new CSVParser(
                     new FileReader(path),
                     csvf
             );
             datos = IteratorUtils.toList(parser.iterator());
-            if (show) {
-                show();
+            data = new String[datos.size()][datos.get(0).size()];
+            for (int i = 0; i < datos.size(); i++) {
+                for (int j = 0; j < datos.get(0).size(); j++) {
+                    data[i][j] = datos.get(i).get(j);
+                }
             }
-            return datos;
         } catch (IOException ex) {
             Logger.getLogger(JDataAnalysis.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
+        }
+    }
+
+    private void generateColumnNames() {
+        columnNames = new String[datos.get(0).size()];
+        if (header) {
+            columnNames = getHeader(parser.getHeaderMap());
+        } else {
+            for (int i = 0; i < datos.get(0).size(); i++) {
+                columnNames[i] = String.valueOf(i);
+            }
         }
     }
 
@@ -149,28 +166,29 @@ public class JDataAnalysis {
      * show 10 rows
      */
     public void show() {
-        String[] columnNames = getHeader(parser.getHeaderMap());
-        String[][] data = getFeature(10);
-        TextTable textTable = new TextTable(columnNames, data);
-        textTable.printTable();
-        System.out.println("...");
-        System.out.println("Records (" + datos.size() + " x " + datos.get(0).size() + ")\n");//parser.getHeaderMap().size() + ")\n");
+        show(10);
     }
-
+    
     /**
      * show all rows
      */
     public void showAll() {
-        printHeader(parser.getHeaderMap());
-        for (int i = 0; i < datos.size(); i++) {
-            CSVRecord next = datos.get(i);
-            int csvrSize = next.size();
-            for (int j = 0; j < csvrSize; j++) {
-                System.out.printf("%s\t", next.get(j));
-            }
-            System.out.printf("\n");
+        show(data.length);
+    }
+
+    /**
+     * show 10 rows
+     */
+    public void show(int files) {
+        int size = files;
+        if (files > data.length) {
+            size = data.length;
         }
-        System.out.println("Records (" + datos.size() + " x " + parser.getHeaderMap().size() + ")\n");
+        String[][] selected = getFeature(size);
+        TextTable textTable = new TextTable(columnNames, selected);
+        textTable.printTable();
+        System.out.println("...");
+        System.out.println("Records (" + data.length + " x " + data[0].length + ")\n");//parser.getHeaderMap().size() + ")\n");
     }
 
     /**
@@ -199,15 +217,6 @@ public class JDataAnalysis {
     private void printHeaders(String... headers) {
         for (int i = 0; i < headers.length; i++) {
             System.out.printf("%s\t", headers[i]);
-        }
-        System.out.println("");
-    }
-
-    private void printHeader(Map<String, Integer> headerMap) {
-        for (Map.Entry<String, Integer> entry : headerMap.entrySet()) {
-            String key = entry.getKey();
-            //Integer value = entry.getValue();
-            System.out.printf("%s\t", key);
         }
         System.out.println("");
     }
@@ -253,16 +262,27 @@ public class JDataAnalysis {
      */
     public String[][] getFeature(int numRows) {
         int size = numRows;
-        if (datos.size() < numRows) {
-            size = datos.size();
+        if (data.length < numRows) {
+            size = data.length;
         }
-        String[][] feature = new String[size][datos.get(0).size()];
+        String[][] feature = new String[size][data[0].length];
         for (int i = 0; i < size; i++) {
-            for (int j = 0; j < datos.get(0).size(); j++) {
-                feature[i][j] = datos.get(i).get(j);
+            for (int j = 0; j < data[0].length; j++) {
+                feature[i][j] = data[i][j];
             }
         }
         return feature;
+    }
+
+    /**
+     * get the feature desired in a vector
+     *
+     * @param numRows Número de filas a recuperar
+     * @return
+     */
+    public String[][] getFeatures() {
+        int size = data.length;
+        return getFeature(size);
     }
 
     /**
