@@ -168,7 +168,7 @@ public class JDataAnalysis {
     public void show() {
         show(10);
     }
-    
+
     /**
      * show all rows
      */
@@ -177,14 +177,14 @@ public class JDataAnalysis {
     }
 
     /**
-     * show 10 rows
+     * show N rows
      */
     public void show(int files) {
         int size = files;
         if (files > data.length) {
             size = data.length;
         }
-        String[][] selected = getFeature(size);
+        String[][] selected = getFeatureString(size);
         TextTable textTable = new TextTable(columnNames, selected);
         textTable.printTable();
         System.out.println("...");
@@ -192,33 +192,16 @@ public class JDataAnalysis {
     }
 
     /**
-     * show selected headers
+     * show selected features
      *
-     * @param headers
+     * @param features
      */
-    public void show(String... headers) {
-        printHeaders(headers);
-        for (int i = 0; i < datos.size(); i++) {
-            CSVRecord next = datos.get(i);
-            int csvrSize = next.size();
-            for (int j = 0; j < headers.length; j++) {
-                System.out.printf("%s\t", next.get(headers[j]));
-            }
-            System.out.printf("\n");
-        }
-        System.out.println("Records (" + datos.size() + " x " + headers.length + ")\n");
-    }
-
-    /**
-     * print headers
-     *
-     * @param headers
-     */
-    private void printHeaders(String... headers) {
-        for (int i = 0; i < headers.length; i++) {
-            System.out.printf("%s\t", headers[i]);
-        }
-        System.out.println("");
+    public void show(String... features) {
+        String[][] selected = getFeaturesString(features);
+        TextTable textTable = new TextTable(features, selected);
+        textTable.printTable();
+        System.out.println("...");
+        System.out.println("Records (" + data.length + " x " + data[0].length + ")\n");
     }
 
     /**
@@ -255,12 +238,31 @@ public class JDataAnalysis {
     }
 
     /**
+     *
+     * @param numRows Número de filas a recuperar
+     * @return
+     */
+    public double[][] getFeature(int numRows) {
+        int size = numRows;
+        if (data.length < numRows) {
+            size = data.length;
+        }
+        double[][] feature = new double[size][data[0].length];
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < data[0].length; j++) {
+                feature[i][j] = Double.valueOf(data[i][j]);
+            }
+        }
+        return feature;
+    }
+    
+    /**
      * get the feature desired in a vector
      *
      * @param numRows Número de filas a recuperar
      * @return
      */
-    public String[][] getFeature(int numRows) {
+    public String[][] getFeatureString(int numRows) {
         int size = numRows;
         if (data.length < numRows) {
             size = data.length;
@@ -275,14 +277,23 @@ public class JDataAnalysis {
     }
 
     /**
-     * get the feature desired in a vector
+     * Retorna todas las características
      *
-     * @param numRows Número de filas a recuperar
      * @return
      */
-    public String[][] getFeatures() {
+    public double[][] getFeatures() {
         int size = data.length;
         return getFeature(size);
+    }
+    
+    /**
+     * Retorna todas las características como String
+     *
+     * @return
+     */
+    public String[][] getFeaturesString() {
+        int size = data.length;
+        return getFeatureString(size);
     }
 
     /**
@@ -313,6 +324,21 @@ public class JDataAnalysis {
 
         }
         return data;
+    }
+
+    /**
+     *
+     * @param Features
+     * @return
+     */
+    public String[][] getFeaturesString(String... Features) {
+        String[][] selected = new String[data.length][Features.length];
+        for (int i = 0; i < data.length; i++) {
+            for (int j = 0; j < Features.length; j++) {
+                selected[i][j] = datos.get(i).get(Features[j]);
+            }
+        }
+        return selected;
     }
 
     /**
