@@ -62,7 +62,7 @@ public class Normalize {
          * parámetro
          */
         if ((min - max) == 0) {
-            return 1;
+            return -1;
         } else {
             return ((2 * x - min - max) / (max - min));
         }
