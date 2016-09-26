@@ -16,8 +16,11 @@
 package com.gitia.jdataanalysis;
 
 import dnl.utils.text.table.TextTable;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -25,7 +28,9 @@ import java.util.logging.Logger;
 import org.apache.commons.collections4.IteratorUtils;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.lang.ArrayUtils;
 
 /**
  *
@@ -127,6 +132,58 @@ public class JDataAnalysis {
         return datos;
     }
 
+    public void save(String[][] data, String[] headers, String folder, String fileName) {
+        String NEW_LINE_SEPARATOR = "\n";
+
+        FileWriter fileWriter = null;
+
+        CSVPrinter csvFilePrinter = null;
+
+        //Create the CSVFormat object with "\n" as a record delimiter
+        CSVFormat csvFileFormat = CSVFormat.DEFAULT.withRecordSeparator(NEW_LINE_SEPARATOR);
+        try {
+            //initialize FileWriter object
+            File file = new File(folder + "/" + fileName);
+            fileWriter = new FileWriter(file);
+
+            //initialize CSVPrinter object 
+            csvFilePrinter = new CSVPrinter(fileWriter, csvFileFormat);
+
+            //Create CSV file header
+            csvFilePrinter.printRecord(headers);
+
+            //Write a new student object list to the CSV file
+            for (int i = 0; i < data.length; i++) {
+                //List studentDataRecord = new ArrayList();
+                csvFilePrinter.printRecord(data[i]);
+            }
+            System.out.println("CSV file was created successfully !!!");
+
+        } catch (Exception e) {
+            System.out.println("Error in CsvFileWriter !!!");
+            e.printStackTrace();
+        } finally {
+            try {
+                fileWriter.flush();
+                fileWriter.close();
+                csvFilePrinter.close();
+            } catch (IOException e) {
+                System.out.println("Error while flushing/closing fileWriter/csvPrinter !!!");
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void save(String[] data, String headers, String folder, String fileName) {
+        String datos[][] = new String[data.length][1];
+        String[] cabeceras = new String[1];
+        cabeceras[0] = headers;
+        for (int i = 0; i < data.length; i++) {
+            datos[i][0] = data[i];
+        }
+        save(datos, cabeceras, folder, fileName);
+    }
+
     private void obtainData() {
         try {
             CSVFormat csvf;
@@ -160,6 +217,10 @@ public class JDataAnalysis {
                 columnNames[i] = String.valueOf(i);
             }
         }
+    }
+
+    public String[] getColumnNames() {
+        return columnNames;
     }
 
     /**
@@ -255,7 +316,7 @@ public class JDataAnalysis {
         }
         return feature;
     }
-    
+
     /**
      * get the feature desired in a vector
      *
@@ -285,7 +346,7 @@ public class JDataAnalysis {
         int size = data.length;
         return getFeature(size);
     }
-    
+
     /**
      * Retorna todas las características como String
      *
@@ -306,6 +367,20 @@ public class JDataAnalysis {
         double[] feature = new double[datos.size()];
         for (int i = 0; i < datos.size(); i++) {
             feature[i] = Double.valueOf(datos.get(i).get(selectedFeature));
+        }
+        return feature;
+    }
+
+    /**
+     * get the feature desired in a vector
+     *
+     * @param selectedFeature
+     * @return
+     */
+    public String[] getFeatureString(String selectedFeature) {
+        String[] feature = new String[datos.size()];
+        for (int i = 0; i < datos.size(); i++) {
+            feature[i] = datos.get(i).get(selectedFeature);
         }
         return feature;
     }

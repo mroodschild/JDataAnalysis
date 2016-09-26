@@ -1,40 +1,32 @@
 package com.gitia.jdataanalysis;
 
-import com.gitia.jdataanalysis.JDataAnalysis;
-
 /**
  *
  * @author Matías Roodschild <mroodschild@gmail.com>
  */
-public class Temp {
+public class LinearAutoComplete {
 
-    public static void main(String[] args) {
-        String folder = "src/main/resources/";
-
-        System.out.println("\nEntrenamos cada uno de los sets");
-
-        JDataAnalysis JDA = new JDataAnalysis(folder + "llenadoTemp_11277.csv", true);
-        String[][] tempData = JDA.getFeaturesString("temp_aero");
-
-        String tempInit = tempData[0][0];
-        String tempFinish = tempData[0][0];
+    public String[] complete(String[] feature) {
+        String[] tempData = feature;
+        String tempInit = tempData[0];
+        String tempFinish = tempData[0];
         int count = 0;
         int pos_init = 0;
         int pos_finish = 0;
 
         for (int i = 0; i < tempData.length; i++) {
-            if (!tempData[i][0].equals("NaN")) {
+            if (!tempData[i].equals("NaN")) {
                 if (count == 0) {
-                    tempInit = tempData[i][0];
+                    tempInit = tempData[i];
                 } else {
-                    tempFinish = tempData[i][0];
+                    tempFinish = tempData[i];
                     double part = 1;
                     double temp1 = Double.valueOf(tempInit);
                     double temp2 = Double.valueOf(tempFinish);
                     double div = count + 1;
                     for (int j = pos_init; j <= pos_finish; j++) {
                         double a = temp1 + (temp2 - temp1) * part / div;
-                        tempData[j][0] = String.valueOf(a);
+                        tempData[j] = String.valueOf(a);
                         part++;
                     }
                 }
@@ -50,8 +42,6 @@ public class Temp {
                 count++;
             }
         }
-        for (int i = 0; i < 10; i++) {
-            System.out.println("i: " + i + " temp: " + tempData[i][0]);
-        }
+        return tempData;
     }
 }
