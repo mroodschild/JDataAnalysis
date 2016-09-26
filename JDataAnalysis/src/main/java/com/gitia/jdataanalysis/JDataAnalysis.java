@@ -20,7 +20,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -30,7 +29,6 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
-import org.apache.commons.lang.ArrayUtils;
 
 /**
  *
@@ -182,6 +180,10 @@ public class JDataAnalysis {
             datos[i][0] = data[i];
         }
         save(datos, cabeceras, folder, fileName);
+    }
+    
+    public void replace(String[] datos, String header){
+        
     }
 
     private void obtainData() {

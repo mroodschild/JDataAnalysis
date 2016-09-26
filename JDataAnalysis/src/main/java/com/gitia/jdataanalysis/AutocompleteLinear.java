@@ -4,9 +4,9 @@ package com.gitia.jdataanalysis;
  *
  * @author Matías Roodschild <mroodschild@gmail.com>
  */
-public class LinearAutoComplete {
+public class AutocompleteLinear {
 
-    public String[] complete(String[] feature) {
+    public static String[] complete(String[] feature) {
         String[] tempData = feature;
         String tempInit = tempData[0];
         String tempFinish = tempData[0];
