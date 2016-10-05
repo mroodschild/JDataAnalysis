@@ -40,7 +40,7 @@ public class JDataAnalysis {
     private CSVParser parser;
     private boolean header = false;
     private String[] columnNames;
-    private String[][] data;
+    private String[][] data; //quitar, mal diseño
     private String path;
 
     public JDataAnalysis() {
@@ -156,6 +156,7 @@ public class JDataAnalysis {
                 csvFilePrinter.printRecord(data[i]);
             }
             System.out.println("CSV file was created successfully !!!");
+            System.out.println(folder + "/" + fileName);
 
         } catch (Exception e) {
             System.out.println("Error in CsvFileWriter !!!");
@@ -181,9 +182,22 @@ public class JDataAnalysis {
         }
         save(datos, cabeceras, folder, fileName);
     }
-    
-    public void replace(String[] datos, String header){
-        
+
+    /**
+     * aún sin terminar
+     *
+     * @param data
+     * @param selectedFeature
+     */
+    public void replace(String[] data, String selectedFeature) {
+        String[] feature = new String[datos.size()];
+        if (data.length == datos.size()) {
+            for (int i = 0; i < datos.size(); i++) {
+                //   datos.get(i).get(selectedFeature) = data[i];
+            }
+        } else {
+            System.out.println("El tamaño del los datos no coinciden");
+        }
     }
 
     private void obtainData() {

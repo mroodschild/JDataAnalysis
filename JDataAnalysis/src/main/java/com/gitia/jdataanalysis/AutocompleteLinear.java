@@ -6,7 +6,15 @@ package com.gitia.jdataanalysis;
  */
 public class AutocompleteLinear {
 
+    /**
+     * Los espacios vacíos deben estar completados con "NaN"
+     *
+     * @param feature
+     * @return
+     */
     public static String[] complete(String[] feature) {
+        System.out.println("AutocompleteLinear Started");
+        int completados = 0;
         String[] tempData = feature;
         String tempInit = tempData[0];
         String tempFinish = tempData[0];
@@ -29,6 +37,7 @@ public class AutocompleteLinear {
                         tempData[j] = String.valueOf(a);
                         part++;
                     }
+                    completados += count;
                 }
                 count = 0;
                 tempInit = tempFinish;
@@ -42,6 +51,8 @@ public class AutocompleteLinear {
                 count++;
             }
         }
+        System.out.println("Datos Completados: " + completados);
+        System.out.println("AutocompleteLinear Finished");
         return tempData;
     }
 }
