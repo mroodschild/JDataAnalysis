@@ -61,7 +61,9 @@ public class JDataAnalysis {
      * indicamos si mostramos los 10 primeros elementos.<br>
      *
      * true: mostrar <br>
-     * false: ocutlar
+     * false: ocutlar <br>
+     * 
+     * por defecto indicamos que el archivo tiene cabecera
      *
      * @param path
      * @param show

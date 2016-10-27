@@ -21,29 +21,31 @@ package com.gitia.jdataanalysis.data;
  */
 public class Normalize {
 
-    double min[];
-    double max[];
+    private double min[];
+    private double max[];
 
     /**
      * normalizamos los datos entre 0 y 1, según un máximo y un mínimo
+     *
      * @param data
-     * @return 
+     * @return
      */
     public double[][] normalize(double[][] data) {
         findMaxMin(data);
-        return reducir(data);
+        return reduce(data);
     }
 
     /**
      * reducimos los datos entre 0 y 1
+     *
      * @param data
-     * @return 
+     * @return
      */
-    private double[][] reducir(double[][] data) {
+    private double[][] reduce(double[][] data) {
         double aux[][] = new double[data.length][data[0].length];
         for (int i = 0; i < data.length; i++) {
             for (int j = 0; j < data[0].length; j++) {
-                aux[i][j] = reducir(data[i][j], min[j], max[j]);
+                aux[i][j] = reducir(data[i][j], getMin()[j], getMax()[j]);
             }
         }
         return aux;
@@ -56,7 +58,7 @@ public class Normalize {
      * @param max máximo del rango de valores
      * @return valor reducido
      */
-    public double reducir(double x, double min, double max) {
+    private double reducir(double x, double min, double max) {
         /**
          * para evitar NaN cuando haya una columna toda llena con el mismo
          * parámetro
@@ -77,20 +79,34 @@ public class Normalize {
         max = new double[data[0].length];
         min = new double[data[0].length];
         //ponemos como maximo el primer valor de todas las columnas
-        System.arraycopy(data[0], 0, max, 0, data[0].length);
+        System.arraycopy(data[0], 0, getMax(), 0, data[0].length);
         //ponemos como mínimo el primer valor de todas las columnas
-        System.arraycopy(data[0], 0, min, 0, data[0].length);
+        System.arraycopy(data[0], 0, getMin(), 0, data[0].length);
         //recorremos todos los valores buscando los máximos
         for (int i = 0; i < data.length; i++) {
             for (int j = 0; j < data[0].length; j++) {
-                if (max[j] < data[i][j]) {
+                if (getMax()[j] < data[i][j]) {
                     max[j] = data[i][j];
                 }
-                if (min[j] > data[i][j]) {
+                if (getMin()[j] > data[i][j]) {
                     min[j] = data[i][j];
                 }
             }
         }
+    }
+
+    /**
+     * @return the min
+     */
+    public double[] getMin() {
+        return min;
+    }
+
+    /**
+     * @return the max
+     */
+    public double[] getMax() {
+        return max;
     }
 
 }
