@@ -24,23 +24,63 @@ import org.ejml.simple.SimpleMatrix;
 public class STD {
 
     double mean;
-    double u;
-    double d;
+    double standardDeviation;
 
+    /**
+     * Laplaician smoothing.
+     */
     public STD() {
     }
 
-    public STD(double mean, double u, double d) {
+    /**
+     *
+     * @param mean
+     * @param standardDeviation
+     */
+    public STD(double mean, double standardDeviation) {
         this.mean = mean;
-        this.u = u;
-        this.d = d;
+        this.standardDeviation = standardDeviation;
     }
 
+    /**
+     *
+     * @param x
+     */
     public void fit(double[] x) {
         mean = Mean.mean(x);
+        double[] Xi2 = new double[x.length];
+        double sum = 0;
+        for (int i = 0; i < x.length; i++) {
+            Xi2[i] = Math.pow((x[i] - mean), 2);
+            sum += Xi2[i];
+        }
+        this.standardDeviation = Math.sqrt(sum / (double) (Xi2.length - 1));
     }
 
+    /**
+     *
+     * @param x
+     * @return
+     */
     public double eval(double x) {
-        return x;
+        return ((x - this.mean) / this.standardDeviation);
     }
+
+    /**
+     *
+     * @param x
+     * @return
+     */
+    public double reverse(double x) {
+        return ((x * this.standardDeviation) + this.mean);
+    }
+
+    public double getMean() {
+        return mean;
+    }
+
+    public double getStandardDeviation() {
+        return standardDeviation;
+    }
+
 }
