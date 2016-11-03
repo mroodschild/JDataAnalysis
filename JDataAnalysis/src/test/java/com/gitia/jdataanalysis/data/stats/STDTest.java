@@ -15,13 +15,13 @@
  */
 package com.gitia.jdataanalysis.data.stats;
 
+import org.ejml.simple.SimpleMatrix;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.Ignore;
 
 /**
  *
@@ -65,6 +65,27 @@ public class STDTest {
     }
 
     /**
+     * Test of fit method, of class STD.
+     */
+    @Test
+    public void testFit_SimpleMatrix() {
+        System.out.println("fit_SimpleMatrix");
+        double[][] x = {
+            {1, 2, 3},
+            {4, 5, 6},
+            {7, 8, 9},
+            {10, 11, 12},
+            {13, 14, 15}};
+        SimpleMatrix input = new SimpleMatrix(x);
+        STD instance = new STD();
+        instance.fit(input);
+        System.out.println("Mean");
+        instance.getMeanSimple().print();
+        System.out.println("STD");
+        instance.getStandardDeviationSimple().print();
+    }
+
+    /**
      * Test of eval method, of class STD.
      */
     @Test
@@ -76,6 +97,45 @@ public class STDTest {
         double result = instance.eval(x);
         assertEquals(expResult, result, 0.0);
         System.out.println(result);
+    }
+
+    /**
+     * Test of eval method, of class STD.
+     */
+    @Test
+    public void testEval_SimpleMatrix() {
+        System.out.println("Test Eval Matrix");
+        double[][] x = {
+            {1, 2, 3},
+            {4, 5, 6},
+            {7, 8, 9},
+            {10, 11, 12},
+            {13, 14, 15}};
+        SimpleMatrix input = new SimpleMatrix(x);
+        STD instance = new STD();
+        instance.fit(input);
+
+        instance.eval(input).print();
+
+    }
+
+    /**
+     * Test of eval method, of class STD.
+     */
+    @Test
+    public void testReverse_SimpleMatrix() {
+        System.out.println("Test Reverse Matrix");
+        double[][] x = {
+            {1, 2, 3},
+            {4, 5, 6},
+            {7, 8, 9},
+            {10, 11, 12},
+            {13, 14, 15}};
+        SimpleMatrix input = new SimpleMatrix(x);
+        STD instance = new STD();
+        instance.fit(input);
+        SimpleMatrix a = instance.eval(input);
+        instance.reverse(a).print();
     }
 
 }
