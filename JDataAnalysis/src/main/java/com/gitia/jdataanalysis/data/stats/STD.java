@@ -15,6 +15,7 @@
  */
 package com.gitia.jdataanalysis.data.stats;
 
+import org.ejml.ops.CommonOps;
 import org.ejml.simple.SimpleMatrix;
 
 /**
@@ -26,6 +27,7 @@ public class STD {
     double mean;
     SimpleMatrix meanSimple;
     double standardDeviation;
+    SimpleMatrix standardDeviationSimple;
 
     /**
      * Laplaician smoothing.
@@ -64,6 +66,7 @@ public class STD {
      */
     public void fit(SimpleMatrix x) {
         meanSimple = Mean.mean(x);
+        standardDeviationSimple = new SimpleMatrix(1, x.numCols());
         SimpleMatrix ones = meanSimple.transpose().copy();
         ones.set(1);
         ones.mult(meanSimple);
