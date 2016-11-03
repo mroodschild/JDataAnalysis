@@ -15,10 +15,7 @@
  */
 package com.gitia.jdataanalysis.data.stats;
 
-import org.ejml.ops.CommonOps;
 import org.ejml.simple.SimpleMatrix;
-import static org.junit.Assert.assertArrayEquals;
-import org.junit.Test;
 
 /**
  *
@@ -26,10 +23,8 @@ import org.junit.Test;
  */
 public class STD {
 
-    double mean;
-    SimpleMatrix meanSimple;
-    double standardDeviation;
-    SimpleMatrix standardDeviationSimple;
+    SimpleMatrix mean;
+    SimpleMatrix standardDeviation;
 
     /**
      * Laplaician smoothing.
@@ -42,24 +37,9 @@ public class STD {
      * @param mean
      * @param standardDeviation
      */
-    public STD(double mean, double standardDeviation) {
+    public STD(SimpleMatrix mean, SimpleMatrix standardDeviation) {
         this.mean = mean;
         this.standardDeviation = standardDeviation;
-    }
-
-    /**
-     *
-     * @param x
-     */
-    public void fit(double[] x) {
-        mean = Mean.mean(x);
-        double[] Xi2 = new double[x.length];
-        double sum = 0;
-        for (int i = 0; i < x.length; i++) {
-            Xi2[i] = Math.pow((x[i] - mean), 2);
-            sum += Xi2[i];
-        }
-        this.standardDeviation = Math.sqrt(sum / (double) (Xi2.length - 1));
     }
 
     /**
@@ -69,11 +49,11 @@ public class STD {
      */
     public void fit(SimpleMatrix x) {
         //calculamos el mean de cada columna
-        meanSimple = Mean.mean(x);
+        mean = Mean.mean(x);
         //obtenemos el mean para restar elemento a elemento
         SimpleMatrix meanAux = meanMatrix(x);
         //obtenemos la desviación estandar para cada columna
-        standardDeviationSimple
+        standardDeviation
                 = Sum.sum(x.minus(meanAux)
                         .elementPower(2))
                         .divide(x.numRows() - 1
@@ -89,7 +69,7 @@ public class STD {
     private SimpleMatrix meanMatrix(SimpleMatrix x) {
         SimpleMatrix meanAux = new SimpleMatrix(x.numRows(), 1);
         meanAux.set(1);
-        return meanAux.mult(meanSimple);
+        return meanAux.mult(mean);
     }
 
     /**
@@ -100,16 +80,7 @@ public class STD {
     private SimpleMatrix stdMatrix(SimpleMatrix x) {
         SimpleMatrix stdAux = new SimpleMatrix(x.numRows(), 1);
         stdAux.set(1);
-        return stdAux.mult(standardDeviationSimple);
-    }
-
-    /**
-     *
-     * @param x
-     * @return
-     */
-    public double eval(double x) {
-        return ((x - this.mean) / this.standardDeviation);
+        return stdAux.mult(standardDeviation);
     }
 
     /**
@@ -128,35 +99,18 @@ public class STD {
      * @param x
      * @return
      */
-    public double reverse(double x) {
-        return ((x * this.standardDeviation) + this.mean);
-    }
-
-    /**
-     *
-     * @param x
-     * @return
-     */
     public SimpleMatrix reverse(SimpleMatrix x) {
         SimpleMatrix meanAux = meanMatrix(x);
         SimpleMatrix stdAux = stdMatrix(x);
         return x.elementMult(stdAux).plus(meanAux);
     }
 
-    public double getMean() {
-        return mean;
-    }
-
-    public double getStandardDeviation() {
+    public SimpleMatrix getStandardDeviationSimple() {
         return standardDeviation;
     }
 
-    public SimpleMatrix getStandardDeviationSimple() {
-        return standardDeviationSimple;
-    }
-
     public SimpleMatrix getMeanSimple() {
-        return meanSimple;
+        return mean;
     }
 
 }

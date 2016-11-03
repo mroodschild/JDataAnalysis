@@ -21,7 +21,6 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -52,22 +51,6 @@ public class STDTest {
      * Test of fit method, of class STD.
      */
     @Test
-    public void testFit() {
-        System.out.println("fit");
-        double[] x = {4, 5, 6, 7};
-        double expMean = 5.5;
-        double expSTD = 1.290994449;
-        STD instance = new STD();
-        instance.fit(x);
-        assertEquals(expSTD, instance.getStandardDeviation(), 0.000000001);
-        assertEquals(expMean, instance.getMean(), 0.0);
-        System.out.println("Mean:\t" + instance.getMean() + "\tSTD:\t" + instance.getStandardDeviation());
-    }
-
-    /**
-     * Test of fit method, of class STD.
-     */
-    @Test
     public void testFit_SimpleMatrix() {
         System.out.println("fit_SimpleMatrix");
         double[][] x = {
@@ -83,20 +66,6 @@ public class STDTest {
         instance.getMeanSimple().print();
         System.out.println("STD");
         instance.getStandardDeviationSimple().print();
-    }
-
-    /**
-     * Test of eval method, of class STD.
-     */
-    @Test
-    public void testEval() {
-        System.out.println("eval");
-        double x = 6.0;
-        STD instance = new STD(2, 5);
-        double expResult = 0.8;
-        double result = instance.eval(x);
-        assertEquals(expResult, result, 0.0);
-        System.out.println(result);
     }
 
     /**
