@@ -43,9 +43,10 @@ public class STD {
     }
 
     /**
-     * sqrt([sum(Xij - Xmean)^2] / (m - 1))
+     * mean = SumRows(Xij)/numRow<br>
+     * standardDeviation = sqrt([sum(Xij - Xmean)^2] / (m - 1))
      *
-     * @param x
+     * @param x value to fit
      */
     public void fit(SimpleMatrix x) {
         //calculamos el mean de cada columna
@@ -85,6 +86,8 @@ public class STD {
 
     /**
      *
+     * Xn = (X - mean(X)) / std(X)
+     *
      * @param x
      * @return
      */
@@ -95,6 +98,7 @@ public class STD {
     }
 
     /**
+     * X = Xn * std(X) + mean(X)
      *
      * @param x
      * @return
@@ -105,12 +109,20 @@ public class STD {
         return x.elementMult(stdAux).plus(meanAux);
     }
 
-    public SimpleMatrix getStandardDeviationSimple() {
+    public SimpleMatrix getStandardDeviation() {
         return standardDeviation;
     }
 
-    public SimpleMatrix getMeanSimple() {
+    public SimpleMatrix getMean() {
         return mean;
+    }
+
+    public void setMean(SimpleMatrix mean) {
+        this.mean = mean;
+    }
+
+    public void setStandardDeviation(SimpleMatrix standardDeviation) {
+        this.standardDeviation = standardDeviation;
     }
 
 }

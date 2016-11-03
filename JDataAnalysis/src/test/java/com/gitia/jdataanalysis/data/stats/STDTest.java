@@ -63,9 +63,9 @@ public class STDTest {
         STD instance = new STD();
         instance.fit(input);
         System.out.println("Mean");
-        instance.getMeanSimple().print();
+        instance.getMean().print();
         System.out.println("STD");
-        instance.getStandardDeviationSimple().print();
+        instance.getStandardDeviation().print();
     }
 
     /**
