@@ -35,11 +35,7 @@ public class Mean {
      */
     public static double mean(double[] datos) {
         double size = datos.length;
-        double sum = 0;
-        for (int i = 0; i < size; i++) {
-            sum = sum + datos[i];
-        }
-        return sum / size;
+        return Sum.sum(datos)/size;
     }
 
     /**
@@ -62,13 +58,6 @@ public class Mean {
      */
     public static SimpleMatrix mean(SimpleMatrix datos) {
         double size = datos.numRows();
-        SimpleMatrix sum = new SimpleMatrix(1, datos.numCols());
-        sum.zero();
-        for (int j = 0; j < datos.numCols(); j++) {
-            for (int i = 0; i < size; i++) {
-                sum.set(j, sum.get(j) + datos.get(i, j));
-            }
-        }
-        return sum.divide(size);
+        return Sum.sum(datos).divide(size);
     }
 }

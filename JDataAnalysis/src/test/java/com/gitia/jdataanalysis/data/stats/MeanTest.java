@@ -55,13 +55,9 @@ public class MeanTest {
     public void testMean_doubleArr() {
         System.out.println("testMean_doubleArr");
         double[] datos = {4, 5, 6, 7};
-        Mean instance = new Mean();
         double expResult = 5.5;
-        double result = instance.mean(datos);
+        double result = Mean.mean(datos);
         assertEquals(expResult, result, 0.0);
-        System.out.println("Result:\t" + result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
 
     /**
@@ -70,14 +66,11 @@ public class MeanTest {
     @Test
     public void testMean_SimpleMatrix() {
         System.out.println("mean");
-        double data[][] = {{1, 2}, {3, 4}, {5, 6}};
+        double data[][] = {{1, 2, 3},{4, 5, 6},{7, 8, 9}};
         SimpleMatrix datos = new SimpleMatrix(data);
-        //datos.print();
-        Mean instance = new Mean();
-        SimpleMatrix expResult = new SimpleMatrix(1, 2, true, 3, 4);
-        //expResult.print();
-        SimpleMatrix result = instance.mean(datos);
-        //result.print();
+        SimpleMatrix expResult = new SimpleMatrix(1, 3, false, 4, 5, 6);
+        SimpleMatrix result = Mean.mean(datos);
+        assertArrayEquals(expResult.getMatrix().getData(), result.getMatrix().getData(), 0);
     }
 
 }
