@@ -24,6 +24,7 @@ import org.ejml.simple.SimpleMatrix;
 public class STD {
 
     double mean;
+    SimpleMatrix meanSimple;
     double standardDeviation;
 
     /**
@@ -49,6 +50,23 @@ public class STD {
     public void fit(double[] x) {
         mean = Mean.mean(x);
         double[] Xi2 = new double[x.length];
+        double sum = 0;
+        for (int i = 0; i < x.length; i++) {
+            Xi2[i] = Math.pow((x[i] - mean), 2);
+            sum += Xi2[i];
+        }
+        this.standardDeviation = Math.sqrt(sum / (double) (Xi2.length - 1));
+    }
+
+    /**
+     *
+     * @param x
+     */
+    public void fit(SimpleMatrix x) {
+        meanSimple = Mean.mean(x);
+        SimpleMatrix ones = meanSimple.transpose().copy();
+        ones.set(1);
+        ones.mult(meanSimple);
         double sum = 0;
         for (int i = 0; i < x.length; i++) {
             Xi2[i] = Math.pow((x[i] - mean), 2);
