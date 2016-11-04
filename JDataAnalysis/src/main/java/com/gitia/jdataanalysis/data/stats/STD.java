@@ -27,12 +27,15 @@ public class STD {
     SimpleMatrix standardDeviation;
 
     /**
-     * Laplaician smoothing.
+     *
      */
     public STD() {
     }
 
     /**
+     * Inicializamos la clase, ingresamos los parámetros de media y desviación
+     * estandard el parámetro mean debe y desviación estandard denen estar en el
+     * formato horizontal es decir:<br> [1, 5, 3]
      *
      * @param mean
      * @param standardDeviation
