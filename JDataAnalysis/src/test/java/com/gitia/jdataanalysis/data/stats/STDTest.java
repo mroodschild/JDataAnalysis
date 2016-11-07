@@ -69,6 +69,29 @@ public class STDTest {
     }
 
     /**
+     * Test of fit method, of class STD.
+     */
+    @Test
+    public void testFit_SimpleMatrix_Jorge() {
+        System.out.println("fit_SimpleMatrix JORGE");
+        double[][] x = {
+            {10, 2, 3, 1},
+            {4, 15, 3, 2},
+            {3, 5, 12, 2}
+        };
+        SimpleMatrix input = new SimpleMatrix(x);
+        STD instance = new STD();
+        instance.fit(input);
+        System.out.println("Mean");
+        instance.getMean().print();
+        System.out.println("STD");
+        instance.getStandardDeviation().print();
+        SimpleMatrix aux = instance.eval(input);
+        instance.eval(input).print();
+        instance.reverse(aux).print();
+    }
+
+    /**
      * Test of eval method, of class STD.
      */
     @Test
