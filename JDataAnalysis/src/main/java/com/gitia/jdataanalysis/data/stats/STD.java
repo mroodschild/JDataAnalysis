@@ -34,7 +34,7 @@ public class STD {
 
     /**
      * Inicializamos la clase, ingresamos los parámetros de media y desviación
-     * estandard el parámetro mean debe y desviación estandard denen estar en el
+     * estandard el parámetro mean y desviación estandard deben estar en el
      * formato horizontal es decir:<br> [1, 5, 3]
      *
      * @param mean
