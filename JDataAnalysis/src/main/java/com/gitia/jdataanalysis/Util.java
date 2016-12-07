@@ -176,6 +176,32 @@ public class Util implements java.io.Serializable {
         return data;
     }
 
+    /**
+     *
+     * @param vector
+     * @return
+     */
+    public static String[] convertVectorToString(double[] vector) {
+        String data[] = new String[vector.length];
+        for (int i = 0; i < vector.length; i++) {
+            data[i] = String.valueOf(vector[i]);
+        }
+        return data;
+    }
+    
+    /**
+     *
+     * @param vector
+     * @return
+     */
+    public static String[] convertVectorToString(double[][] vector) {
+        String data[] = new String[vector.length];
+        for (int i = 0; i < vector.length; i++) {
+            data[i] = String.valueOf(vector[i]);
+        }
+        return data;
+    }
+
     public static int[] ordenarVector(int[] vector) {
         int[] aux = new int[vector.length];
         System.arraycopy(vector, 0, aux, 0, vector.length);
