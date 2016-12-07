@@ -188,16 +188,18 @@ public class Util implements java.io.Serializable {
         }
         return data;
     }
-    
+
     /**
      *
      * @param vector
      * @return
      */
-    public static String[] convertVectorToString(double[][] vector) {
-        String data[] = new String[vector.length];
+    public static String[][] convertMatrixToString(double[][] vector) {
+        String data[][] = new String[vector.length][vector[0].length];
         for (int i = 0; i < vector.length; i++) {
-            data[i] = String.valueOf(vector[i]);
+            for (int j = 0; j < vector[0].length; j++) {
+                data[i][j] = String.valueOf(vector[i][j]);
+            }
         }
         return data;
     }
