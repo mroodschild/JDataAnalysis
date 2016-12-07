@@ -56,10 +56,28 @@ public class Util implements java.io.Serializable {
         }
     }
 
+    /**
+     * precisión %.3f
+     *
+     * @param vector [1, 4, 6, 8, 3]
+     * @param nombre null no muestra el nombre
+     */
     public static void mostrarVector(double[] vector, String nombre) {
-        System.out.println("Vector " + nombre + ":");
+        mostrarVector(vector, nombre, "%.3f\t");
+    }
+
+    /**
+     *
+     * @param vector
+     * @param nombre null no muestra nombre
+     * @param format example: "%.5f\t"
+     */
+    public static void mostrarVector(double[] vector, String nombre, String format) {
+        if (nombre != null) {
+            System.out.println("Vector " + nombre + ":");
+        }
         for (int i = 0; i < vector.length; i++) {
-            System.out.printf("%.3f\n", vector[i]);
+            System.out.printf(format, vector[i]);
         }
         System.out.println("");
     }
