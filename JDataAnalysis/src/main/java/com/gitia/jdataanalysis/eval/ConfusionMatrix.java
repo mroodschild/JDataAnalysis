@@ -90,12 +90,16 @@ public class ConfusionMatrix {
     public void printStats() {
         System.out.println("Confusion Matrix\n");
         confusionMatrix.print();
+        
         System.out.println("");
         System.out.println("Aciertos: " + aciertos + "/" + elements);
         System.out.println("Aciertos %: " + aciertosPorc);
+        System.out.println("");
         int size = confusionMatrix.numCols();
         double VP = 0;
         double FN = 0;
+        
+        System.out.println("Aciertos por clase");
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 if (i != j) {
@@ -118,17 +122,17 @@ public class ConfusionMatrix {
                 0, 0, 1,
                 1, 0, 0,
                 0, 1, 0);
-        obs.print();
-        for (int i = 0; i < obs.numRows(); i++) {
-            System.out.println("i\t" + i + "\t" + obs.extractVector(true, i).hashCode());
-        }
-        SimpleMatrix b = obs.extractVector(true, 0);
-        SimpleMatrix c = obs.extractVector(true, 1);
-        b.print();
-        c.print();
-        System.out.println("//");
-        System.out.println(ArrayUtils.indexOf(b.transpose().getMatrix().getData(), 1));
-        System.out.println(ArrayUtils.indexOf(c.transpose().getMatrix().getData(), 1));
+//        obs.print();
+//        for (int i = 0; i < obs.numRows(); i++) {
+//            System.out.println("i\t" + i + "\t" + obs.extractVector(true, i).hashCode());
+//        }
+//        SimpleMatrix b = obs.extractVector(true, 0);
+//        SimpleMatrix c = obs.extractVector(true, 1);
+//        b.print();
+//        c.print();
+//        System.out.println("//");
+//        System.out.println(ArrayUtils.indexOf(b.transpose().getMatrix().getData(), 1));
+//        System.out.println(ArrayUtils.indexOf(c.transpose().getMatrix().getData(), 1));
 
         SimpleMatrix calc = new SimpleMatrix(5, 3, true,
                 1, 0, 0,
@@ -144,7 +148,6 @@ public class ConfusionMatrix {
 
         ConfusionMatrix matrix = new ConfusionMatrix();
         matrix.eval(calc, obs);
-        matrix.getConfusionMatrix().print();
         System.out.println("");
         matrix.printStats();
     }
