@@ -45,7 +45,7 @@ public class ConfusionMatrix {
      * @param calc
      * @param obs
      */
-    private void eval(SimpleMatrix calc, SimpleMatrix obs) {
+    public void eval(SimpleMatrix calc, SimpleMatrix obs) {
         //iniciamos el conteo
         confusionMatrix = new SimpleMatrix(obs.numCols(), obs.numCols());
         confusionMatrix.set(0);
