@@ -84,8 +84,7 @@ public class FilterConstantColumns {
      * @return
      */
     private boolean constant(SimpleMatrix vector) {
-        DenseMatrix64F v = vector.getMatrix();
-        return (CommonOps.elementMax(v) == CommonOps.elementMin(v));
+        return (CommonOps.elementMax(vector.getMatrix()) == CommonOps.elementMin(vector.getMatrix()));
     }
 
 }

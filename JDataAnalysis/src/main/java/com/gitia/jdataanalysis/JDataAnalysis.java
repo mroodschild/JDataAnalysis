@@ -15,6 +15,9 @@
  */
 package com.gitia.jdataanalysis;
 
+import com.fasterxml.jackson.databind.MappingIterator;
+import com.fasterxml.jackson.dataformat.csv.CsvMapper;
+import com.fasterxml.jackson.dataformat.csv.CsvParser;
 import dnl.utils.text.table.TextTable;
 import java.io.File;
 import java.io.FileReader;
@@ -29,6 +32,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
+import org.ejml.simple.SimpleMatrix;
 
 /**
  *
@@ -38,7 +42,7 @@ public class JDataAnalysis {
 
     private List<CSVRecord> datos;
     private CSVParser parser;
-    private boolean header = false;
+    private boolean isHeader = false;
     private String[] columnNames;
     private String[][] data; //quitar, mal diseño
     private String path;
@@ -62,7 +66,7 @@ public class JDataAnalysis {
      *
      * true: mostrar <br>
      * false: ocutlar <br>
-     * 
+     *
      * por defecto indicamos que el archivo tiene cabecera
      *
      * @param path
@@ -80,6 +84,7 @@ public class JDataAnalysis {
      * false: ocutlar
      *
      * @param path
+     * @param header
      * @param show
      */
     public JDataAnalysis(String path, boolean header, boolean show) {
@@ -105,6 +110,7 @@ public class JDataAnalysis {
      * false: ocutlar
      *
      * @param path
+     * @param show
      * @return
      */
     public List<CSVRecord> open(String path, boolean show) {
@@ -119,10 +125,12 @@ public class JDataAnalysis {
      * false: ocutlar
      *
      * @param path
+     * @param isHeader
+     * @param show
      * @return
      */
-    public List<CSVRecord> open(String path, boolean header, boolean show) {
-        this.header = header;
+    private List<CSVRecord> open(String path, boolean isHeader, boolean show) {
+        this.isHeader = isHeader;
         this.path = path;
         obtainData();
         generateColumnNames();
@@ -205,10 +213,39 @@ public class JDataAnalysis {
     private void obtainData() {
         try {
             CSVFormat csvf;
-            if (this.header) {
+            if (this.isHeader) {
                 csvf = CSVFormat.DEFAULT.withHeader();
+
+                parser = new CSVParser(
+                        new FileReader(path),
+                        csvf
+                );
+                datos = IteratorUtils.toList(parser.iterator());
+                data = new String[datos.size()][datos.get(0).size()];
+                for (int i = 0; i < datos.size(); i++) {
+                    for (int j = 0; j < datos.get(0).size(); j++) {
+                        data[i][j] = datos.get(i).get(j);
+                    }
+                }
+
             } else {
-                csvf = CSVFormat.DEFAULT.withIgnoreHeaderCase(header);
+                csvf = CSVFormat.DEFAULT.withIgnoreHeaderCase(isHeader);
+
+                CsvMapper mapper = new CsvMapper();
+                // important: we need "array wrapping" (see next section) here:
+                mapper.enable(CsvParser.Feature.WRAP_AS_ARRAY);
+                File csvFile = new File("src/main/resources/handwrittennumbers/mnist_train_in.csv"); // or from String, URL etc
+                MappingIterator<double[]> it = mapper.readerFor(double[].class).readValues(csvFile);
+                int a = 1;
+                List<double[]> listData = it.readAll();
+                double[][] data = new double[listData.size()][listData.get(0).length];
+                for (int i = 0; i < listData.size(); i++) {
+                    data[i] = listData.get(i);
+                    System.out.println(a++ + ":\t");
+                }
+                SimpleMatrix A = new SimpleMatrix(data);
+                A.print();
+
             }
             parser = new CSVParser(
                     new FileReader(path),
@@ -228,7 +265,7 @@ public class JDataAnalysis {
 
     private void generateColumnNames() {
         columnNames = new String[datos.get(0).size()];
-        if (header) {
+        if (isHeader) {
             columnNames = getHeader(parser.getHeaderMap());
         } else {
             for (int i = 0; i < datos.get(0).size(); i++) {
