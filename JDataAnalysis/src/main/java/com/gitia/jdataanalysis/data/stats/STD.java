@@ -46,8 +46,8 @@ public class STD {
     }
 
     /**
-     * mean = SumRows(Xij)/numRow<br>
-     * standardDeviation = sqrt([sum(Xij - Xmean)^2] / (m - 1))
+     * mean = SumRows(X<sub>ij</sub>)/numRow<br>
+     * standardDeviation = sqrt([sum(X<sub>ij</sub> - Xmean)<sup>2</sup>] / (m - 1))
      *
      * @param x value to fit
      */
