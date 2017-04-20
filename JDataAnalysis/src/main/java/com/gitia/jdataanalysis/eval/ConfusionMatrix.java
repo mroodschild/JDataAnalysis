@@ -1,17 +1,25 @@
 /*
- * Copyright 2016 Matías Roodschild <mroodschild@gmail.com>.
+ * The MIT License
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Copyright 2017 Matías Roodschild <mroodschild@gmail.com>.
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  */
 package com.gitia.jdataanalysis.eval;
 
@@ -87,34 +95,6 @@ public class ConfusionMatrix {
         return confusionMatrix;
     }
 
-    public void printStats() {
-        System.out.println("Confusion Matrix\n");
-        confusionMatrix.print();
-        
-        System.out.println("");
-        System.out.println("Aciertos: " + aciertos + "/" + elements);
-        System.out.println("Aciertos %: " + aciertosPorc);
-        System.out.println("");
-        int size = confusionMatrix.numCols();
-        double VP = 0;
-        double FN = 0;
-        
-        System.out.println("Aciertos por clase");
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                if (i != j) {
-                    FN += confusionMatrix.get(i, j);
-                } else {
-                    VP = confusionMatrix.get(i, j);
-                }
-            }
-            System.out.println("Clase " + i + ": \t" + VP / (VP + FN));
-            VP = 0;
-            FN = 0;
-        }
-
-    }
-
     public static void main(String[] args) {
         SimpleMatrix obs = new SimpleMatrix(5, 3, true,
                 1, 0, 0,
@@ -150,6 +130,36 @@ public class ConfusionMatrix {
         matrix.eval(calc, obs);
         System.out.println("");
         matrix.printStats();
+    }
+    
+    public void printStats() {
+        System.out.println(this.toString());
+    }
+    
+    @Override
+    public String toString() {
+        String info = "";
+        info += "\nConfusion Matrix\n";
+        info += confusionMatrix.toString();
+        info += "\nAciertos: " + aciertos + "/" + elements;
+        info += "\nAciertos %: " + aciertosPorc;
+        int size = confusionMatrix.numCols();
+        double VP = 0;
+        double FN = 0;
+        info += "\nAciertos por clase:\t";
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (i != j) {
+                    FN += confusionMatrix.get(i, j);
+                } else {
+                    VP = confusionMatrix.get(i, j);
+                }
+            }
+            info += "\nClase " + i + ": \t" + VP / (VP + FN)+"\t";
+            VP = 0;
+            FN = 0;
+        }
+        return info;
     }
 
 }
