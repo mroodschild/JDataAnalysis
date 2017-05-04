@@ -47,7 +47,8 @@ public class STD {
 
     /**
      * mean = SumRows(X<sub>ij</sub>)/numRow<br>
-     * standardDeviation = sqrt([sum(X<sub>ij</sub> - Xmean)<sup>2</sup>] / (m - 1))
+     * standardDeviation = sqrt([sum(X<sub>ij</sub> - Xmean)<sup>2</sup>] / (m -
+     * 1))
      *
      * @param x value to fit
      */
@@ -60,9 +61,9 @@ public class STD {
         standardDeviation
                 = Sum.sum(x.minus(meanAux)
                         .elementPower(2))
-                        .divide(x.numRows() - 1
-                        )
-                        .elementPower(0.5);//sqrt
+                .divide(x.numRows() - 1
+                )
+                .elementPower(0.5);//sqrt
     }
 
     /**
@@ -95,9 +96,20 @@ public class STD {
      * @return
      */
     public SimpleMatrix eval(SimpleMatrix x) {
+        System.out.println("MB: " + (double) (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024 / 1024);
+        System.out.println("mean");
         SimpleMatrix meanAux = meanMatrix(x);
+        System.out.println("/mean");
+        System.out.println("MB: " + (double) (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024 / 1024);
+        System.out.println("std_aux");
         SimpleMatrix stdAux = stdMatrix(x);
-        return x.minus(meanAux).elementDiv(stdAux);
+        System.out.println("/std_aux");
+        System.out.println("MB: " + (double) (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024 / 1024);
+        SimpleMatrix out = x.minus(meanAux);
+        System.out.println("MB: " + (double) (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024 / 1024);
+        out = out.elementDiv(stdAux);
+        System.out.println("MB: " + (double) (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024 / 1024);
+        return out;
     }
 
     /**
