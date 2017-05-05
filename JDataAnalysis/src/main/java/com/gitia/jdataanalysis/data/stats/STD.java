@@ -96,19 +96,11 @@ public class STD {
      * @return
      */
     public SimpleMatrix eval(SimpleMatrix x) {
-        System.out.println("MB: " + (double) (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024 / 1024);
-        System.out.println("mean");
         SimpleMatrix meanAux = meanMatrix(x);
-        System.out.println("/mean");
-        System.out.println("MB: " + (double) (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024 / 1024);
-        System.out.println("std_aux");
         SimpleMatrix stdAux = stdMatrix(x);
-        System.out.println("/std_aux");
-        System.out.println("MB: " + (double) (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024 / 1024);
         SimpleMatrix out = x.minus(meanAux);
         System.out.println("MB: " + (double) (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024 / 1024);
         out = out.elementDiv(stdAux);
-        System.out.println("MB: " + (double) (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024 / 1024);
         return out;
     }
 
