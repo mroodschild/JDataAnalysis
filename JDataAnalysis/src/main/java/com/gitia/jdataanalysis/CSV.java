@@ -33,12 +33,12 @@ public class CSV {
 
     public CSV() {
     }
-    
+
     /**
      * Debemos abrir un archivo csv sin cabecera
-     * 
+     *
      * @param path "src/main/resources/handwrittennumbers/mnist_train_in.csv"
-     * @return 
+     * @return
      */
     public static SimpleMatrix open(String path){
         double[][] data = null;
@@ -48,7 +48,7 @@ public class CSV {
             File csvFile = new File(path);
             MappingIterator<double[]> it = mapper.readerFor(double[].class).readValues(csvFile);
             List<double[]> listData = it.readAll();
-            data = new double[listData.size()][listData.get(0).length]; 
+            data = new double[listData.size()][listData.get(0).length];
             for (int i = 0; i < listData.size(); i++) {
                 data[i] = listData.get(i);
             }
@@ -57,7 +57,4 @@ public class CSV {
         }
         return new SimpleMatrix(data);
     }
-    
-    
-    
 }
