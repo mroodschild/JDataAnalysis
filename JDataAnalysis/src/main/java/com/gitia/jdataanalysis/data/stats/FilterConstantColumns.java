@@ -15,6 +15,7 @@
  */
 package com.gitia.jdataanalysis.data.stats;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.ops.CommonOps;
 import org.ejml.simple.SimpleMatrix;
@@ -25,12 +26,12 @@ import org.ejml.simple.SimpleMatrix;
  */
 public class FilterConstantColumns {
 
-    int[] colsFiltered;
+    double[] colsFiltered;
 
     public FilterConstantColumns() {
     }
 
-    public FilterConstantColumns(int[] colsFiltered) {
+    public FilterConstantColumns(double[] colsFiltered) {
         this.colsFiltered = colsFiltered;
     }
 
@@ -42,7 +43,7 @@ public class FilterConstantColumns {
      * @param matrix
      */
     public void fit(SimpleMatrix matrix) {
-        colsFiltered = new int[matrix.numCols()];
+        colsFiltered = new double[matrix.numCols()];
         for (int i = 0; i < matrix.numCols(); i++) {
             if (constant(matrix.extractVector(false, i))) {
                 colsFiltered[i] = 1;
@@ -55,23 +56,26 @@ public class FilterConstantColumns {
     /**
      *
      * Quitamos las columnas que fueron seleccionadas previamente
-     * 
+     *
      * @param matrix
      * @return
      */
     public SimpleMatrix eval(SimpleMatrix matrix) {
-        SimpleMatrix aux = null;
+        SimpleMatrix a = new SimpleMatrix(1, colsFiltered.length, true, colsFiltered);
+        SimpleMatrix aux = new SimpleMatrix(matrix.numRows(), matrix.numCols() - (int) a.elementSum());
+        int count = 0;
         for (int i = 0; i < colsFiltered.length; i++) {
             //las columas con datos a quitar estan marcadas con 1
             //las marcadas con 0 será usadas para crear una nueva matriz
             if (colsFiltered[i] == 0) {
-                if (aux == null) {
-                    //inicializamos la matriz
-                    aux = matrix.extractVector(false, i).copy();
-                } else {
-                    //agregamos las columas que tienen información
-                    aux = aux.combine(0, SimpleMatrix.END, matrix.extractVector(false, i));
-                }
+                //if (aux == null) {
+                //inicializamos la matriz
+                aux.setColumn(count++, 0, matrix.extractVector(false, i).getMatrix().getData());
+                //aux = matrix.extractVector(false, i).copy();
+                //} else {
+                //agregamos las columas que tienen información
+                //  aux = aux.combine(0, SimpleMatrix.END, matrix.extractVector(false, i));
+                //}
             }
         }
         return aux;
