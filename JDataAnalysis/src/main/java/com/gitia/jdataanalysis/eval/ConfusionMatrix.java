@@ -141,8 +141,8 @@ public class ConfusionMatrix {
         String info = "";
         info += "\nConfusion Matrix\n";
         info += confusionMatrix.toString();
-        info += "\nAciertos: " + aciertos + "/" + elements;
-        info += "\nAciertos %: " + aciertosPorc;
+        info += "\nAciertos:\t" + aciertos + "/" + elements;
+        info += "\nAciertos %:\t" + aciertosPorc;
         int size = confusionMatrix.numCols();
         double VP = 0;
         double FN = 0;
