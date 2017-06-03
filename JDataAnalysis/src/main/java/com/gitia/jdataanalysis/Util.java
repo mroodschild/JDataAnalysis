@@ -3,6 +3,7 @@ package com.gitia.jdataanalysis;
 import dnl.utils.text.table.TextTable;
 import java.util.Arrays;
 import javafx.scene.chart.XYChart;
+import org.ejml.simple.SimpleMatrix;
 
 /**
  *
@@ -209,5 +210,13 @@ public class Util implements java.io.Serializable {
         System.arraycopy(vector, 0, aux, 0, vector.length);
         Arrays.sort(aux);
         return aux;
+    }
+    
+    public static double[][] toArray(SimpleMatrix matrix) {
+        double array[][] = new double[matrix.numRows()][matrix.numCols()];
+        for (int r = 0; r < matrix.numRows(); r++) {
+            array[r] = matrix.extractVector(true, r).getMatrix().getData();
+        }
+        return array;
     }
 }
