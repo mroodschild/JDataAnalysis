@@ -18,11 +18,12 @@ package com.gitia.jdataanalysis;
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvParser;
+import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.ejml.simple.SimpleMatrix;
 
 /**
@@ -40,9 +41,9 @@ public class CSV {
      * @param path "src/main/resources/handwrittennumbers/mnist_train_in.csv"
      * @return
      */
-    public static SimpleMatrix open(String path){
+    public static SimpleMatrix open(String path) throws IOException{
         double[][] data = null;
-        try {
+//        try {
             CsvMapper mapper = new CsvMapper();
             mapper.enable(CsvParser.Feature.WRAP_AS_ARRAY);
             File csvFile = new File(path);
@@ -52,9 +53,25 @@ public class CSV {
             for (int i = 0; i < listData.size(); i++) {
                 data[i] = listData.get(i);
             }
-        } catch (IOException ex) {
-            Logger.getLogger(CSV.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        } catch (IOException ex) {
+//            Logger.getLogger(CSV.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         return new SimpleMatrix(data);
+    }
+    
+    /**
+     * @param listOfMap
+     * @param writer
+     * @throws IOException
+     */
+    public static void write(SimpleMatrix matrix, String Name) throws IOException {
+        File file = new File(Name);
+        Writer writer = new FileWriter(file, false);
+        CsvSchema schema = null;
+        CsvSchema.Builder schemaBuilder = CsvSchema.builder();
+        schema = schemaBuilder.build().withLineSeparator("\r").withoutHeader();
+        CsvMapper mapper = new CsvMapper();
+        mapper.writer(schema).writeValues(writer).writeAll(Util.toArray(matrix));
+        writer.flush();
     }
 }
