@@ -56,14 +56,12 @@ public class STD {
         //calculamos el mean de cada columna
         mean = Mean.mean(x);
         //obtenemos el mean para restar elemento a elemento
-        SimpleMatrix meanAux = meanMatrix(x);
+        SimpleMatrix aux = meanMatrix(x);
         //obtenemos la desviación estandar para cada columna
-        standardDeviation
-                = Sum.sum(x.minus(meanAux)
-                        .elementPower(2))
-                .divide(x.numRows() - 1
-                )
-                .elementPower(0.5);//sqrt
+        aux = x.minus(aux);//.elementPower(2);
+        aux = aux.elementPower(2);
+        //standardDeviation = Sum.sum(x.minus(aux).elementPower(2)).divide(x.numRows() - 1).elementPower(0.5);//sqrt
+        standardDeviation = Sum.sum(aux).divide(x.numRows() - 1).elementPower(0.5);//sqrt
     }
 
     /**
@@ -96,12 +94,13 @@ public class STD {
      * @return
      */
     public SimpleMatrix eval(SimpleMatrix x) {
-        SimpleMatrix meanAux = meanMatrix(x);
+        SimpleMatrix aux = meanMatrix(x);
         SimpleMatrix stdAux = stdMatrix(x);
-        SimpleMatrix out = x.minus(meanAux);
         System.out.println("MB: " + (double) (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024 / 1024);
-        out = out.elementDiv(stdAux);
-        return out;
+        aux = x.minus(aux);
+        System.out.println("MB: " + (double) (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024 / 1024);
+        aux = aux.elementDiv(stdAux);
+        return aux;
     }
 
     /**
