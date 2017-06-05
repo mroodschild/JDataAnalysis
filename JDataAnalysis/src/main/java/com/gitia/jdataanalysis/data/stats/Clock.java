@@ -50,7 +50,7 @@ public class Clock {
     }
     
     public void printTime(){
-        System.out.printf("\n%.5f",timeSec());
+        System.out.printf("Time:\t%.5f\n",timeSec());
     }
 
     /**
