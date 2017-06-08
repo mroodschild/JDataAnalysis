@@ -33,7 +33,7 @@ import org.ejml.simple.SimpleMatrix;
 public class ConfusionMatrix {
 
     SimpleMatrix confusionMatrix;
-    double elements;
+    int elements;
     double aciertos;
     double aciertosPorc;
 
@@ -54,16 +54,15 @@ public class ConfusionMatrix {
      * @param obs
      */
     public void eval(SimpleMatrix calc, SimpleMatrix obs) {
-        //iniciamos el conteo
-        confusionMatrix = new SimpleMatrix(obs.numCols(), obs.numCols());
-        confusionMatrix.set(0);
         elements = calc.numRows();
-        int rows = calc.numRows();
-        for (int i = 0; i < rows; i++) {
-            add(getIndex(obs.extractVector(true, i)), getIndex(calc.extractVector(true, i)));
+        int clases = obs.numCols();
+        //Creamos la matriz donde serán guardados los datos
+        confusionMatrix = new SimpleMatrix(clases, clases);
+        for (int i = 0; i < elements; i++) {
+            addValue(getIndex(obs.extractVector(true, i)), getIndex(calc.extractVector(true, i)));
         }
         aciertos = confusionMatrix.extractDiag().elementSum();
-        aciertosPorc = aciertos / elements;
+        aciertosPorc = aciertos / ((double) elements);
     }
 
     /**
@@ -81,20 +80,30 @@ public class ConfusionMatrix {
 
     /**
      *
+     * En esta función buscamos la fila "obs" y sumamos uno en la col "calc"
+     *
      * @param obs este parámetro es la clase observada
      * @param calc este parámetro es la clase calculada
      */
-    private void add(int obs, int calc) {
+    private void addValue(int obs, int calc) {
         //sumamos uno en la posición indicada
         double a = confusionMatrix.get(obs, calc) + 1;
         //actualizamos
         confusionMatrix.set(obs, calc, a);
     }
 
+    /**
+     * 
+     * @return 
+     */
     public SimpleMatrix getConfusionMatrix() {
         return confusionMatrix;
     }
 
+    /**
+     * 
+     * @param args 
+     */
     public static void main(String[] args) {
         SimpleMatrix obs = new SimpleMatrix(5, 3, true,
                 1, 0, 0,
@@ -102,17 +111,6 @@ public class ConfusionMatrix {
                 0, 0, 1,
                 1, 0, 0,
                 0, 1, 0);
-//        obs.print();
-//        for (int i = 0; i < obs.numRows(); i++) {
-//            System.out.println("i\t" + i + "\t" + obs.extractVector(true, i).hashCode());
-//        }
-//        SimpleMatrix b = obs.extractVector(true, 0);
-//        SimpleMatrix c = obs.extractVector(true, 1);
-//        b.print();
-//        c.print();
-//        System.out.println("//");
-//        System.out.println(ArrayUtils.indexOf(b.transpose().getMatrix().getData(), 1));
-//        System.out.println(ArrayUtils.indexOf(c.transpose().getMatrix().getData(), 1));
 
         SimpleMatrix calc = new SimpleMatrix(5, 3, true,
                 1, 0, 0,
@@ -131,17 +129,24 @@ public class ConfusionMatrix {
         System.out.println("");
         matrix.printStats();
     }
-    
+
+    /**
+     * 
+     */
     public void printStats() {
         System.out.println(this.toString());
     }
-    
+
+    /**
+     * 
+     * @return 
+     */
     @Override
     public String toString() {
         String info = "";
         info += "\nConfusion Matrix\n";
         info += confusionMatrix.toString();
-        info += "\nAciertos:\t" + aciertos + "/" + elements;
+        info += "\nAciertos:\t" + aciertos + "/" + (double) elements;
         info += "\nAciertos %:\t" + aciertosPorc;
         int size = confusionMatrix.numCols();
         double VP = 0;
@@ -155,7 +160,7 @@ public class ConfusionMatrix {
                     VP = confusionMatrix.get(i, j);
                 }
             }
-            info += "\nClase " + i + ": \t" + VP / (VP + FN)+"\t";
+            info += "\nClase " + i + ": \t" + VP / (VP + FN) + "\t";
             VP = 0;
             FN = 0;
         }
