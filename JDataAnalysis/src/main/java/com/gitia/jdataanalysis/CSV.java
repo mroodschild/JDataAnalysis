@@ -70,9 +70,8 @@ public class CSV {
     }
     
     /**
-     * @param listOfMap
-     * @param writer
-     * @throws IOException
+     * @param matrix
+     * @param Name
      */
     public static void write(SimpleMatrix matrix, String Name) {
         Writer writer = null;
