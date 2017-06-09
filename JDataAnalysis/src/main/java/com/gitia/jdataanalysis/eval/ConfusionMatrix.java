@@ -93,16 +93,16 @@ public class ConfusionMatrix {
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public SimpleMatrix getConfusionMatrix() {
         return confusionMatrix;
     }
 
     /**
-     * 
-     * @param args 
+     *
+     * @param args
      */
     public static void main(String[] args) {
         SimpleMatrix obs = new SimpleMatrix(5, 3, true,
@@ -131,15 +131,15 @@ public class ConfusionMatrix {
     }
 
     /**
-     * 
+     *
      */
     public void printStats() {
         System.out.println(this.toString());
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     @Override
     public String toString() {
@@ -165,6 +165,33 @@ public class ConfusionMatrix {
             FN = 0;
         }
         return info;
+    }
+
+    /**
+     * cantidad de aciertos
+     *
+     * @return
+     */
+    public double getAciertos() {
+        return aciertos;
+    }
+
+    /**
+     * porcentaje de aciertos
+     *
+     * @return
+     */
+    public double getAciertosPorc() {
+        return aciertosPorc;
+    }
+
+    /**
+     * cantidad de datos totales
+     *
+     * @return
+     */
+    public int getElements() {
+        return elements;
     }
 
 }
