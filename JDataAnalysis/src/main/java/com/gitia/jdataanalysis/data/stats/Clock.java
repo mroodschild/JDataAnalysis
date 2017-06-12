@@ -48,14 +48,19 @@ public class Clock {
     public double time() {
         return f.getTimeInMillis() - i.getTimeInMillis();
     }
-    
-    public void printTime(){
-        System.out.printf("Time:\t%.5f\n",timeSec());
+
+    public void printTime() {
+        System.out.printf("Time:\t%.5f\ts.\n", timeSec());
+    }
+
+    public void printTime(String message) {
+        System.out.printf("%s\tTime:\t%.5f\ts.\n", message, timeSec());
     }
 
     /**
      * devuelve el tiempo en segundos
-     * @return 
+     *
+     * @return
      */
     public double timeSec() {
         return time() / 1000.0;
