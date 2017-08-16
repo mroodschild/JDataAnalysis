@@ -73,6 +73,34 @@ public class STD {
     }
 
     /**
+     * mean = SumRows(X<sub>ij</sub>)/numRow<br>
+     * standardDeviation = sqrt([sum(X<sub>ij</sub> - Xmean)<sup>2</sup>] / (m -
+     * 1))
+     *
+     * @param numberInput number of columns or features
+     * @param min min value for all columns
+     * @param max max value for all columns
+     */
+    public void fit(int numberInput, int min, int max) {
+        //calculamos el mean de cada columna
+        double[][] data = new double[2][numberInput];
+        for (int j = 0; j < data[0].length; j++) {
+            data[0][j] = min;
+            data[1][j] = max;
+        }
+        
+        SimpleMatrix x = new SimpleMatrix(data);
+        mean = Mean.mean(x);
+        //obtenemos el mean para restar elemento a elemento
+        SimpleMatrix aux = meanMatrix(x);
+        //obtenemos la desviación estandar para cada columna
+        aux = x.minus(aux);//.elementPower(2);
+        aux = aux.elementPower(2);
+        //standardDeviation = Sum.sum(x.minus(aux).elementPower(2)).divide(x.numRows() - 1).elementPower(0.5);//sqrt
+        standardDeviation = Sum.sum(aux).divide(x.numRows() - 1).elementPower(0.5);//sqrt
+    }
+
+    /**
      *
      * @param x
      * @return
