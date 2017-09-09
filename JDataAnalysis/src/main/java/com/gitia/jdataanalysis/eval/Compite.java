@@ -32,29 +32,26 @@ import org.ejml.simple.SimpleMatrix;
 public class Compite {
     
     public static SimpleMatrix eval(SimpleMatrix matrix){
-        SimpleMatrix aux = matrix;
+        SimpleMatrix aux = new SimpleMatrix(matrix.numRows(), matrix.numCols());
         double max;
-        double pos;
+        int pos;
         for (int i = 0; i < aux.numRows(); i++) {
-            SimpleMatrix row = aux.extractVector(true, i);
+            SimpleMatrix row = matrix.extractVector(true, i);
             max = row.get(0);
             pos = 0;
-            for (int j = 0; j < row.numCols(); j++) {
+            //inicializamos en 1 ya que el 0 ya fue tomado
+            for (int j = 1; j < row.numCols(); j++) {
                 if (max < row.get(j)) {
                     max = row.get(j);
+                    //guardamos la posición del mas grande
                     pos = j;
                 }
             }
-            for (int j = 0; j < row.numCols(); j++) {
-                if (j == pos) {
-                    row.set(j, 1);
-                } else {
-                    row.set(j, 0);
-                }
-            }
-            aux.setRow(i, 0, row.getMatrix().getData());
+            //guardamos en la fila y columna un 1
+            aux.set(i, pos, 1);
         }
         return aux;
+        
     }
     
 }
