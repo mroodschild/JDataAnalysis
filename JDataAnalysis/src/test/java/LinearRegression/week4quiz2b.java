@@ -98,7 +98,7 @@ public class week4quiz2b {
 //Util.mostrarVector(predict_set1, "Predict 1");
 
         String[] title = {"Poly 1", "Poly 2", "Poly 3", "Poly 4", "Poly 5", "Poly 6"};
-        Util.show(title, poly1, poly2, poly3, poly4, poly5, poly6);
+        //Util.show(title, poly1, poly2, poly3, poly4, poly5, poly6);
         
         modelSet1.getCoefficients();
     }

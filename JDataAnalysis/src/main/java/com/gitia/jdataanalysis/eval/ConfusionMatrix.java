@@ -23,7 +23,7 @@
  */
 package com.gitia.jdataanalysis.eval;
 
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.ejml.simple.SimpleMatrix;
 
 /**

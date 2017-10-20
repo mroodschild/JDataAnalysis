@@ -26,7 +26,11 @@ package com.gitia.jdataanalysis;
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvParser;
-import dnl.utils.text.table.TextTable;
+import io.bretty.console.table.Alignment;
+import io.bretty.console.table.ColumnFormatter;
+import io.bretty.console.table.Precision;
+import io.bretty.console.table.Table;
+//import dnl.utils.text.table.TextTable;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -190,12 +194,12 @@ public class JDataAnalysis {
             }
         }
     }
-    
+
     /**
-     * 
+     *
      * @param list
      * @param folder
-     * @param fileName 
+     * @param fileName
      */
     public void save(List<String> list, String folder, String fileName) {
         String NEW_LINE_SEPARATOR = "\n";
@@ -213,10 +217,9 @@ public class JDataAnalysis {
 
             //initialize CSVPrinter object 
             csvFilePrinter = new CSVPrinter(fileWriter, csvFileFormat);
-            
+
             //Create CSV file header
             //csvFilePrinter.printRecord(headers);
-
             //Write a new student object list to the CSV file
             for (int i = 0; i < list.size(); i++) {
                 //List studentDataRecord = new ArrayList();
@@ -350,17 +353,31 @@ public class JDataAnalysis {
 
     /**
      * show N rows
+     *
+     * @param size
      */
-    public void show(int files) {
-        int size = files;
-        if (files > data.length) {
-            size = data.length;
-        }
+    public void show(int size) {
+//        int size = files;
+//        if (files > data.length) {
+//            size = data.length;
+//        }
+//        String[][] selected = getFeatureString(size);
+//        TextTable textTable = new TextTable(columnNames, selected);
+//        textTable.printTable();
+//        System.out.println("...");
+//        System.out.println("Records (" + data.length + " x " + data[0].length + ")\n");//parser.getHeaderMap().size() + ")\n");
+
         String[][] selected = getFeatureString(size);
-        TextTable textTable = new TextTable(columnNames, selected);
-        textTable.printTable();
-        System.out.println("...");
-        System.out.println("Records (" + data.length + " x " + data[0].length + ")\n");//parser.getHeaderMap().size() + ")\n");
+        Double[][] o = new Double[selected.length][selected[0].length];
+        for (int i = 0; i < o.length; i++) {
+            for (int j = 0; j < o[0].length; j++) {
+                o[i][j] = Double.valueOf(selected[i][j]);
+            }
+        }
+        Table table;
+        ColumnFormatter<Number> cf = ColumnFormatter.number(Alignment.RIGHT, 8, Precision.THREE);
+        table = Table.of(columnNames, o, cf);
+        System.out.println(table);
     }
 
     /**
@@ -369,11 +386,23 @@ public class JDataAnalysis {
      * @param features
      */
     public void show(String... features) {
+//        String[][] selected = getFeaturesString(features);
+//        TextTable textTable = new TextTable(features, selected);
+//        textTable.printTable();
+//        System.out.println("...");
+//        System.out.println("Records (" + data.length + " x " + data[0].length + ")\n");
+        
         String[][] selected = getFeaturesString(features);
-        TextTable textTable = new TextTable(features, selected);
-        textTable.printTable();
-        System.out.println("...");
-        System.out.println("Records (" + data.length + " x " + data[0].length + ")\n");
+        Double[][] o = new Double[selected.length][selected[0].length];
+        for (int i = 0; i < o.length; i++) {
+            for (int j = 0; j < o[0].length; j++) {
+                o[i][j] = Double.valueOf(selected[i][j]);
+            }
+        }
+        Table table;
+        ColumnFormatter<Number> cf = ColumnFormatter.number(Alignment.RIGHT, 8, Precision.THREE);
+        table = Table.of(columnNames, o, cf);
+        System.out.println(table);
     }
 
     /**

@@ -23,7 +23,7 @@
  */
 package com.gitia.jdataanalysis;
 
-import dnl.utils.text.table.TextTable;
+//import dnl.utils.text.table.TextTable;
 import java.util.Arrays;
 import javafx.scene.chart.XYChart;
 import org.ejml.simple.SimpleMatrix;
@@ -119,11 +119,11 @@ public class Util implements java.io.Serializable {
         System.out.println("");
     }
 
-    public static void show(String[] headers, double[]... vectores) {
-        //TextTable textTable = new TextTable(headers, vectores);
-        TextTable textTable = new TextTable(headers, convertVectorToArray(vectores));
-        textTable.printTable();
-    }
+//    public static void show(String[] headers, double[]... vectores) {
+//        //TextTable textTable = new TextTable(headers, vectores);
+//        TextTable textTable = new TextTable(headers, convertVectorToArray(vectores));
+//        textTable.printTable();
+//    }
 
     public static void mostrarVector(int[] vector, String nombre) {
         System.out.println("Vector " + nombre + ":");

@@ -10,12 +10,22 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
-
+    <repositories>
+        <repository>
+            <id>d-maven</id>
+            <url>http://d-maven.googlecode.com/svn/trunk/repo</url>
+        </repository>
+    </repositories>
     <dependencies>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-csv</artifactId>
             <version>1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.6</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -32,11 +42,11 @@
             <artifactId>junit</artifactId>
             <version>4.12</version>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>dnl.utils</groupId>
             <artifactId>j-text-utils</artifactId>
             <version>0.3.3</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>net.sf.opencsv</groupId>
             <artifactId>opencsv</artifactId>
@@ -47,11 +57,10 @@
             <artifactId>jackson-dataformat-csv</artifactId>
             <version>2.9.0</version>
         </dependency>
+        <dependency>
+            <groupId>io.bretty</groupId>
+            <artifactId>console-table-builder</artifactId>
+            <version>1.2</version>
+        </dependency>
     </dependencies>
-    <repositories>
-        <repository>
-            <id>d-maven</id>
-            <url>http://d-maven.googlecode.com/svn/trunk/repo</url>
-        </repository>
-    </repositories>
 </project>
