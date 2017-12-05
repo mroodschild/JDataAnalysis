@@ -38,6 +38,8 @@ public class MapMinMax {
 
     SimpleMatrix max;
     SimpleMatrix min;
+    double a = 0;
+    double b = 1;
 
     /**
      *
@@ -59,102 +61,117 @@ public class MapMinMax {
     }
 
     /**
-     * mean = SumRows(X<sub>ij</sub>)/numRow<br>
-     * standardDeviation = sqrt([sum(X<sub>ij</sub> - Xmean)<sup>2</sup>] / (m -
-     * 1))
+     *
+     * Ajusta los valores maximos y minimos de la matrix acorde a las columnas.
      *
      * @param x value to fit
      */
     public void fit(SimpleMatrix x) {
-        //calculamos el mean de cada columna
         max = x.extractVector(true, 0);
         min = x.extractVector(true, 0);
         for (int i = 0; i < x.numCols(); i++) {
             min.set(i, CommonOps.elementMin(x.extractVector(false, i).getMatrix()));
             max.set(i, CommonOps.elementMax(x.extractVector(false, i).getMatrix()));
         }
+        double[] test = max.minus(min).getMatrix().getData();
+        for (int i = 0; i < test.length; i++) {
+            if (test[i] == 0) {
+                throw new IllegalArgumentException("Difference between min and max '" + i + "' are zero");
+            }
+        }
     }
 
     /**
-     * mean = SumRows(X<sub>ij</sub>)/numRow<br>
-     * standardDeviation = sqrt([sum(X<sub>ij</sub> - Xmean)<sup>2</sup>] / (m -
-     * 1))
      *
-     * @param numberInput number of columns or features
+     * Ajusta los valores maximos y minimos de la matrix acorde a las columnas.
+     *
+     * @param x value to fit
+     * @param a min value for the scale
+     * @param b max value for the scale
+     */
+    public void fit(SimpleMatrix x, double a, double b) {
+        if (a > b) {
+            throw new IllegalArgumentException("'a' can´t be less than 'b'");
+        }
+        if (a == b) {
+            throw new IllegalArgumentException("Numbers 'a' and 'b' can´t be the same");
+        }
+        this.a = a;
+        this.b = b;
+        fit(x);
+    }
+
+    /**
+     *
+     * @param numberColumns number of columns or features
      * @param min min value for all columns
      * @param max max value for all columns
      */
-    public void fit(int numberInput, int min, int max) {
-        this.min = new SimpleMatrix(1, numberInput);
-        this.max = new SimpleMatrix(1, numberInput);
-        
-        
+    public void fit(int numberColumns, double min, double max) {
+        if (min == max) {
+            throw new IllegalArgumentException("Numbers min and max can´t be the same");
+        }
+        if (min > max) {
+            throw new IllegalArgumentException("'min' can´t be less than 'max'");
+        }
+        this.min = new SimpleMatrix(1, numberColumns);
+        this.max = new SimpleMatrix(1, numberColumns);
+        this.min.set(min);
+        this.max.set(max);
     }
 
     /**
      *
-     * @param x
-     * @return
+     * @param numberColumns number of columns or features
+     * @param min min value for all columns
+     * @param max max value for all columns
+     * @param a min value for the scale
+     * @param b max value for the scale
      */
-    private SimpleMatrix meanMatrix(SimpleMatrix x) {
-        SimpleMatrix meanAux = new SimpleMatrix(x.numRows(), 1);
-        meanAux.set(1);
-        return meanAux.mult(max);
+    public void fit(int numberColumns, double min, double max, double a, double b) {
+        if (a > b) {
+            throw new IllegalArgumentException("'a' can´t be less than 'b'");
+        }
+        if (a == b) {
+            throw new IllegalArgumentException("Numbers 'a' and 'b' can´t be the same");
+        }
+        this.a = a;
+        this.b = b;
+        fit(numberColumns, min, max);
     }
 
     /**
      *
-     * @param x
-     * @return
-     */
-    private SimpleMatrix stdMatrix(SimpleMatrix x) {
-        SimpleMatrix stdAux = new SimpleMatrix(x.numRows(), 1);
-        stdAux.set(1);
-        return stdAux.mult(min);
-    }
-
-    /**
-     *
-     * Xn = (X - mean(X)) / std(X)
+     * y = (b - a) * (x - xmin) / (xmax - xmin) + a;
      *
      * @param x
      * @return
      */
     public SimpleMatrix eval(SimpleMatrix x) {
-        SimpleMatrix aux = meanMatrix(x);
-        SimpleMatrix stdAux = stdMatrix(x);
-        aux = x.minus(aux);
-        aux = aux.elementDiv(stdAux);
-        //System.out.println("MB: " + (double) (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024 / 1024);
-        return aux;
+        SimpleMatrix xmin = new SimpleMatrix(x.numRows(), 1);
+        SimpleMatrix xmax = new SimpleMatrix(x.numRows(), 1);
+        xmin.set(1);
+        xmax.set(1);
+        xmin = xmin.mult(min);
+        xmax = xmax.mult(max);
+        return x.minus(xmin).scale(b - a).elementDiv(xmax.minus(xmin)).plus(a);
     }
 
     /**
-     * X = Xn * std(X) + mean(X)
+     *
+     * x = (y - a) * (xmax - xmin) / (b - a) + xmin
      *
      * @param x
      * @return
      */
     public SimpleMatrix reverse(SimpleMatrix x) {
-        SimpleMatrix meanAux = meanMatrix(x);
-        SimpleMatrix stdAux = stdMatrix(x);
-        return x.elementMult(stdAux).plus(meanAux);
-    }
-
-    public SimpleMatrix getStandardDeviation() {
-        return min;
-    }
-
-    public SimpleMatrix getMean() {
-        return max;
-    }
-
-    public void setMean(SimpleMatrix mean) {
-        this.max = mean;
-    }
-
-    public void setStandardDeviation(SimpleMatrix standardDeviation) {
-        this.min = standardDeviation;
+        SimpleMatrix dif = new SimpleMatrix(x.numRows(), 1);
+        dif.set(1);
+        dif = dif.mult(max.minus(min));
+        SimpleMatrix xmin = new SimpleMatrix(x.numRows(), 1);
+        xmin.set(1);
+        xmin = xmin.mult(min);
+        return x.minus(a).elementMult(dif).divide(b - a).plus(xmin);
     }
 
 }
