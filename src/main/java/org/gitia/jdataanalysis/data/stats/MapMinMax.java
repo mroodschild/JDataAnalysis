@@ -48,9 +48,8 @@ public class MapMinMax {
     }
 
     /**
-     * Inicializamos la clase, ingresamos los parámetros de media y desviación
-     * estandard el parámetro mean y desviación estandard deben estar en el
-     * formato horizontal es decir:<br> [1, 5, 3]
+     *
+     * Iniciamos la clase con los vectores máximos y mínimos de cada columna.
      *
      * @param max
      * @param min
@@ -58,6 +57,22 @@ public class MapMinMax {
     public MapMinMax(SimpleMatrix max, SimpleMatrix min) {
         this.max = max;
         this.min = min;
+    }
+
+    /**
+     *
+     * Iniciamos la clase con los vectores máximos y mínimos de cada columna y
+     * la escala [a, b] a la que deben ser convertidos los valores.
+     *
+     * @param max
+     * @param min
+     * @param a
+     * @param b
+     */
+    public MapMinMax(SimpleMatrix max, SimpleMatrix min, double a, double b) {
+        this(max, min);
+        this.a = a;
+        this.b = b;
     }
 
     /**
