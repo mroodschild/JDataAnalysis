@@ -24,7 +24,7 @@
 package LinearRegression;
 
 
-import com.gitia.jdataanalysis.UtilMatrix;
+import org.gitia.jdataanalysis.UtilMatrix;
 import org.ejml.simple.SimpleMatrix;
 
 /**

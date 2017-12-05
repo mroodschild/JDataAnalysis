@@ -23,9 +23,9 @@
  */
 package LinearRegression;
 
-import com.gitia.jdataanalysis.JDataAnalysis;
-import com.gitia.jdataanalysis.RidgeRegression;
-import com.gitia.jdataanalysis.Util;
+import org.gitia.jdataanalysis.JDataAnalysis;
+import org.gitia.jdataanalysis.RidgeRegression;
+import org.gitia.jdataanalysis.Util;
 
 /**
  *

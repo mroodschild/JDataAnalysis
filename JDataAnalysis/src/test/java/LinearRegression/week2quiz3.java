@@ -23,8 +23,8 @@
  */
 package LinearRegression;
 
-import com.gitia.jdataanalysis.JDataAnalysis;
-import com.gitia.jdataanalysis.MultipleLinearRegressionGD;
+import org.gitia.jdataanalysis.JDataAnalysis;
+import org.gitia.jdataanalysis.MultipleLinearRegressionGD;
 
 /**
  *
