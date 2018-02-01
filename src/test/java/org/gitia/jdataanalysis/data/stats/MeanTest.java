@@ -79,9 +79,8 @@ public class MeanTest {
     @Test
     public void testMean_SimpleMatrix() {
         System.out.println("mean");
-        double data[][] = {{1, 2, 3},{4, 5, 6},{7, 8, 9}};
-        SimpleMatrix datos = new SimpleMatrix(data);
-        SimpleMatrix expResult = new SimpleMatrix(1, 3, false, 4, 5, 6);
+        SimpleMatrix datos = new SimpleMatrix(3, 3, true, 1, 2, 3, 4, 5, 6, 7, 8, 9.0);
+        SimpleMatrix expResult = new SimpleMatrix(1, 3, false, 4, 5, 6.0);
         SimpleMatrix result = Mean.mean(datos);
         assertArrayEquals(expResult.getDDRM().getData(), result.getDDRM().getData(), 0);
     }

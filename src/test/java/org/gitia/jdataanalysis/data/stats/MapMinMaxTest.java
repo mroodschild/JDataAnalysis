@@ -67,7 +67,7 @@ public class MapMinMaxTest {
     public void testFit_SimpleMatrix() {
         System.out.println("fit");
         SimpleMatrix x = new SimpleMatrix(3, 3, true,
-                7, 5, 3,
+                7, 5, 3.0,
                 4, 2, 6,
                 1, 8, 9);
         MapMinMax instance = new MapMinMax();
@@ -104,7 +104,7 @@ public class MapMinMaxTest {
         System.out.println("testEval");
         SimpleMatrix x = new SimpleMatrix(3, 3, true,
                 0, -10, 0,
-                4, 0, 1,
+                4, 0, 1.0,
                 10, 10, 5);
         MapMinMax instance = new MapMinMax();
         instance.fit(x);
@@ -118,7 +118,7 @@ public class MapMinMaxTest {
     public void testReverse() {
         System.out.println("testReverse");
         SimpleMatrix x = new SimpleMatrix(3, 3, true,
-                0, -10, 0,
+                0, -10, 0.0,
                 4, 0, 1,
                 10, 10, 5);
         MapMinMax instance = new MapMinMax();
