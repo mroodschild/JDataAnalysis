@@ -79,8 +79,8 @@ public class MapMinMaxTest {
         instance.max.print();
         double[] minExpected = {1, 2, 3};
         double[] maxExpected = {7, 8, 9};
-        assertArrayEquals(minExpected, instance.min.getMatrix().data, 0);
-        assertArrayEquals(maxExpected, instance.max.getMatrix().data, 0);
+        assertArrayEquals(minExpected, instance.min.getDDRM().data, 0);
+        assertArrayEquals(maxExpected, instance.max.getDDRM().data, 0);
     }
 
     /**

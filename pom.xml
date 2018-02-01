@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.gitia</groupId>
     <artifactId>JDataAnalysis</artifactId>
-    <version>0.2</version>
+    <version>0.3</version>
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -72,8 +72,8 @@
         </dependency>
         <dependency>
             <groupId>org.ejml</groupId>
-            <artifactId>all</artifactId>
-            <version>0.30</version>
+            <artifactId>ejml-all</artifactId>
+            <version>0.33</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -88,7 +88,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-csv</artifactId>
-            <version>2.9.2</version>
+            <version>2.9.4</version>
         </dependency>
         <dependency>
             <groupId>io.bretty</groupId>

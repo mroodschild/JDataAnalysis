@@ -27,7 +27,7 @@
  */
 package org.gitia.jdataanalysis.data.stats;
 
-import org.ejml.ops.CommonOps;
+import org.ejml.dense.row.CommonOps_DDRM;
 import org.ejml.simple.SimpleMatrix;
 
 /**
@@ -80,7 +80,7 @@ public class FilterConstantColumns {
             if (colsFiltered[i] == 0) {
                 //if (aux == null) {
                 //inicializamos la matriz
-                aux.setColumn(count++, 0, matrix.extractVector(false, i).getMatrix().getData());
+                aux.setColumn(count++, 0, matrix.extractVector(false, i).getDDRM().getData());
                 //aux = matrix.extractVector(false, i).copy();
                 //} else {
                 //agregamos las columas que tienen información
@@ -98,7 +98,7 @@ public class FilterConstantColumns {
      * @return
      */
     private boolean constant(SimpleMatrix vector) {
-        return (CommonOps.elementMax(vector.getMatrix()) == CommonOps.elementMin(vector.getMatrix()));
+        return (CommonOps_DDRM.elementMax(vector.getMatrix()) == CommonOps_DDRM.elementMin(vector.getMatrix()));
     }
 
 }

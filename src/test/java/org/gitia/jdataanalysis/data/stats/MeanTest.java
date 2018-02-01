@@ -83,7 +83,7 @@ public class MeanTest {
         SimpleMatrix datos = new SimpleMatrix(data);
         SimpleMatrix expResult = new SimpleMatrix(1, 3, false, 4, 5, 6);
         SimpleMatrix result = Mean.mean(datos);
-        assertArrayEquals(expResult.getMatrix().getData(), result.getMatrix().getData(), 0);
+        assertArrayEquals(expResult.getDDRM().getData(), result.getDDRM().getData(), 0);
     }
 
 }

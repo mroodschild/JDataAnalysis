@@ -27,7 +27,7 @@
  */
 package org.gitia.jdataanalysis.data.stats;
 
-import org.ejml.ops.CommonOps;
+import org.ejml.dense.row.CommonOps_DDRM;
 import org.ejml.simple.SimpleMatrix;
 
 /**
@@ -85,10 +85,10 @@ public class MapMinMax {
         max = x.extractVector(true, 0);
         min = x.extractVector(true, 0);
         for (int i = 0; i < x.numCols(); i++) {
-            min.set(i, CommonOps.elementMin(x.extractVector(false, i).getMatrix()));
-            max.set(i, CommonOps.elementMax(x.extractVector(false, i).getMatrix()));
+            min.set(i, CommonOps_DDRM.elementMin(x.extractVector(false, i).getMatrix()));
+            max.set(i, CommonOps_DDRM.elementMax(x.extractVector(false, i).getMatrix()));
         }
-        double[] test = max.minus(min).getMatrix().getData();
+        double[] test = max.minus(min).getDDRM().getData();
         for (int i = 0; i < test.length; i++) {
             if (test[i] == 0) {
                 throw new IllegalArgumentException("Difference between min and max '" + i + "' are zero");

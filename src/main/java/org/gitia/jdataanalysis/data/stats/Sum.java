@@ -27,7 +27,7 @@
  */
 package org.gitia.jdataanalysis.data.stats;
 
-import org.ejml.ops.CommonOps;
+import org.ejml.dense.row.CommonOps_DDRM;
 import org.ejml.simple.SimpleMatrix;
 
 /**
@@ -74,6 +74,6 @@ public class Sum {
      * @return
      */
     public static SimpleMatrix sum(SimpleMatrix datos) {
-        return new SimpleMatrix(CommonOps.sumCols(datos.getMatrix(), null));
+        return new SimpleMatrix(CommonOps_DDRM.sumCols(datos.getMatrix(), null));
     }
 }

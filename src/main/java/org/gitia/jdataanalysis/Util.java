@@ -240,7 +240,7 @@ public class Util implements java.io.Serializable {
     public static double[][] toArray(SimpleMatrix matrix) {
         double array[][] = new double[matrix.numRows()][matrix.numCols()];
         for (int r = 0; r < matrix.numRows(); r++) {
-            array[r] = matrix.extractVector(true, r).getMatrix().getData();
+            array[r] = matrix.extractVector(true, r).getDDRM().getData();
         }
         return array;
     }
