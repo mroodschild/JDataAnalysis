@@ -84,10 +84,12 @@ public class MapMinMax {
     public void fit(SimpleMatrix x) {
         max = x.extractVector(true, 0);
         min = x.extractVector(true, 0);
-        for (int i = 0; i < x.numCols(); i++) {
-            min.set(i, CommonOps_DDRM.elementMin(x.extractVector(false, i).getMatrix()));
-            max.set(i, CommonOps_DDRM.elementMax(x.extractVector(false, i).getMatrix()));
-        }
+        CommonOps_DDRM.minCols(x.getDDRM(), min.getDDRM());
+        CommonOps_DDRM.maxCols(x.getDDRM(), max.getDDRM());
+//        for (int i = 0; i < x.numCols(); i++) {
+//            min.set(i, CommonOps_DDRM.elementMin(x.extractVector(false, i).getMatrix()));
+//            max.set(i, CommonOps_DDRM.elementMax(x.extractVector(false, i).getMatrix()));
+//        }
         double[] test = max.minus(min).getDDRM().getData();
         for (int i = 0; i < test.length; i++) {
             if (test[i] == 0) {
