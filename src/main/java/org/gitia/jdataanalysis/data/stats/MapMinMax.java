@@ -133,8 +133,8 @@ public class MapMinMax {
         }
         this.min = new SimpleMatrix(1, numberColumns);
         this.max = new SimpleMatrix(1, numberColumns);
-        this.min.set(min);
-        this.max.set(max);
+        this.min.fill(min);
+        this.max.fill(max);
     }
 
     /**
@@ -167,8 +167,8 @@ public class MapMinMax {
     public SimpleMatrix eval(SimpleMatrix x) {
         SimpleMatrix xmin = new SimpleMatrix(x.numRows(), 1);
         SimpleMatrix xmax = new SimpleMatrix(x.numRows(), 1);
-        xmin.set(1);
-        xmax.set(1);
+        xmin.fill(1);
+        xmax.fill(1);
         xmin = xmin.mult(min);
         xmax = xmax.mult(max);
         return x.minus(xmin).scale(b - a).elementDiv(xmax.minus(xmin)).plus(a);
@@ -183,10 +183,10 @@ public class MapMinMax {
      */
     public SimpleMatrix reverse(SimpleMatrix x) {
         SimpleMatrix dif = new SimpleMatrix(x.numRows(), 1);
-        dif.set(1);
+        dif.fill(1);
         dif = dif.mult(max.minus(min));
         SimpleMatrix xmin = new SimpleMatrix(x.numRows(), 1);
-        xmin.set(1);
+        xmin.fill(1);
         xmin = xmin.mult(min);
         return x.minus(a).elementMult(dif).divide(b - a).plus(xmin);
     }

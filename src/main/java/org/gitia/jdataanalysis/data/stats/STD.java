@@ -111,7 +111,7 @@ public class STD {
      */
     private SimpleMatrix meanMatrix(SimpleMatrix x) {
         SimpleMatrix meanAux = new SimpleMatrix(x.numRows(), 1);
-        meanAux.set(1);
+        meanAux.fill(1);
         return meanAux.mult(mean);
     }
 
@@ -122,7 +122,7 @@ public class STD {
      */
     private SimpleMatrix stdMatrix(SimpleMatrix x) {
         SimpleMatrix stdAux = new SimpleMatrix(x.numRows(), 1);
-        stdAux.set(1);
+        stdAux.fill(1);
         return stdAux.mult(standardDeviation);
     }
 
