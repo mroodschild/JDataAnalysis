@@ -24,13 +24,18 @@
 package org.gitia.jdataanalysis;
 
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.awt.image.WritableRaster;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageInputStream;
 import org.gitia.jdataanalysis.data.stats.Clock;
-
+//import org.nd4j.linalg.api.ndarray.INDArray;
 /**
  *
  * @author Alberto Ortega <ortegalbertoi@gmail.com>
@@ -47,6 +52,18 @@ public class ImageReader {
 
         }
         return imagenL;
+    }
+        
+    public BufferedImage getImageFromArray(double[] pixels, int width, int height) throws IOException {
+        BufferedImage image = new BufferedImage(width, height,     BufferedImage.TYPE_INT_ARGB);
+        WritableRaster raster = (WritableRaster) image.getData();
+        raster.setPixels(0,0,width,height,pixels);
+        image.setData(raster); 
+        File f = null;
+        f = new File("MyFile.png");
+        
+        ImageIO.write(image, "png", f);
+      return image;
     }
 
     /**
@@ -71,10 +88,15 @@ public class ImageReader {
             vector[i + size] = c.getGreen();
             vector[i + size * 2] = c.getBlue();
         }
-
+        
         return vector;
     }
+    
+    public void save(Image img)
+    {
+        
 
+    }
     public static void main(String[] args) {
 
         ImageReader ir = new ImageReader();
@@ -84,17 +106,17 @@ public class ImageReader {
         reloj.stop();
         reloj.printTime("open");
         
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 120; i++) {
             System.out.printf("%.1f\t",imagenL[i]);
         }
         System.out.println("");
-        for (int i = 10000; i < 10020; i++) {
+        for (int i = 10000; i < 10120; i++) {
             System.out.printf("%.1f\t",imagenL[i]);
         }
         System.out.println("");
-        for (int i = 20000; i < 20020; i++) {
+        for (int i = 20000; i < 20120; i++) {
             System.out.printf("%.1f\t",imagenL[i]);
         }
-
+        
     }
 }
