@@ -84,7 +84,7 @@ public class ImageReader {
             List<String> address = listFilesForFolder(url, extension);
             BufferedImage im = ImageIO.read(new File(address.get(0)));
             int sizeImage = im.getHeight() * im.getWidth();
-            matrix = new SimpleMatrix(address.size(), sizeImage);
+            matrix = new SimpleMatrix(address.size(), 3*sizeImage);
             for (int i = 0; i < address.size(); i++) {
                 String imageUrl = address.get(i);
                 BufferedImage hugeImage = ImageIO.read(new File(imageUrl));
@@ -177,7 +177,7 @@ public class ImageReader {
                     temp = fileEntry.getName();
                     if ((temp.substring(temp.lastIndexOf('.') + 1, temp.length()).toLowerCase()).equals(extension)) {
                         //System.out.println("File= " + folder.getAbsolutePath() + "\\" + fileEntry.getName());
-                        address.add(folder.getAbsolutePath() + fileEntry.getName());
+                        address.add(folder.getAbsolutePath() +"\\" +fileEntry.getName());
                     }
                 }
 

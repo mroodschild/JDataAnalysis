@@ -29,6 +29,7 @@ import java.awt.image.DataBufferByte;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import org.ejml.simple.SimpleMatrix;
 
 public class PerformanceTest {
 
@@ -66,6 +67,18 @@ public class PerformanceTest {
             System.out.println(String.format("%-2d: %s", (i + 1), toString(endTime - startTime)));
             
         }
+        
+        SimpleMatrix imagenes=null;
+        System.out.println("Test ImageReader.open:");
+        for (int i = 0; i < 10; i++) {
+            long startTime = System.nanoTime();
+            imagenes=ImageReader.open("D:/Alberto/GITIA/prueba/", "png");
+            long endTime = System.nanoTime();
+            System.out.println(String.format("%-2d: %s", (i + 1), toString(endTime - startTime)));
+        }
+        
+        imagenes.printDimensions();
+        
     }
 
     private static int[][] convertTo2DUsingGetRGB(BufferedImage image) {
