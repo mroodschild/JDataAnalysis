@@ -16,3 +16,4 @@ hs_err_pid*
 /CudaExample/target/
 /JDataAnalysis/nbproject/
 /target/
+/nbproject/
