@@ -72,7 +72,7 @@ public class PerformanceTest {
         System.out.println("Test ImageReader.open:");
         for (int i = 0; i < 10; i++) {
             long startTime = System.nanoTime();
-            imagenes=ImageReader.open("D:/Alberto/GITIA/prueba/", "png");
+            imagenes=ImageReader.open("src/main/resources/imagenes/", "png");
             long endTime = System.nanoTime();
             System.out.println(String.format("%-2d: %s", (i + 1), toString(endTime - startTime)));
         }

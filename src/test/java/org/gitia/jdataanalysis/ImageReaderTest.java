@@ -46,20 +46,20 @@ public class ImageReaderTest {
     /**
      * Test of getImageFromArray method, of class ImageReader.
      */
-    @Ignore
-    @Test
-    public void testGetImageFromArray() throws Exception {
-        System.out.println("getImageFromArray");
-        double[] pixels = null;
-        int width = 0;
-        int height = 0;
-        ImageReader instance = new ImageReader();
-        BufferedImage expResult = null;
-        BufferedImage result = instance.getImageFromArray(pixels, width, height);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+//    @Ignore
+//    @Test
+//    public void testGetImageFromArray() throws Exception {
+//        System.out.println("getImageFromArray");
+//        double[] pixels = null;
+//        int width = 0;
+//        int height = 0;
+//        ImageReader instance = new ImageReader();
+//        BufferedImage expResult = null;
+//        BufferedImage result = instance.getImageFromArray(pixels, width, height);
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
 
     /**
      * Test of open method, of class ImageReader.

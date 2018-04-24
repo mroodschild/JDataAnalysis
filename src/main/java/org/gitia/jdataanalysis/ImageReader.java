@@ -30,7 +30,6 @@ import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -40,8 +39,6 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageInputStream;
 import org.ejml.simple.SimpleMatrix;
-import org.gitia.jdataanalysis.data.stats.Clock;
-//import org.nd4j.linalg.api.ndarray.INDArray;
 
 /**
  *
@@ -49,29 +46,29 @@ import org.gitia.jdataanalysis.data.stats.Clock;
  */
 public class ImageReader {
 
-    private BufferedImage openBF(String url) {
-        BufferedImage imagenL = null;
-        try {
-            InputStream input = new FileInputStream(url);
-            ImageInputStream imageInput = ImageIO.createImageInputStream(input);
-            imagenL = ImageIO.read(imageInput);
-        } catch (Exception e) {
+//    private BufferedImage openBF(String url) {
+//        BufferedImage imagenL = null;
+//        try {
+//            InputStream input = new FileInputStream(url);
+//            ImageInputStream imageInput = ImageIO.createImageInputStream(input);
+//            imagenL = ImageIO.read(imageInput);
+//        } catch (Exception e) {
+//
+//        }
+//        return imagenL;
+//    }
 
-        }
-        return imagenL;
-    }
-
-    public BufferedImage getImageFromArray(double[] pixels, int width, int height) throws IOException {
-        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        WritableRaster raster = (WritableRaster) image.getData();
-        raster.setPixels(0, 0, width, height, pixels);
-        image.setData(raster);
-        File f = null;
-        f = new File("MyFile.png");
-
-        ImageIO.write(image, "png", f);
-        return image;
-    }
+//    public BufferedImage getImageFromArray(double[] pixels, int width, int height) throws IOException {
+//        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+//        WritableRaster raster = (WritableRaster) image.getData();
+//        raster.setPixels(0, 0, width, height, pixels);
+//        image.setData(raster);
+//        File f = null;
+//        f = new File("MyFile.png");
+//
+//        ImageIO.write(image, "png", f);
+//        return image;
+//    }
 
     /**
      *
@@ -100,22 +97,61 @@ public class ImageReader {
         }
         return matrix;
     }
+    
+    /**
+     *
+     * @param url
+     * @return
+     */
+    public static SimpleMatrix openRelative(String url, String extension) {
+        SimpleMatrix matrix = null;
+        try {
+            List<String> address = listFilesForFolder(url, extension);
+            BufferedImage im = ImageIO.read(new File(address.get(0)));
+            int sizeImage = im.getHeight() * im.getWidth();
+            matrix = new SimpleMatrix(address.size(), 3*sizeImage);
+            for (int i = 0; i < address.size(); i++) {
+                String imageUrl = address.get(i);
+                BufferedImage hugeImage = ImageIO.read(new File(imageUrl));
+                int[][] result = convertTo2DWithoutUsingGetRGB(hugeImage);
+                SimpleMatrix r = new SimpleMatrix(1, sizeImage);
+                SimpleMatrix g = new SimpleMatrix(1, sizeImage);
+                SimpleMatrix b = new SimpleMatrix(1, sizeImage);
+                getRGB(result, r.getDDRM().getData(), g.getDDRM().getData(), b.getDDRM().getData());
+                matrix.setRow(i, 0, r.concatColumns(g, b).getDDRM().getData());
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(ImageReader.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return matrix;
+    }
 
+    /**
+     * 
+     * @param image image is a matrix with integers that describe colors rgb
+     * @param r it's a vector to save the red matrix
+     * @param g it's a vector to save the green matrix
+     * @param b it's a vector to save the blue matrix
+     */
     public static void getRGB(int[][] image, double[] r, double[] g, double[] b) {
-
         int pos = 0;
-        for (int i = 0; i < image.length; i++) {
+        for (int[] image1 : image) {
             for (int j = 0; j < image[0].length; j++) {
-                r[pos] = (double) (new Color(image[i][j])).getRed();
-                g[pos] = (double) (new Color(image[i][j])).getGreen();
-                b[pos] = (double) (new Color(image[i][j])).getBlue();
+                r[pos] = (double) (new Color(image1[j])).getRed();
+                g[pos] = (double) (new Color(image1[j])).getGreen();
+                b[pos] = (double) (new Color(image1[j])).getBlue();
                 pos++;
             }
-
         }
 
     }
 
+    /**
+     * This function obtain the Integer RGB Matrix.
+     * 
+     * @param image
+     * @return 
+     */
     private static int[][] convertTo2DWithoutUsingGetRGB(BufferedImage image) {
 
         final byte[] pixels = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
@@ -163,6 +199,12 @@ public class ImageReader {
 
     }
 
+    /**
+     * this function obtain all the images from a given folder
+     * @param folderUrl
+     * @param extension
+     * @return 
+     */
     public static List<String> listFilesForFolder(String folderUrl, String extension) {
         //  System.out.println("folder.list " + folder.list().length);
         List<String> address = new ArrayList<>();
