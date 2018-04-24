@@ -1,3 +1,5 @@
+[![](https://jitpack.io/v/mroodschild/froog.svg)](https://jitpack.io/#mroodschild/froog)
+
 # JDataAnalysis
                     Author: Roodschild Matías
                             mroodschild@gmail.com
