@@ -79,6 +79,7 @@ public class ImageReaderTest {
     /**
      * Test of save method, of class ImageReader.
      */
+    @Ignore
     @Test
     public void testSave() {
         System.out.println("save");
