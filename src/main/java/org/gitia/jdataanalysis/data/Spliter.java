@@ -61,13 +61,7 @@ public class Spliter {
 
     public void shuffle() {
         //mezclamos los datos
-        for (int i = 0; i < index.size(); i++) {
-            System.out.println(index.get(i));
-        }
         Collections.shuffle(index);
-        for (int i = 0; i < index.size(); i++) {
-            System.out.println(index.get(i));
-        }
         int v = 0;
 
         for (int i = 0; i < idxTrain.length; i++) {
@@ -77,7 +71,7 @@ public class Spliter {
         
         for (int i = 0; i < idxValidation.length; i++) {
             idxValidation[i] = index.get(v);
-            v++;//este faltaba
+            v++;
         }
     }
 
