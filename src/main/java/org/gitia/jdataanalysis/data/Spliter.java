@@ -43,6 +43,11 @@ public class Spliter {
     int[] idxTrain;
     int[] idxValidation;
 
+    /**
+     * 
+     * @param sizeDatabase tamaño del conjunto de datos
+     * @param percentTrain Porcentaje de datos de entrenamientos
+     */
     public Spliter(int sizeDatabase, double percentTrain) {
         this.sizeDatabase = sizeDatabase;
         this.percentTrain = percentTrain;

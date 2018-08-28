@@ -37,11 +37,23 @@ public class DataContainer {
     public DataContainer() {
     }
 
+    /**
+     * @param input
+     * @param output 
+     */
     public DataContainer(SimpleMatrix input, SimpleMatrix output) {
         this.input = input;
         this.output = output;
     }
 
+    /**
+     * 
+     * Obtener los datos en formato vertical u horizontal
+     * 
+     * @param idx
+     * @param vertical
+     * @return 
+     */
     public SimpleMatrix getInput(int[] idx, boolean vertical) {
         if (vertical == false) {
             return getData(input, idx);
