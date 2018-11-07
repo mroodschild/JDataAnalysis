@@ -276,6 +276,15 @@ public class ImageReader {
     public void save(Image img) {
 
     }
+    
+    public static void save(BufferedImage img, String fullname){
+        try {
+            File outputfile = new File(fullname);
+            ImageIO.write(img, "jpg", outputfile);
+        } catch (IOException ex) {
+            Logger.getLogger(ImageReader.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 //    public static void main(String[] args) {
 //
 //        ImageReader ir = new ImageReader();
