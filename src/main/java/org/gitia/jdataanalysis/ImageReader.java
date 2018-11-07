@@ -24,6 +24,7 @@
 package org.gitia.jdataanalysis;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
@@ -206,7 +207,7 @@ public class ImageReader {
         for (int i = 0, row = 0, col = 0; i < pixels.length; i++) {
             int pixel = pixels[i];
             Color c = new Color(pixel);
-            result[row][col] = (c.getBlue()+c.getGreen()+c.getRed())/3;
+            result[row][col] = (c.getBlue() + c.getGreen() + c.getRed()) / 3;
             col++;
             if (col == width) {
                 col = 0;
@@ -216,8 +217,8 @@ public class ImageReader {
 
         return result;
     }
-    
-     /**
+
+    /**
      * This function obtain the Integer RGB Matrix.
      *
      * @param image
@@ -227,17 +228,11 @@ public class ImageReader {
         final int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
         final int width = image.getWidth();
         final int height = image.getHeight();
-        double[][] result = new double[height*width][1];
-
-        for (int i = 0, row = 0, col = 0; i < pixels.length; i++) {
-            int pixel = pixels[i];
-            Color c = new Color(pixel);
-            result[i][0] = (c.getBlue()+c.getGreen()+c.getRed())/3;
-            row++;
-            if (row == height) {
-                row = 0;
-                col++;
-            }
+        double[][] result = new double[height * width][1];
+        
+        for (int i = 0; i < pixels.length; i++) {
+            Color c = new Color(pixels[i]);
+            result[i][0] = (c.getBlue() + c.getGreen() + c.getRed()) / 3;
         }
 
         return result;
@@ -276,14 +271,31 @@ public class ImageReader {
     public void save(Image img) {
 
     }
-    
-    public static void save(BufferedImage img, String fullname){
+
+    public static void save(BufferedImage img, String fullname) {
         try {
             File outputfile = new File(fullname);
             ImageIO.write(img, "jpg", outputfile);
         } catch (IOException ex) {
             Logger.getLogger(ImageReader.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    /**
+     * devuelve una imagen nueva recortada
+     *
+     * @param image imagen a recortar
+     * @param startX coordenada X a iniciar el corte
+     * @param startY coordenada Y a iniciar el corte
+     * @param width ancho del corte
+     * @param heigh alto del corte
+     */
+    public static BufferedImage crop(BufferedImage image, int startX, int startY, int width, int heigh) {
+        BufferedImage img = image.getSubimage(startX, startY, width, heigh); //fill in the corners of the desired crop location here
+        BufferedImage copyOfImage = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_RGB);
+        Graphics g = copyOfImage.createGraphics();
+        g.drawImage(img, 0, 0, null);
+        return copyOfImage; //or use it however you want
     }
 //    public static void main(String[] args) {
 //
