@@ -21,30 +21,30 @@ public class runOneHot {
         
         OneHot oneHotEncoder = new OneHot(stringLabels);
         List<String> datos = Arrays.asList("Sunday", "Monday", "Tuestay", "Sunday", "Monday", "Tuestay");
-        List<int[]> predictions = new ArrayList<>();
+        List<double[]> predictions = new ArrayList<>();
         for (String dato : datos) {
-            int[] oneHot = oneHotEncoder.encode(dato);
+            double[] oneHot = oneHotEncoder.encode(dato);
             predictions.add(oneHot);
             print(oneHotEncoder.decode(oneHot), oneHot);
         }
-        for (int[] predicton : predictions) {
-            int classLabel = oneHotEncoder.decode(predicton);
+        for (double[] predicton : predictions) {
+            double classLabel = oneHotEncoder.decode(predicton);
             String label = oneHotEncoder.tag(predicton);
-            System.out.printf("classLabel: %d %s\n", classLabel, label);
+            System.out.printf("classLabel: %.0f %s\n", classLabel, label);
         }
     }
     
-    public static void print(int[] oneHot){
+    public static void print(double[] oneHot){
         for (int i = 0; i < oneHot.length; i++) {
-            System.out.printf("%d ", oneHot[i]);
+            System.out.printf("%.0f ", oneHot[i]);
         }
         System.out.println("");
     }
 
-    public static void print(int classNumber, int[] oneHot) {
-        System.out.printf("%d: ", classNumber);
+    public static void print(double classNumber, double[] oneHot) {
+        System.out.printf("%.0f: ", classNumber);
         for (int i = 0; i < oneHot.length; i++) {
-            System.out.printf("%d ", oneHot[i]);
+            System.out.printf("%.0f ", oneHot[i]);
         }
         System.out.println("");
     }

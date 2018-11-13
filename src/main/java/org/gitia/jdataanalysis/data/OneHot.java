@@ -38,7 +38,8 @@ public class OneHot {
     private final int numberOfClasses;
 
     /**
-     * inicializamos OneHot con las etiquetas a utilizar, remueve las etiquetas duplicadas
+     * inicializamos OneHot con las etiquetas a utilizar, remueve las etiquetas
+     * duplicadas
      *
      * @param words
      */
@@ -63,9 +64,9 @@ public class OneHot {
      * @param label
      * @return
      */
-    public int[] encode(int label) {
-        int[] oneHot = new int[numberOfClasses];
-        oneHot[label] = 1;
+    public double[] encode(double label) {
+        double[] oneHot = new double[numberOfClasses];
+        oneHot[(int) label] = 1;
         return oneHot;
     }
 
@@ -75,8 +76,20 @@ public class OneHot {
      * @param label
      * @return
      */
-    public int[] encode(String label) {
+    public double[] encode(String label) {
         return this.encode(labelEncoder.encode(label));
+    }
+
+    public double[] encode(String[] tags) {
+        double[] result = new double[this.numberOfClasses * tags.length];
+        int count = 0;
+        for (int i = 0; i < tags.length; i++) {
+            String tag = tags[i];
+            double[] code = this.encode(tag);
+            ArrayUtils.insert(count, result, code);
+            count += code.length;
+        }
+        return result;
     }
 
     /**
@@ -85,7 +98,7 @@ public class OneHot {
      * @param oneHot
      * @return
      */
-    public int decode(int[] oneHot) {
+    public double decode(double[] oneHot) {
         return ArrayUtils.indexOf(oneHot, 1);
     }
 
@@ -95,12 +108,12 @@ public class OneHot {
      * @param oneHot
      * @return
      */
-    public String tag(int[] oneHot) {
-        return labelEncoder.decode(this.decode(oneHot));
+    public String tag(double[] oneHot) {
+        return labelEncoder.decode((int) this.decode(oneHot));
     }
 
-    public String tag(int code) {
-        return labelEncoder.decode(code);
+    public String tag(double code) {
+        return labelEncoder.decode((int) code);
     }
 
     private String[] removeDuplicates(String[] words) {
