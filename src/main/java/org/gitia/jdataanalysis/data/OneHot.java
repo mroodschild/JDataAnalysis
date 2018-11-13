@@ -24,10 +24,9 @@
 package org.gitia.jdataanalysis.data;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import org.ejml.simple.SimpleMatrix;
+import org.apache.commons.lang3.ArrayUtils;
 
 /**
  *
@@ -35,62 +34,78 @@ import org.ejml.simple.SimpleMatrix;
  */
 public class OneHot {
 
-    public static SimpleMatrix decode(String[] labels) {
-        String[] targets = getUniqueslabels(labels);
-        SimpleMatrix onehot = new SimpleMatrix(labels.length, targets.length);
-        
-        for (int i = 0; i < targets.length; i++) {
-            SimpleMatrix v = new SimpleMatrix(1, targets.length);
-            v.zero();
-            
-            
-            for (int j = 0; j < labels.length; j++) {
-                String label = labels[j];
-                
-            }
-            
-        }
-        for (int i = 0; i < labels.length; i++) {
-            String label = labels[i];
+    LabelEncoder<String> labelEncoder;
+    private final int numberOfClasses;
 
-        }
-
-        return null;
-    }
-    
     /**
-     * obtenemos las etiquetas que aparecen una sola vez
-     * @param labels
-     * @return 
+     * inicializamos OneHot con las etiquetas a utilizar, remueve las etiquetas duplicadas
+     *
+     * @param words
      */
-    public static String[] getUniqueslabels(String[] labels){
-        Set<String> myset = new HashSet<>();
-        Collections.addAll(myset, labels);
-        String[] array = Arrays.copyOf(myset.toArray(), myset.size(), String[].class);
-        return array;
+    public OneHot(String[] words) {
+        String[] aux = removeDuplicates(words);
+        labelEncoder = new LabelEncoder<>(aux);
+        this.numberOfClasses = labelEncoder.getNumClasses();
     }
 
-//    public static void main(String args[]) {
-//
-//        String[] labels = {"aim", "rajesh", "raju", "aim"};
-//
-//        Set<String> myset = new HashSet<>();
-//        Set<String> l = new 
-//        //Collections.addAll(myset, labels);
-//
-//        System.out.println(myset);
-//        myset.parallelStream().forEach((string) -> {
-//            if(string.equals("aim"))
-//                string = "0";
-//            System.out.println(string);
-//        });
-//        
-//        String[] array = Arrays.copyOf(myset.toArray(), myset.size(), String[].class);
-//        
-//        for (int i = 0; i < array.length; i++) {
-//            String string = array[i];
-//            System.out.println(string);
-//        }
-//        
-//    }
+    /**
+     * devuelve la cantidad de etiquetas encontradas
+     *
+     * @return
+     */
+    public int getNumberOfClasses() {
+        return numberOfClasses;
+    }
+
+    /**
+     * binariza el codigo de la etiqueta
+     *
+     * @param label
+     * @return
+     */
+    public int[] encode(int label) {
+        int[] oneHot = new int[numberOfClasses];
+        oneHot[label] = 1;
+        return oneHot;
+    }
+
+    /**
+     * convierte la etiqueta de un estring a binario
+     *
+     * @param label
+     * @return
+     */
+    public int[] encode(String label) {
+        return this.encode(labelEncoder.encode(label));
+    }
+
+    /**
+     * convierte el binario a etiqueta
+     *
+     * @param oneHot
+     * @return
+     */
+    public int decode(int[] oneHot) {
+        return ArrayUtils.indexOf(oneHot, 1);
+    }
+
+    /**
+     * convierte el binario a etiqueta
+     *
+     * @param oneHot
+     * @return
+     */
+    public String tag(int[] oneHot) {
+        return labelEncoder.decode(this.decode(oneHot));
+    }
+
+    public String tag(int code) {
+        return labelEncoder.decode(code);
+    }
+
+    private String[] removeDuplicates(String[] words) {
+        Set<String> wordSet = new HashSet<>(Arrays.asList(words));
+        String[] wordArray = wordSet.toArray(new String[0]);
+        return wordArray;
+    }
 }
