@@ -24,7 +24,7 @@
 package org.gitia.jdataanalysis.data;
 
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -71,7 +71,7 @@ public class OneHot {
     }
 
     /**
-     * convierte la etiqueta de un estring a binario
+     * convierte la etiqueta de un String a binario
      *
      * @param label
      * @return
@@ -116,8 +116,14 @@ public class OneHot {
         return labelEncoder.decode((int) code);
     }
 
+    /**
+     * Mantiene el orden de ocurrencia de las palabras
+     * 
+     * @param words
+     * @return 
+     */
     private String[] removeDuplicates(String[] words) {
-        Set<String> wordSet = new HashSet<>(Arrays.asList(words));
+        Set<String> wordSet = new LinkedHashSet<>(Arrays.asList(words));
         String[] wordArray = wordSet.toArray(new String[0]);
         return wordArray;
     }
