@@ -27,7 +27,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.Ignore;
 
 /**
  *
@@ -36,7 +35,7 @@ import org.junit.Ignore;
 public class OneHotTest {
 
     OneHot onehot;
-    String[] words = {"hola", "mundo", "matias", "hola"};
+    String[] words = {"hola", "mundo", "matias", "hola", "matias"};
 
     public OneHotTest() {
     }
@@ -69,7 +68,7 @@ public class OneHotTest {
         System.out.println("org.gitia.jdataanalysis.data.OneHotTest.testEncode_double()");
         double label = 1;
         OneHot instance = onehot;
-        double[] expResult = {0,1,0};
+        double[] expResult = {0, 1, 0};
         double[] result = instance.encode(label);
 //        System.out.println("\nEsperado");
 //        for (int i = 0; i < expResult.length; i++) {
@@ -87,33 +86,30 @@ public class OneHotTest {
     /**
      * Test of encode method, of class OneHot.
      */
-    @Ignore
     @Test
     public void testEncode_String() {
-        System.out.println("encode");
-        String label = "";
-        OneHot instance = null;
-        double[] expResult = null;
+        System.out.println("org.gitia.jdataanalysis.data.OneHotTest.testEncode_String()");
+        String label = "mundo";
+        OneHot instance = onehot;
+        double[] expResult = {0, 1, 0};
         double[] result = instance.encode(label);
         assertArrayEquals(expResult, result, 0);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
      * Test of encode method, of class OneHot.
      */
-    @Ignore
     @Test
     public void testEncode_StringArr() {
         System.out.println("encode");
-        String[] tags = null;
-        OneHot instance = null;
-        double[] expResult = null;
+        String[] tags = {"hola", "mundo", "matias", "mundo"};
+        OneHot instance = onehot;
+        double[] expResult = {1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0};
         double[] result = instance.encode(tags);
         assertArrayEquals(expResult, result, 0);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -122,7 +118,7 @@ public class OneHotTest {
     @Test
     public void testDecode() {
         System.out.println("org.gitia.jdataanalysis.data.OneHotTest.testDecode()");
-        double[] oneHot = {0,0,1};
+        double[] oneHot = {0, 0, 1};
         OneHot instance = onehot;
         double expResult = 2;
         double result = instance.decode(oneHot);
@@ -132,17 +128,16 @@ public class OneHotTest {
     /**
      * Test of tag method, of class OneHot.
      */
-    
     @Test
     public void testTag_doubleArr() {
         System.out.println("org.gitia.jdataanalysis.data.OneHotTest.testTag_doubleArr()");
-        double[] oneHot = {0,1,0};
+        double[] oneHot = {0, 1, 0};
         OneHot instance = onehot;
         String expResult = "mundo";
         String result = instance.tag(oneHot);
         //System.out.println("RESULT\t" + result);
         assertEquals(expResult, result);
-        
+
     }
 
     /**
@@ -154,9 +149,6 @@ public class OneHotTest {
         System.out.println("org.gitia.jdataanalysis.data.OneHotTest.testTag_double()");
         double code = 0;
         OneHot instance = onehot;
-//        for (int i = 0; i < instance.getNumberOfClasses(); i++) {
-//            System.out.println(i+": "+instance.tag(i));
-//        }
         String expResult = "hola";
         String result = instance.tag(code);
         assertEquals(expResult, result);

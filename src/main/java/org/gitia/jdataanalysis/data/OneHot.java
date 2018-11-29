@@ -35,7 +35,6 @@ import org.apache.commons.lang3.ArrayUtils;
 public class OneHot {
 
     LabelEncoder<String> labelEncoder;
-    private final int numberOfClasses;
 
     /**
      * inicializamos OneHot con las etiquetas a utilizar, remueve las etiquetas
@@ -44,9 +43,8 @@ public class OneHot {
      * @param words
      */
     public OneHot(String[] words) {
-        String[] aux = removeDuplicates(words);
-        labelEncoder = new LabelEncoder<>(aux);
-        this.numberOfClasses = labelEncoder.getNumClasses();
+        String[] tags = removeDuplicates(words);
+        labelEncoder = new LabelEncoder<String>(tags);
     }
 
     /**
@@ -55,7 +53,7 @@ public class OneHot {
      * @return
      */
     public int getNumberOfClasses() {
-        return numberOfClasses;
+        return labelEncoder.getNumClasses();
     }
 
     /**
@@ -65,7 +63,7 @@ public class OneHot {
      * @return
      */
     public double[] encode(double label) {
-        double[] oneHot = new double[numberOfClasses];
+        double[] oneHot = new double[getNumberOfClasses()];
         oneHot[(int) label] = 1;
         return oneHot;
     }
@@ -80,14 +78,20 @@ public class OneHot {
         return this.encode(labelEncoder.encode(label));
     }
 
-    public double[] encode(String[] tags) {
-        double[] result = new double[this.numberOfClasses * tags.length];
-        int count = 0;
-        for (int i = 0; i < tags.length; i++) {
-            String tag = tags[i];
+    /**
+     * esperamos un array de binarios con las etiquetas pasadas
+     *
+     * @param labels
+     * @return
+     */
+    public double[] encode(String[] labels) {
+        double[] result = new double[getNumberOfClasses() * labels.length];
+        int pos = 0;
+        for (int i = 0; i < labels.length; i++) {
+            String tag = labels[i];
             double[] code = this.encode(tag);
-            ArrayUtils.insert(count, result, code);
-            count += code.length;
+            System.arraycopy(code, 0, result, pos, code.length);
+            pos += code.length;
         }
         return result;
     }
@@ -118,9 +122,9 @@ public class OneHot {
 
     /**
      * Mantiene el orden de ocurrencia de las palabras
-     * 
+     *
      * @param words
-     * @return 
+     * @return
      */
     private String[] removeDuplicates(String[] words) {
         Set<String> wordSet = new LinkedHashSet<>(Arrays.asList(words));
