@@ -38,6 +38,7 @@ import java.io.Writer;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.IntStream;
 import org.ejml.simple.SimpleMatrix;
 
 /**
@@ -72,7 +73,7 @@ public class CSV {
         }
         return new SimpleMatrix(data);
     }
-    
+
     /**
      * @param matrix
      * @param Name
