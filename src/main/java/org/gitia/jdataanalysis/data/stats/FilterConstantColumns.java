@@ -27,6 +27,9 @@
  */
 package org.gitia.jdataanalysis.data.stats;
 
+import java.util.Arrays;
+import java.util.stream.IntStream;
+import org.apache.commons.lang3.ArrayUtils;
 import org.ejml.dense.row.CommonOps_DDRM;
 import org.ejml.simple.SimpleMatrix;
 
@@ -54,13 +57,17 @@ public class FilterConstantColumns {
      */
     public void fit(SimpleMatrix matrix) {
         colsFiltered = new double[matrix.numCols()];
-        for (int i = 0; i < matrix.numCols(); i++) {
-            if (constant(matrix.extractVector(false, i))) {
-                colsFiltered[i] = 1;
-            } else {
-                colsFiltered[i] = 0;
-            }
-        }
+        int size = matrix.numCols();
+        IntStream.range(0, size).parallel()
+                .forEach(i -> colsFiltered[i] = 
+                        (constant(matrix.extractVector(false, i)) ? 1 : 0));
+//        for (int i = 0; i < matrix.numCols(); i++) {
+//            if (constant(matrix.extractVector(false, i))) {
+//                colsFiltered[i] = 1;
+//            } else {
+//                colsFiltered[i] = 0;
+//            }
+//        }
     }
 
     /**
@@ -72,20 +79,15 @@ public class FilterConstantColumns {
      */
     public SimpleMatrix eval(SimpleMatrix matrix) {
         SimpleMatrix a = new SimpleMatrix(1, colsFiltered.length, true, colsFiltered);
-        SimpleMatrix aux = new SimpleMatrix(matrix.numRows(), matrix.numCols() - (int) a.elementSum());
+        int sum = (int) a.elementSum();
+        SimpleMatrix aux = new SimpleMatrix(matrix.numRows(), matrix.numCols() - sum);
         int count = 0;
         for (int i = 0; i < colsFiltered.length; i++) {
             //las columas con datos a quitar estan marcadas con 1
             //las marcadas con 0 será usadas para crear una nueva matriz
             if (colsFiltered[i] == 0) {
-                //if (aux == null) {
                 //inicializamos la matriz
                 aux.setColumn(count++, 0, matrix.extractVector(false, i).getDDRM().getData());
-                //aux = matrix.extractVector(false, i).copy();
-                //} else {
-                //agregamos las columas que tienen información
-                //  aux = aux.combine(0, SimpleMatrix.END, matrix.extractVector(false, i));
-                //}
             }
         }
         return aux;
@@ -98,7 +100,17 @@ public class FilterConstantColumns {
      * @return
      */
     private boolean constant(SimpleMatrix vector) {
-        return (CommonOps_DDRM.elementMax(vector.getMatrix()) == CommonOps_DDRM.elementMin(vector.getMatrix()));
+        double val = vector.get(0);
+        double[] data = vector.getDDRM().getData();
+        boolean constant = true;
+        for (int i = 0; i < data.length; i++) {
+            if (data[i] != val) {
+                constant = false;
+                break;
+            }
+        }
+        return constant;
+        //return (CommonOps_DDRM.elementMax(vector.getMatrix()) == CommonOps_DDRM.elementMin(vector.getMatrix()));
     }
 
 }
