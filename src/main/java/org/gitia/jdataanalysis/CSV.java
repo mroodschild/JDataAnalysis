@@ -75,8 +75,8 @@ public class CSV {
     }
 
     /**
-     * @param matrix
-     * @param Name
+     * @param matrix to save
+     * @param Name "src/main/resources/file.csv"
      */
     public static void write(SimpleMatrix matrix, String Name) {
         Writer writer = null;
