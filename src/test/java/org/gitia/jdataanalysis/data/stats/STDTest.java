@@ -27,7 +27,6 @@
  */
 package org.gitia.jdataanalysis.data.stats;
 
-import org.gitia.jdataanalysis.data.stats.STD;
 import org.ejml.simple.SimpleMatrix;
 import org.junit.After;
 import org.junit.AfterClass;

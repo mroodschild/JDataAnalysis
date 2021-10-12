@@ -24,7 +24,6 @@
 package org.gitia.jdataanalysis;
 
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import org.junit.AfterClass;
 import org.junit.Test;
 import static org.junit.Assert.*;

@@ -29,7 +29,7 @@ package org.gitia.jdataanalysis;
 
 //import dnl.utils.text.table.TextTable;
 import java.util.Arrays;
-import javafx.scene.chart.XYChart;
+//import javafx.scene.chart.XYChart;
 import org.ejml.simple.SimpleMatrix;
 
 /**
@@ -177,15 +177,15 @@ public class Util implements java.io.Serializable {
         return salida;
     }
 
-    /**
-     *
-     * @param serie
-     */
-    public static void mostrarXYChartSeries(XYChart.Series serie) {
-        for (int i = 0; i < serie.getData().size(); i++) {
-            System.out.println(serie.getData().get(i).toString());
-        }
-    }
+    // /**
+    //  *
+    //  * @param serie
+    //  */
+    // public static void mostrarXYChartSeries(XYChart.Series serie) {
+    //     // for (int i = 0; i < serie.getData().size(); i++) {
+    //     //     System.out.println(serie.getData().get(i).toString());
+    //     // }
+    // }
 
     /**
      *

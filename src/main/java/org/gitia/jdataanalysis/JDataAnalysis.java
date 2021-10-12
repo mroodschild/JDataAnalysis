@@ -361,16 +361,6 @@ public class JDataAnalysis {
      * @param size
      */
     public void show(int size) {
-//        int size = files;
-//        if (files > data.length) {
-//            size = data.length;
-//        }
-//        String[][] selected = getFeatureString(size);
-//        TextTable textTable = new TextTable(columnNames, selected);
-//        textTable.printTable();
-//        System.out.println("...");
-//        System.out.println("Records (" + data.length + " x " + data[0].length + ")\n");//parser.getHeaderMap().size() + ")\n");
-
         String[][] selected = getFeatureString(size);
         Double[][] o = new Double[selected.length][selected[0].length];
         for (int i = 0; i < o.length; i++) {
@@ -390,12 +380,6 @@ public class JDataAnalysis {
      * @param features
      */
     public void show(String... features) {
-//        String[][] selected = getFeaturesString(features);
-//        TextTable textTable = new TextTable(features, selected);
-//        textTable.printTable();
-//        System.out.println("...");
-//        System.out.println("Records (" + data.length + " x " + data[0].length + ")\n");
-        
         String[][] selected = getFeaturesString(features);
         Double[][] o = new Double[selected.length][selected[0].length];
         for (int i = 0; i < o.length; i++) {
