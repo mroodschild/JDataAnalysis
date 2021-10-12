@@ -27,10 +27,7 @@
  */
 package org.gitia.jdataanalysis.data.stats;
 
-import java.util.Arrays;
 import java.util.stream.IntStream;
-import org.apache.commons.lang3.ArrayUtils;
-import org.ejml.dense.row.CommonOps_DDRM;
 import org.ejml.simple.SimpleMatrix;
 
 /**
